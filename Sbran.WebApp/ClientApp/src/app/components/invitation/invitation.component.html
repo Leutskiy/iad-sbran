@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="table-wrapper">
+    <!-- Заголовок таблицы -->
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-12 d-inline-flex">
+          <div class="mr-auto"><h2><b>Приглашения</b></h2></div>
+          <div class="input-group w-auto">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-warning ml-2" (click)="new()">
+                <span><b>Новое</b></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Таблица приглашений -->
+    <table class="table table-hover table-dark">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">ФИО</th>
+          <th scope="col">Страна</th>
+          <th scope="col">Организация</th>
+          <th scope="col">Год</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invitation of invitations; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{invitation.alien?.passport?.nameRus}} {{invitation.alien?.passport?.surnameRus}} {{invitation.alien?.passport?.patronymicNameRus}}</td>
+          <td>{{invitation.visitDetail?.country}}</td>
+          <td>{{invitation.alien?.workPlace}}</td>
+          <td>{{invitation.visitDetail?.arrivalDate?.getFullYear()}}</td>
+          <td class="text-center">
+            <a class="view" (click)="edit($event, invitation, i)">
+              <i class="fa fa-share-square-o"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

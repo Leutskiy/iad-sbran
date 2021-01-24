@@ -1,0 +1,58 @@
+<div class="list-group-item d-flex" [class.viewed-details]="viewMode" >
+
+  <a href="#organization-details" class="mr-auto" [class.viewed-details]="viewMode" data-toggle="collapse" (click)="openForm()">
+    <p class="m-0 align-middle">{{title}}</p>
+  </a>
+
+  <div [class.invisible]="isNewForm">
+    <div class="btn-group mr-2" [class.invisible]="!viewMode || !editable" role="group" aria-label="Second persist group">
+      <button class="btn btn-warning" type="button" (click)="saveForm()">
+        <i class="fa fa-floppy-o"></i>
+      </button>
+    </div>
+    <div class="btn-group" [class.invisible]="!viewMode" role="group" aria-label="First persist group">
+      <button class="btn btn-warning" type="button" (click)="editForm()">
+        <i class="fa fa-pencil"></i>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="collapse" id="organization-details">
+  <div class="input-group mt-3 mb-3">
+
+    <div class="col-md-6">
+      <label for="name">Наименование:</label>
+      <input type="text" class="form-control" id="name" [disabled]="!editable && !isNewForm" [(ngModel)]="organization.name" >
+    </div>
+
+    <div class="col-md-6">
+      <label for="shortName">Короткое наименование:</label>
+      <input type="text" class="form-control" id="shortName" [disabled]="!editable && !isNewForm" [(ngModel)]="organization.shortName" >
+    </div>
+
+    <div class="col-md-8">
+      <label for="legalAddress">Юридический адрес:</label>
+      <input type="text" class="form-control" id="legalAddress" [disabled]="!editable && !isNewForm" [(ngModel)]="organization.legalAddress" >
+    </div>
+
+    <div class="w-100"></div>
+
+    <div class="col-md-8">
+      <label for="scientificActivity">Научная деятельность:</label>
+      <input type="text" class="form-control" id="scientificActivity" [disabled]="!editable && !isNewForm" [(ngModel)]="organization.scientificActivity" >
+    </div>
+
+    <div class="col-md-6">
+      <label for="orgInn">ИНН:</label>
+      <input type="text" class="form-control" id="orgInn" [disabled]="!editable && !isNewForm" [(ngModel)]="organization.stateRegistration.inn" >
+    </div>
+
+    <div class="col-md-6">
+      <label for="orgOgrnip">ОГРНИП:</label>
+      <input type="text" class="form-control" id="orgOgrnip" [disabled]="!editable && !isNewForm" [(ngModel)]="organization.stateRegistration.ogrnip" >
+    </div>
+
+  </div>
+</div>

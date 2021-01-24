@@ -1,0 +1,43 @@
+<div class="container">
+
+  <!-- TODO: надо ли здесь прописывать доступ к значениям полей через знак ? -->
+  <!-- TODO: Надо данные передавать как-то иначе - более аккуратно, без проверок -->
+  <!-- Форма редактирования приглашения -->
+  <div class="list-group list-group-flush border mt-3">
+    <app-visit-details-invitation  [title]="visitDetailsTitle" [scope]="scope" [visitDetails]="invitation.visitDetail">
+      <!-- Детали визита приглашенного -->
+    </app-visit-details-invitation>
+
+    <app-alien-passport-invitation [title]="alienPasportDetailsTitle" [scope]="scope" [passport]="invitation.alien?.passport">
+      <!-- Паспорт приглашенного иностранца -->
+    </app-alien-passport-invitation>
+
+    <app-alien-contacts-invitation [title]="alienContactDetailsTitle" [scope]="scope" [contact]="invitation.alien?.contact">
+      <!-- Контакты приглашенного иностранца -->
+    </app-alien-contacts-invitation>
+
+    <app-alien-organization-invitation [title]="alienOrganizationTitle" [scope]="scope" [organization]="invitation.alien?.organization">
+      <!-- Организация приглашенного иностранца -->
+    </app-alien-organization-invitation>
+
+    <app-alien-job-invitation [title]="alienWorkPlaceTitle" [scope]="scope" [job]="job">
+      <!-- Работа приглашенного иностранца -->
+    </app-alien-job-invitation>
+
+    <app-alien-state-registration-invitation [title]="alienStateRegistrationTitle" [scope]="scope" [stateRegistration]="invitation.alien?.stateRegistration">
+      <!-- Данные о госудраственной регистрации приглашенного иностранца -->
+    </app-alien-state-registration-invitation>
+  </div>
+
+  <!-- Дополнительные кнопки для создания приглашени с нуля -->
+  <div class="row mt-5" [class.invisible]="!isNew">
+    <div class="col-md-12 text-right">
+      <button type="button" class="btn btn-outline-dark" (click)="save()">
+        <span><b>Сохранить</b></span>
+      </button>
+      <button type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
+        <span><b>Отменить</b></span>
+      </button>
+    </div>
+  </div>
+</div>

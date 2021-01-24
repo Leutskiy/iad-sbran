@@ -1,0 +1,52 @@
+<div class="list-group-item d-flex" [class.viewed-details]="viewMode" >
+  <a href="#person-details" class="mr-auto" [class.viewed-details]="viewMode" data-toggle="collapse" (click)="viewForm()">
+    <p class="m-0 align-middle">{{title}}</p>
+  </a>
+  <div [class.invisible]="isNewForm">
+    <div class="btn-group mr-2" [class.invisible]="!viewMode || !editable" role="group" aria-label="Second persist group">
+      <button class="btn btn-warning" type="button" (click)="saveForm()">
+        <i class="fa fa-floppy-o"></i>
+      </button>
+    </div>
+    <div class="btn-group" [class.invisible]="!viewMode" role="group" aria-label="First persist group">
+      <button class="btn btn-warning" type="button" (click)="editForm()">
+        <i class="fa fa-pencil"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="collapse" id="person-details">
+  <div class="input-group mt-3 mb-3">
+
+    <div *ngIf="!isNewForm" class="col-md-5">
+      <app-file-upload [(avatar)]="profile.avatar" [editable]="editable"></app-file-upload>
+    </div>
+
+    <div *ngIf="!isNewForm" class="w-100"></div>
+
+    <div class="col-md-6">
+      <label for="academicDegree">Степень:</label>
+      <input type="text" class="form-control" id="academicDegree" [disabled]="!editable && !isNewForm" [(ngModel)]="employee.scientificInfo.academicDegree" >
+    </div>
+
+    <div class="col-md-6">
+      <label for="academicRank">Ученое звание:</label>
+      <input type="text" class="form-control" id="academicRank" [disabled]="!editable && !isNewForm" [(ngModel)]="employee.scientificInfo.academicRank" >
+    </div>
+
+    <div class="col-md-6">
+      <label for="education">Образование:</label>
+      <input type="text" class="form-control" id="education" [disabled]="!editable && !isNewForm" [(ngModel)]="employee.scientificInfo.education" >
+    </div>
+
+    <div class="w-100"></div>
+
+    <div *ngIf="!isNewForm" class="col-md-8">
+      <label for="webPage">Страница:</label>
+      <input type="text" class="form-control" id="webPage" [disabled]="!editable && !isNewForm" [(ngModel)]="profile.webPages" >
+    </div>
+
+    <div *ngIf="!isNewForm" class="w-100"></div>
+
+  </div>
+</div>

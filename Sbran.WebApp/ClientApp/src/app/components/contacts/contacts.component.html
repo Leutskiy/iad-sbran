@@ -1,0 +1,49 @@
+<div class="list-group-item d-flex" [class.viewed-details]="viewMode" >
+  <a href="#contact-details" class="mr-auto" [class.viewed-details]="viewMode" data-toggle="collapse" (click)="openForm()">
+    <p class="m-0 align-middle">{{title}}</p>
+  </a>
+  <div [class.invisible]="isNewForm">
+    <div class="btn-group mr-2" [class.invisible]="!viewMode || !editable" role="group" aria-label="Second persist group">
+      <button class="btn btn-warning" type="button" (click)="saveForm()">
+        <i class="fa fa-floppy-o"></i>
+      </button>
+    </div>
+    <div class="btn-group" [class.invisible]="!viewMode" role="group" aria-label="First persist group">
+      <button class="btn btn-warning" type="button" (click)="editForm()">
+        <i class="fa fa-pencil"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="collapse" id="contact-details">
+  <div class="input-group mt-3 mb-3">
+
+    <div class="col-md-4">
+      <label for="email">Электронная почта:</label>
+      <input type="text" class="form-control" id="email" [disabled]="!editable && !isNewForm" [(ngModel)]="contact.email" >
+    </div>
+
+    <div class="col-md-2">
+      <label for="postcode">Почтовый индекс:</label>
+      <input type="text" class="form-control" id="postcode" [disabled]="!editable && !isNewForm" [(ngModel)]="contact.postcode">
+    </div>
+
+    <div class="w-100"></div>
+
+    <div class="col-md-4">
+      <label for="mobilePhoneNumber">Мобильный номер:</label>
+      <input type="text" class="form-control" id="mobilePhoneNumber" [disabled]="!editable && !isNewForm" [(ngModel)]="contact.mobilePhoneNumber">
+    </div>
+
+    <div class="col-md-4">
+      <label for="homePhoneNumber">Домашний телефон:</label>
+      <input type="text" class="form-control" id="homePhoneNumber" [disabled]="!editable && !isNewForm" [(ngModel)]="contact.homePhoneNumber">
+    </div>
+
+    <div class="col-md-4">
+      <label for="workPhoneNumber">Рабочий телефон:</label>
+      <input type="text" class="form-control" id="workPhoneNumber" [disabled]="!editable && !isNewForm" [(ngModel)]="contact.workPhoneNumber">
+    </div>
+
+  </div>
+</div>

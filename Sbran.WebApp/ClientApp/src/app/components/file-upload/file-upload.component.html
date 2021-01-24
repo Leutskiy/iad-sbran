@@ -1,0 +1,9 @@
+<label class="d-block" for="avatarFile">Аватарка:</label>
+<!-- Select File -->
+<input class="d-block" type="file" id="avatarFile" accept="image/*" (change)="processAvatar($event)" [disabled]="!editable" />
+<!-- Image Preview -->
+<!--
+<div class="imagePreview" *ngIf="imageURL && imageURL !== ''">
+  <img [src]="imageURL" alt="test">
+</div>
+-->

@@ -1,0 +1,35 @@
+<!-- Панель для отображения заголовка формы и кнопок работы с формой -->
+<div class="list-group-item d-flex" [class.viewed-details]="viewMode" >
+  <!-- Кнопка открытия формы для просмотра/редактирования -->
+  <a href="#job-details" class="mr-auto" [class.viewed-details]="viewMode" data-toggle="collapse" (click)="openForm()">
+    <p class="m-0 align-middle">{{title}}</p>
+  </a>
+  <!-- Кнопок Отредактировать/Сохранить -->
+  <div [class.invisible]="isNewForm">
+    <div class="btn-group mr-2" [class.invisible]="!viewMode || !editable" role="group" aria-label="Second persist group">
+      <button class="btn btn-warning" type="button" (click)="saveForm()">
+        <i class="fa fa-floppy-o"></i>
+      </button>
+    </div>
+    <div class="btn-group" [class.invisible]="!viewMode" role="group" aria-label="First persist group">
+      <button class="btn btn-warning" type="button" (click)="editForm()">
+        <i class="fa fa-pencil"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Форма для заполнения информации о работе -->
+<div class="collapse" id="job-details">
+  <div class="input-group mt-3 mb-3">
+    <div class="col-md-6">
+      <label for="workPlace">Место работы:</label>
+      <input type="text" class="form-control" id="workPlace" [disabled]="!editable && !isNewForm" [(ngModel)]="job.workPlace" >
+    </div>
+    <div class="w-100"></div>
+    <div class="col-md-6">
+      <label for="position">Должность:</label>
+      <input type="text" class="form-control" id="position" [disabled]="!editable && !isNewForm" [(ngModel)]="job.position" >
+    </div>
+    <div class="w-100"></div>
+  </div>
+</div>

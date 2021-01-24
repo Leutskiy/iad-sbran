@@ -1,0 +1,220 @@
+<!-- PROFILE -->
+<div class="container">
+  <!-- PROFILE SIDEBAR -->
+  <div class="row">
+    <div class="col-md-2 pr-md-0">
+      <div class="profile-menu border">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <i class="fa fa-home fa-fw"></i>
+              Главная
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-envelope-o fa-fw"></i>
+              Сообщения
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profile/{{profileId}}/employee/{{employeeId}}/invitation">
+              <i class="fa fa-globe fa-fw"></i>
+              Приглашения
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-plane fa-fw"></i>
+              Выезды
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-university fa-fw"></i>
+              Публикации
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-briefcase fa-fw"></i>
+              Проекты
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-cogs fa-fw"></i>
+              Настройки
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-flag-o fa-fw"></i>
+              Помощь
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-3 pr-md-0">
+      <div class="profile-sidebar border">
+        <div class="profile-picture text-center">
+          <img src="{{userInfo.avatarContent}}" class="img-responsive" alt="">
+        </div>
+        <div class="profile-information text-center">
+          &nbsp;<!--{{userId}}-->
+        </div>
+        <div class="profile-buttons text-center">
+          <button type="button" class="btn" routerLink="information"><span class="glyphicon glyphicon-pencil"></span>Редактировать</button>
+        </div>
+        <div class="profile-rating card text-center">
+          <div class="card-header">
+            <h5>Рейтинг</h5>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title">90</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="profile-content border">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 p-1">
+              <div class="profile-user-name text-center border">
+                {{userInfo.fio}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="workPlace" class="col-md-4 col-form-label">Место работы:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="workPlace" [class.empty-field]="!!userInfo.shortName">{{userInfo.shortName}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="department" class="col-md-4 col-form-label">Подразделение:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="department" [class.empty-field]="!!userInfo.workPlace">{{userInfo.workPlace}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="position" class="col-md-4 col-form-label">Должность:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="position" [class.empty-field]="!!userInfo.position">{{userInfo.position}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="scholasticDegree" class="col-md-4 col-form-label">Степень:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="scholasticDegree" [class.empty-field]="!!userInfo.academicDegree">{{userInfo.academicDegree}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="academicRank" class="col-md-4 col-form-label">Ученое звание:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="academicRank" [class.empty-field]="!!userInfo.academicRank">{{userInfo.academicRank}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="workPhoneNumber" class="col-md-4 col-form-label">Рабочий телефон:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="workPhoneNumber" [class.empty-field]="!!userInfo.mobilePhoneNumber">{{userInfo.mobilePhoneNumber}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-md-4 col-form-label">Email:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="email" [class.empty-field]="!!userInfo.email">{{userInfo.email}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="fax" class="col-md-4 col-form-label">Факс:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="fax" [class.empty-field]="!!userInfo.fax">Не заполнено</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="education" class="col-md-4 col-form-label">Образование:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="education" [class.empty-field]="!!userInfo.education">{{userInfo.education}}</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="webPage" class="col-md-4 col-form-label">Страница <br>(researchgate, WoS):</label>
+            <div class="col-md-8">
+              <span class="form-control" id="webPage">
+                <span *ngFor="let webPage of userInfo.profile.webPages">
+                  <a target="_blank" rel="noopener noreferrer" href="{{webPage}}">
+                    {{webPage}},
+                  </a>
+                </span>
+                <!--Todo: Переделать так, чтобы даные приходили с фронта-->
+                <span *ngIf="!!!userInfo.profile.webPages" [class.empty-field]="!!!userInfo.profile.webPages">Не заполнено</span>
+              </span>
+            </div>
+          </div>
+          <div class="profile-achievements row">
+            <div class="card-columns">
+              <div class="card bg-dark">
+                <div class="card-body text-center">
+                  <a href="#">
+                    <p class="card-text">Членство
+                      <span class="badge badge-warning">42</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div class="card bg-dark">
+                <div class="card-body text-center">
+                  <a href="#">
+                    <p class="card-text">Публикации
+                      <span class="badge badge-warning">7</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div class="card bg-dark">
+                <div class="card-body text-center">
+                  <a href="#">
+                    <p class="card-text">Выезды
+                      <span class="badge badge-warning">24</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div class="card bg-dark">
+                <div class="card-body text-center">
+                  <a href="#">
+                    <p class="card-text">Проекты
+                      <span class="badge badge-warning">1</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div class="card bg-dark">
+                <div class="card-body text-center">
+                  <a href="#">
+                    <p class="card-text">Соавторы
+                      <span class="badge badge-warning">13</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div class="card bg-dark">
+                <div class="card-body text-center">
+                  <a href="#">
+                    <p class="card-text">Приглашения
+                      <span class="badge badge-warning">3</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

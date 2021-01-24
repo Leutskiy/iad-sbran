@@ -1,0 +1,7 @@
+<label [for]="identifier">{{title}}:</label>
+<div class="input-group" >
+  <input [id]="identifier" class="form-control" [placeholder]="placeholder" name="d" [ngModel]="date" (ngModelChange)="onDateChange($event)" [disabled]="disabled" ngbDatepicker #c="ngModel" #d="ngbDatepicker">
+  <div class="input-group-append">
+    <button [disabled]="disabled" class="btn btn-warning" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+  </div>
+</div>

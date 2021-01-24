@@ -1,0 +1,23 @@
+<header *ngIf="authService.isLoggedIn">
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-2">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/profile/{{profileId | async}}/employee/{{employeeId | async}}">
+        <img [src]="logoRelativePath" [alt]="logoAlt" width="40">
+      </a>
+      <div class="text-white mr-auto">
+        <h2>{{logoTitle}}</h2>
+      </div>
+      <div class="input-group w-auto">
+        <input type="text" class="form-control" placeholder="Поиск...">
+        <div class="input-group-append">
+          <button type="button" class="btn btn-warning">
+            <i class="fa fa-search"></i>
+          </button>
+          <button type="button" class="ml-2 btn btn-warning" (click)="onLogout()">
+            <span><b>Выйти</b></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

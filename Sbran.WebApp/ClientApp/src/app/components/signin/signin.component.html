@@ -1,0 +1,27 @@
+<form class="form-signin" (submit)="login(loginBox.value, passwordBox.value)">
+  <div class="title">
+    <span class="main-title text-uppercase text-center text-dark">Вход в систему</span>
+    <br>
+  </div>
+  <div class="form-group">
+    <input #loginBox id="login" name="login" type="text" class="form-control" placeholder="Электронный адрес" autofocus="autofocus" required="required">
+  </div>
+  <div class="form-group">
+    <input #passwordBox id="password" name="password" type="password" class="form-control" placeholder="Пароль" required="required">
+  </div>
+  <!-->
+  <div class="form-group subform">
+    <label class="checkbox-inline" for="rememberMe">
+      <input type="checkbox" (change)="onChangeRememberMe($event.target.checked)">
+      Запомнить
+    </label>
+    <a href="#" class="resetpassword">Сбросить пароль</a>
+  </div>
+  </!-->
+  <div class="form-group">
+    <button class="btn btn-signin btn-warning" type="submit">Войти</button>
+  </div>
+  <div class="form-group text-center">
+    <a class="signup" routerLink="/singup">Зарегистрироваться</a>
+  </div>
+</form>
