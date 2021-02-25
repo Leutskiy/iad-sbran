@@ -1,4 +1,5 @@
 import { InjectionToken } from "@angular/core";
+import { environment } from "../../environments/environment";
 
 export const APP_CONFIG = new InjectionToken<IAppConfig>("APP_CONFIG");
 
@@ -8,7 +9,6 @@ export interface IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-    icsApiEndpoint: "http://localhost:8991/",
-    /*icsApiEndpoint: "http://ras.techdir.ru:4200/",*/
+    icsApiEndpoint: environment.apiUrl,
     authGrantType: "password"
 };

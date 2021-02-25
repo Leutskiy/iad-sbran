@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  dev: false,
+  apiUrl: "http://iad-sbras.ru/"
 };

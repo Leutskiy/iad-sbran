@@ -8,6 +8,8 @@ namespace Sbran.Domain.Data.Repositories.Contracts
 {
     public interface IEmployeeRepository
     {
+        Task<List<Employee>> GetAllWithPassportAsync();
+
         Employee Create(Guid userId);
 
         Task DeleteAsync(Guid id);

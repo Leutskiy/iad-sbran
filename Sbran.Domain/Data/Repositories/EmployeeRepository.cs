@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sbran.Domain.Entities.System;
 
 namespace Sbran.Domain.Data.Repositories
 {
@@ -32,13 +33,26 @@ namespace Sbran.Domain.Data.Repositories
         }
 
         /// <summary>
+        /// Получить всех сотрудников
+        /// </summary>
+        /// <returns><Сотрудники</returns>
+        public Task<List<Employee>> GetAllWithPassportAsync()
+        {
+            return _domainContext.Employees
+                .Include<Employee, Passport?>(test => test.Passport)
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Получить сотрудника по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор иностранца</param>
         /// <returns>Сотрудник</returns>
         public async Task<Employee> GetAsync(Guid id)
         {
-            var employee = await _domainContext.Employees.Include<Employee, List<Invitation>>(test => test.Invitations).FirstOrDefaultAsync(empl => empl.Id == id);
+            var employee = await _domainContext.Employees
+                .Include<Employee, List<Invitation>>(test => test.Invitations)
+                .FirstOrDefaultAsync(empl => empl.Id == id);
 
             if (employee == null)
             {

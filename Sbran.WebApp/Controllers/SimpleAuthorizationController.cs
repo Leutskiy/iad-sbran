@@ -47,9 +47,11 @@ namespace Sbran.WebApp
             var role = _userService.GetUserRole(loginModel.UserName);
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name,loginModel.UserName),
-                new Claim(ClaimTypes.Role, role),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, loginModel.UserName),
+                new Claim(ClaimTypes.NameIdentifier, loginModel.UserName),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, role),
                 new Claim("UserId", $"{user.Id}")
+                
             };
 
 

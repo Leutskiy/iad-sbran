@@ -44,6 +44,22 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
+            "techdir": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.techdir.ts"
+                }
+              ]
             }
           }
         },
@@ -55,6 +71,12 @@
           "configurations": {
             "production": {
               "browserTarget": "Sbran.WebApp:build:production"
+            },
+            "dev": {
+              "browserTarget": "Sbran.WebApp:build:dev"
+            },
+            "techdir": {
+              "browserTarget": "Sbran.WebApp:build:techdir"
             }
           }
         },

@@ -260,6 +260,11 @@ export class Employee {
     }
 }
 
+export class MessageDto {
+  public user: string = '';
+  public messageText: string = '';
+}
+
 export enum Gender {
   male,
   female,

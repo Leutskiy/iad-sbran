@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Sbran.Domain.Entities.System;
 using System;
 using System.Collections.Generic;
 
@@ -116,7 +117,7 @@ namespace Sbran.Domain.Entities
         /// <summary>
         /// Задать руководителя
         /// </summary>
-        /// <param name="managerId">Руководитель</param>
+        /// <param name="manager">Руководитель</param>
         public void SetManager(Employee manager)
         {
             if (Manager?.Id == manager.Id)
