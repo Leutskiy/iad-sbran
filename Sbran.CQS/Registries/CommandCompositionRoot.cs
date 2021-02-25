@@ -11,6 +11,7 @@ namespace Sbran.CQS.Registries
         public void Compose(IServiceRegistry serviceRegistry)
         {
             serviceRegistry.Register<ForeignParticipantReadCommand>();
+            serviceRegistry.Register<ParticipantChatReadCommand>(); 
             serviceRegistry.Register<UserReadCommand>();
             serviceRegistry.Register<ProfileWriteCommand>();
             serviceRegistry.Register<InvitationWriteCommand>();

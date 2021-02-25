@@ -1,6 +1,7 @@
 ﻿using Sbran.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Sbran.Domain.Entities.System;
 
 namespace Sbran.Domain.Configurations
 {
@@ -41,6 +42,7 @@ namespace Sbran.Domain.Configurations
                 .HasOne(employee => employee.Manager)
                 .WithMany()
                 .HasForeignKey(employee => employee.ManagerId);
+                //.HasPrincipalKey<User>(user => user.Id);
 
             builder
                 .HasOne(employee => employee.Contact)

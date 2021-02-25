@@ -9,6 +9,7 @@ import { InvitationComponent } from './components/invitation/invitation.componen
 import { NewInvitationFormComponent } from './components/invitation/new-form/new-invitation-form.component';
 import { AuthGuard } from './auth/auth.guard';
 import { RedirectToProfileGuard } from './auth/redirect-to-profile.guard';
+import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
   {
@@ -23,12 +24,14 @@ const routes: Routes = [
   },
   { path: 'login', component: SigninComponent, canActivate: [RedirectToProfileGuard]  },
   { path: 'singup', component: SingupComponent },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/information', component: MainComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/invitation', component: InvitationComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/invitation/new/form', component: NewInvitationFormComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/invitation/:invitationId/edit/form', component: NewInvitationFormComponent, canActivate: [AuthGuard] },
-  { path: '**', component: NotFoundPageComponent }
+  { path: '**', component: NotFoundPageComponent },
+  
 ];
 
 @NgModule({

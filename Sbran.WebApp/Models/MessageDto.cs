@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Sbran.WebApp.Models
+{
+	public sealed class MessageDto
+	{
+		public string user { get; set; }
+
+		public string messageText { get; set; }
+	}
+}

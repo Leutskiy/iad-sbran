@@ -13,9 +13,10 @@ using Npgsql;
 using Sbran.CQS.Registries;
 using Sbran.Domain.Data.Adapters;
 using Sbran.Domain.Registries;
+using Sbran.WebApp.Hubs;
 using System;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace Sbran.WebApp
 {
@@ -55,6 +56,25 @@ namespace Sbran.WebApp
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromMinutes(1)
                 };
+
+                // настраиваем приложение на обработку токена из query-string
+                x.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        // If the request is for our hub...
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chatsocket")))
+                        {
+                            // Read the token out of the query string
+                            context.Token = accessToken;
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddMvc(option =>
@@ -93,9 +113,11 @@ namespace Sbran.WebApp
                     //opt.UseLazyLoadingProxies(true);
                 });*/
 
+
             // Web API middleware which will register all the controllers (classes derived from ControllerBase)
             /// <see cref="https://medium.com/imaginelearning/asp-net-core-3-1-microservice-quick-start-c0c2f4d6c7fa"/>
             services.AddControllers().AddNewtonsoftJson();
+            services.AddSignalR();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -149,6 +171,11 @@ namespace Sbran.WebApp
                 {
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
+
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://localhost:5001").AllowCredentials();
+                });
             });
         }
 
@@ -181,11 +208,15 @@ namespace Sbran.WebApp
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseCors("CorsPolicy");
+
             app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller}/{action=Index}/{id?}");
+
+                endpoints.MapHub<ChatHub>("/chatsocket");
 			});
 
 			app.UseSpa(spa =>

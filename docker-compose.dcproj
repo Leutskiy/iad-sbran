@@ -9,8 +9,10 @@
     <DockerServiceName>sbran.webapp</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="docker-compose - app.yml" />
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="docker-compose-app.yml" />
   </ItemGroup>
 </Project>

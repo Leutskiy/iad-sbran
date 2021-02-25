@@ -35,11 +35,13 @@ import { EmployeeContactsComponent } from './components/contacts/employee-contac
 import { EmployeeStateRegistrationComponent } from './components/state-registration/employee-state-registration.component';
 import { AlienStateRegistrationInvitationComponent } from './components/state-registration/alien-state-registration-invitation.component';
 import { VisitDetailsInvitationComponent } from './components/visit-details/visit-details.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    ChatComponent,
     SigninComponent,
     SingupComponent,
     PersonDetailsComponent,

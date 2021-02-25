@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Sbran.Domain.Data.Repositories
 {
@@ -69,6 +70,11 @@ namespace Sbran.Domain.Data.Repositories
             }
 
             return user.ProfileId;
+        }
+
+        public Task<List<User>> GetUsersFull()
+        {
+            return _systemContext.Users.Include<User, Profile>(user => user.Profile).ToListAsync();
         }
     }
 }

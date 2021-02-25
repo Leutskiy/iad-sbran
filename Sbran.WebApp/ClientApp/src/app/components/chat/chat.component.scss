@@ -1,0 +1,221 @@
+/***
+User Profile Sidebar by @keenthemes
+A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
+Licensed under MIT
+***/
+body {
+  background: #F1F3FA;
+}
+
+/*profile-header h1, h2, h3, h4, h5 {
+  color: white;
+  margin-bottom: 0px;
+}*/
+
+/* Profile sidebar */
+.profile-sidebar {
+  padding: 5px 0 0 0;
+  background: #fff;
+  height: 100%;
+}
+
+.profile-picture img {
+  width: 50%;
+  height: 50%;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.profile-information {
+  margin: 20px 0;
+  color: #1b3e6e;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.profile-rating {
+  height: 59%;
+}
+
+.profile-rating div.card-body {
+  padding-bottom: 0px;
+}
+
+.profile-rating h5 {
+  color: black;
+}
+
+.profile-rating h1 {
+  padding-top: 70%;
+  margin: 0;
+}
+
+.profile-rating .card-body {
+  padding-top: 65px;
+  color: black;
+}
+
+.profile-buttons .btn {
+  transition-duration: 0.4s;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  padding: 8px 15px;
+  width: 100%;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid rgba(0,0,0,.125)
+}
+
+.profile-buttons .btn:hover {
+  background-color: #f6f9fb;
+  color: black;
+}
+
+.profile-buttons .btn:last-child {
+  margin-right: 0px;
+}
+
+.profile-menu ul li a {
+  color: grey;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.profile-menu ul li a i {
+  margin-right: 10px;
+  font-size: 16px;
+  color: black;
+}
+
+.profile-menu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-menu ul li {
+  border-bottom: none;
+}
+
+.profile-menu ul li a.active {
+  color: #1b3e6e;
+  background-color: #f6f9fb;
+  border-left: 2px solid #5b9bd1;
+  margin-left: -2px;
+  font-size: 18px;
+}
+
+.profile-user-name {
+  margin: 2px 0px 10px 0px;
+  padding: 5px 0px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 15px;
+}
+
+/* Profile Content */
+.profile-content {
+  background: #fff;
+  min-height: 460px;
+  border: 1px solid gray;
+  font-size: 16px;
+}
+
+.profile-content div.form-group label {
+  font-size: 15px;
+  padding-right: 0px;
+}
+
+.profile-content div.form-group span {
+  font-size: 17px;
+  padding: 0px;
+}
+
+.profile-content div.form-group label, span {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border: 0px;
+  height: 2.0em; /* 30px */
+}
+
+.profile-content div.form-group {
+  margin-bottom: 0px;
+}
+
+.profile-achievements {
+  margin: 40px 0 0 0;
+}
+
+.profile-achievements span.badge {
+  padding: 7px;
+}
+
+.profile-achievements p.card-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.profile-achievements div.card-body > a:hover {
+  color: #fff;
+}
+
+.empty-field {
+  font-style: italic;
+}
+
+img {
+  object-fit: cover;
+}
+
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  width: 5px;
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 1em;
+  background-color: #ddd;
+  outline: 1px solid slategrey;
+  border-radius: 1rem;
+}
+
+.text-small {
+  font-size: 0.9rem;
+}
+
+.messages-box,
+.chat-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+input::placeholder {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+/*
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+*/
