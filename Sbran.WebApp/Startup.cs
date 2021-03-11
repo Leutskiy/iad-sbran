@@ -85,7 +85,7 @@ namespace Sbran.WebApp
             var builder = new NpgsqlConnectionStringBuilder
             {
                 Username = "postgres",
-                Password = "postgres",
+                Password = "47H8Ms5a",
                 Host = "localhost",
                 Port = 5432,
                 Database = "postgres",
@@ -176,7 +176,7 @@ namespace Sbran.WebApp
                 {
                     builder.AllowAnyMethod()
                     .AllowAnyHeader()
-                    .WithOrigins("https://localhost:44343")
+                    .WithOrigins("https://localhost:5001")
                     .AllowCredentials();
                 });
             });
@@ -231,8 +231,8 @@ namespace Sbran.WebApp
 
 				if (env.IsDevelopment())
 				{
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                    //spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseAngularCliServer(npmScript: "start");
                 }
 			});
 		}

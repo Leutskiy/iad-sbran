@@ -6,9 +6,9 @@ export const environment = {
   production: false,
   dev: false,
   //локально
-  apiUrl: "https://localhost:44343/"
+  //apiUrl: "https://localhost:44343/"
   //На сервере
-  //apiUrl: "https://localhost:5001/"
+  apiUrl: "http://localhost:5001/"
 };
 
 /*
