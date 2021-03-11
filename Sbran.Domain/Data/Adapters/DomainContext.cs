@@ -1,6 +1,7 @@
 ﻿using Sbran.Domain.Configurations;
 using Sbran.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Sbran.Domain.Entities.Chat;
 
 namespace Sbran.Domain.Data.Adapters
 {
@@ -28,6 +29,9 @@ namespace Sbran.Domain.Data.Adapters
 		public DbSet<StateRegistration> StateRegistrations { get; set; }
 
 		public DbSet<ForeignParticipant> ForeignParticipants { get; set; }
+        public DbSet<ChatRoom> ChatRooms { get; set; }
+        public DbSet<ChatRoomList> ChatRoomLists { get; set; }
+        public DbSet<Messages> Messages { get; set; }
 
         /// <summary>
         /// Конструктор контекста домена
@@ -79,6 +83,9 @@ namespace Sbran.Domain.Data.Adapters
             modelBuilder.ApplyConfiguration(new OrganizationConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new StateRegistrationConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new ForeignParticipantConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new ChatRoomConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new ChatRoomListConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new MessagesConfiguration(SchemaName));
         }
     }
 }

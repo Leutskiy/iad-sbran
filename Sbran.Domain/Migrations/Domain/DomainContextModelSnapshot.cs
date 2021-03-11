@@ -74,6 +74,67 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("Aliens", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatRoom", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ChatRoomUid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChatRooms", "domain");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatRoomList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ChatRoomListUid");
+
+                    b.Property<Guid>("ChatRoomId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ChatRoomUid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("UserUid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatRoomId");
+
+                    b.ToTable("ChatRoomLists", "domain");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.Messages", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("MessagesUid");
+
+                    b.Property<Guid>("ChatRoomId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ChatRoomUid");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateTime");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("text")
+                        .HasColumnName("Message");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("UserUid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatRoomId");
+
+                    b.ToTable("Messageses", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Contact", b =>
                 {
                     b.Property<Guid>("Id")
@@ -208,9 +269,6 @@ namespace Sbran.Domain.Migrations.Domain
                         .IsUnique();
 
                     b.HasIndex("StateRegistrationId")
-                        .IsUnique();
-
-                    b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("Employees", "domain");
@@ -417,45 +475,6 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("StateRegistrations", "domain");
                 });
 
-            modelBuilder.Entity("Sbran.Domain.Entities.System.Profile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<byte[]>("Photo")
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("WebPages")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Profile");
-                });
-
-            modelBuilder.Entity("Sbran.Domain.Entities.System.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Account")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("ProfileId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("Sbran.Domain.Entities.VisitDetail", b =>
                 {
                     b.Property<Guid>("Id")
@@ -534,6 +553,28 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("StateRegistration");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatRoomList", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Chat.ChatRoom", "ChatRoom")
+                        .WithMany()
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChatRoom");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.Messages", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Chat.ChatRoom", "ChatRoom")
+                        .WithMany()
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChatRoom");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Document", b =>
                 {
                     b.HasOne("Sbran.Domain.Entities.Invitation", "Invitation")
@@ -567,12 +608,6 @@ namespace Sbran.Domain.Migrations.Domain
                         .WithOne()
                         .HasForeignKey("Sbran.Domain.Entities.Employee", "StateRegistrationId");
 
-                    b.HasOne("Sbran.Domain.Entities.System.User", "User")
-                        .WithOne()
-                        .HasForeignKey("Sbran.Domain.Entities.Employee", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Contact");
 
                     b.Navigation("Manager");
@@ -582,8 +617,6 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("Passport");
 
                     b.Navigation("StateRegistration");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.ForeignParticipant", b =>
@@ -631,17 +664,6 @@ namespace Sbran.Domain.Migrations.Domain
                         .HasForeignKey("Sbran.Domain.Entities.Organization", "StateRegistrationId");
 
                     b.Navigation("StateRegistration");
-                });
-
-            modelBuilder.Entity("Sbran.Domain.Entities.System.User", b =>
-                {
-                    b.HasOne("Sbran.Domain.Entities.System.Profile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.Employee", b =>

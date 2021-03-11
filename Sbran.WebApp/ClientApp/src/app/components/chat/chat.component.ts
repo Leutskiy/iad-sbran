@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { ChatService } from '../../services/component-providers/chat/chat.service';
+import { ChatRoomsInfo, Message, MyMessagesInRoom, User } from '../../contracts/login-data';
 import * as signalR from '@microsoft/signalr';
+import { Target } from '@angular/compiler';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { timer } from 'rxjs';
 
 declare var $: any;
 
@@ -9,7 +14,7 @@ declare var $: any;
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
-  providers: [AuthService]
+  providers: [ChatService, AuthService]
 })
 
 export class ChatComponent implements OnInit {
@@ -19,64 +24,44 @@ export class ChatComponent implements OnInit {
   private hubConnection: signalR.HubConnection;
   profileId: string;
   employeeId: string;
+  search: string;
   receiver: string;
-  chatDataJson: any;
+  chatRoomId: string;
+  chatDataJson: any[];
+  messages: any[];
   selectedUserid: string;
+  message: Message;
+  messageSearch: string;
+  @ViewChild('searchInput') searchInput: ElementRef;
 
   constructor(
-    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private chatService: ChatService,
     private authService: AuthService) {
-
-    this.chatDataJson = JSON.parse(`[{ 
-    "userid": "alex@mail.ru",
-      "image": "../../../assets/images/profilephotos/alex.jpg",
-        "userfullname": "Алексей Богданов",
-          "lastmessagedate": "11:30",
-            "lastmessage": "Вы: Именно поэтому..."
-},
-{
-  "userid": "alisa@mail.ru",
-    "image": "../../../assets/images/profilephotos/alisa.jpg",
-      "userfullname": "Алиса Буковская",
-        "lastmessagedate": "Вчера",
-          "lastmessage": "Вы: Отличная работа."
-},
-{
-  "userid": "lora@mail.ru",
-    "image": "../../../assets/images/profilephotos/lora.jpg",
-      "userfullname": "Лора Кузова",
-        "lastmessagedate": "Вчера",
-          "lastmessage": "Встречу перенесли на 11-го."
-},
-{
-  "userid": "nastya@mail.ru",
-    "image": "../../../assets/images/profilephotos/nastya.jpg",
-      "userfullname": "Настя Трофимова",
-        "lastmessagedate": "03.02.2021",
-          "lastmessage": "Я отправил вам отчёты"
-},
-{
-  "userid": "tom@mail.ru",
-    "image": "../../../assets/images/profilephotos/tom.jpg",
-      "userfullname": "Рахаб Магамедов",
-        "lastmessagedate": "25.01.2021",
-          "lastmessage": "Презентация была отличной."
-}]`);
-
-
+    this.message = new Message();
+    this.chatDataJson = new Array(ChatRoomsInfo);
+    this.search = "";
+    this.messageSearch = "";
+    this.messages = new Array(MyMessagesInRoom);
+    // this.subscribeToEvents();
   }
 
   ngOnInit(): void {
 
-    let user = JSON.parse(localStorage.getItem('user'));
-    this.profileId = user.profileId;
-    this.employeeId = user.employeeId;
+    this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
+    this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
+
+    this.getMyChats(this.profileId);
 
     this.accessToken = this.authService.getToken();
 
+    //console.log($.fn.jquery);
+
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .configureLogging(signalR.LogLevel.Debug)
-      .withUrl("https://localhost:5001/chatsocket", {
+      //конфигурации на сервере 
+      //.withUrl("https://localhost:5001/chatsocket", {  })
+      .configureLogging(signalR.LogLevel.Error)
+      .withUrl("https://localhost:44343/chatsocket", {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
         accessTokenFactory: () => this.accessToken
@@ -84,61 +69,19 @@ export class ChatComponent implements OnInit {
       .build();
 
 
-    this.hubConnection.on("Receive", function (message, userName) {
+    this.hubConnection.on("Receive", (message, userName, chatRoomId) => {
+      let element = new MyMessagesInRoom();
+      element = JSON.parse(JSON.stringify(message));
+      //console.log("profileId " + element.profileId);
+      // console.log("profileTo " + element.profileTo);
+      // console.log("this.profileId " + this.profileId);
+      //  console.log("this.receiver " + this.receiver);
+      //  console.log("userName " + userName);
+      if (userName == this.receiver && element.profileId == this.profileId) {
+        this.messages.push(element);
+      }
 
-      let image = "";
-      if (userName == "alisa@mail.ru") image = "../../../assets/images/profilephotos/alisa.jpg";
-      if (userName == "lora@mail.ru") image = "../../../assets/images/profilephotos/lora.jpg";
-      if (userName == "tom@mail.ru") image = "../../../assets/images/profilephotos/tom.jpg";
-      if (userName == "nastya@mail.ru") image = "../../../assets/images/profilephotos/nastya.jpg";
-      if (userName == "alex@mail.ru") image = "../../../assets/images/profilephotos/alex.jpg";
-
-
-      // создаем элемент <b> для имени пользователя
-      let firstDiv = document.createElement("div");
-      let img = document.createElement("img");
-      let secondDiv = document.createElement("div");
-      let thirdDiv = document.createElement("div");
-      let firstP = document.createElement("p");
-      let secondP = document.createElement("p");
-      // значения
-      firstP.appendChild(document.createTextNode(message));
-      secondP.appendChild(document.createTextNode(Date()));
-      img.src = image;
-      img.width = 35;
-      img.height = 35;
-
-      // стиль
-      thirdDiv.className = "bg-light rounded py-2 px-3 mb-2";
-      img.className = "rounded-circle";
-      img.style.objectFit = "cover";
-      firstP.className = "text-small mb-0 text-muted";
-      secondP.className = "small text-muted";
-      secondP.style.textAlign = "end";
-      secondDiv.className = "media-body ml-1";
-      firstDiv.className = "media w-100 mb-3";
-
-      /* структура
-      div
-        div
-          div
-            p
-          p
-      */
-      thirdDiv.appendChild(firstP);
-      secondDiv.appendChild(thirdDiv);
-      secondDiv.appendChild(secondP);
-      firstDiv.appendChild(img);
-      firstDiv.appendChild(secondDiv);
-
-      // создает элемент <p> для сообщения пользователя
-      //let elem = document.createElement("p");
-      //elem.appendChild(firstDiv);
-      //elem.appendChild(document.createTextNode(message));
-
-      document.getElementById("chatroom").appendChild(firstDiv);
     });
-
 
     this.hubConnection.on("Notify", function (message) {
 
@@ -153,20 +96,73 @@ export class ChatComponent implements OnInit {
 
     // начинаем соединение с хабом
     this.hubConnection.start();
+
   }
 
   public sendMessage(message: string): void {
     // отправка сообщения на сервер
-    this.hubConnection.invoke("Send", message, this.receiver);
+    this.searchInput.nativeElement.value = '';
+    var objDiv = document.getElementById("chatroom");
+    objDiv.scrollTop = 10000;
+    this.chatService.setDataByIdd(this.receiver, message, this.chatRoomId, this.profileId).subscribe(
+      response => {
+        this.hubConnection.invoke("Send", response, this.receiver);
+      },
+      error => {
+        //console.log(error);
+      }
+    );
   }
 
-  public chatUserSelected(userid: string) {
-    console.log(userid);
 
+  //private subscribeToEvents(): void {
+  //  this.hubConnection.on("Receive", function (message, userName, chatRoomId) {
+  //    let element = new MyMessagesInRoom();
+  //    element = JSON.parse(JSON.stringify(message));
+  //    console.log(element);
+  //    this.messages.push(element);
+  //    //this.chatService.getDataByMyChats(chatRoomId, this.receiver).subscribe(userInfoResult => {
+  //    //  //console.log(userInfoResult);
+  //    //  this.messages = JSON.parse(JSON.stringify(userInfoResult));
+  //    //  console.log(this.messages);
+  //    //});
+  //  });
+  //}
+
+  public chatUserSelected(userid: string, chatRoomId: string) {
+
+    //document.getElementById("chatroom").innerHTML = '';
+    //console.log(userid + ";" + chatRoomId);
     this.receiver = userid;
+    this.chatRoomId = chatRoomId;
     this.selectedUserid = userid;
-
-    document.getElementById("chatroom").innerHTML = '';
+    this.chatService.getDataByMyChats(chatRoomId, this.receiver).subscribe(userInfoResult => {
+      //console.log(userInfoResult);
+      this.messages = JSON.parse(JSON.stringify(userInfoResult));
+      //console.log(this.messages);
+      var objDiv = document.getElementById("chatroom");
+      objDiv.scrollTop = 10000;
+    });
 
   }
+
+  public getDataByMyChatsForName(userid: string, name: string) {
+    //console.log(userid);
+    //console.log(name);
+    if (name != "") {
+      this.chatService.getDataByMyChatsForName(userid, name).subscribe(userInfoResult => {
+        this.chatDataJson = JSON.parse(JSON.stringify(userInfoResult));
+        //console.log(this.messages);
+      });
+    }
+  }
+
+  private getMyChats(profileId: string): void {
+    this.chatService.getDataById(profileId).subscribe(userInfoResult => {
+      //console.log(userInfoResult);
+      this.chatDataJson = JSON.parse(JSON.stringify(userInfoResult));
+      //console.log(this.chatDataJson);
+    });
+  }
+
 }

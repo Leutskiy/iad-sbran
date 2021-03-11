@@ -469,3 +469,90 @@ export class NewInvitationDto {
     this.foreignParticipants = [];
   }
 }
+
+
+export class ChatRoomsInfo {
+
+  userid: string | null;
+  image: string | null;
+  userfullname: string | null;
+  chatRoomId: string | null;
+  lastmessagedate: string | null;
+  lastmessage: string | null;
+
+  constructor() {
+    this.userid = this.userid;
+    this.image = this.image;
+    this.chatRoomId = this.chatRoomId;
+    this.userfullname = this.userfullname;
+    this.lastmessage = this.lastmessage;
+    this.lastmessagedate = this.lastmessagedate;
+  }
+
+  public init(
+    userid: string | null,
+    image: string | null,
+    userfullname: string | null,
+    lastmessage: string | null,
+    chatRoomId: string | null,
+    lastmessagedate: string | null): void {
+    this.userid = userid ? userid : this.userid;
+    this.image = image ? image : this.image;
+    this.chatRoomId = chatRoomId ? chatRoomId : this.chatRoomId;
+    this.userfullname = userfullname ? userfullname : this.userfullname;
+    this.lastmessage = lastmessage ? lastmessage : this.lastmessage;
+    this.lastmessagedate = lastmessagedate ? lastmessagedate : this.lastmessagedate;
+  }
+}
+
+export class MyMessagesInRoom {
+
+  isValid: boolean | null;
+  message: string | null;
+  dateTime: string | null;
+  profileId: string | null;
+  profileTo: string | null;
+
+  constructor() {
+    this.isValid = this.isValid;
+    this.message = this.message;
+    this.dateTime = this.dateTime;
+    this.profileId = this.profileId;
+    this.profileTo = this.profileTo;
+  }
+
+  public init(
+    isValid: boolean | null,
+    message: string | null,
+    profileId: string | null,
+    profileTo: string | null,
+    dateTime: string | null): void {
+    this.isValid = isValid ? isValid : this.isValid;
+    this.message = message ? message : this.message;
+    this.profileId = profileId ? profileId : this.profileId;
+    this.dateTime = dateTime ? dateTime : this.dateTime;
+    this.profileTo = profileTo ? profileTo : this.profileTo;
+  }
+}
+
+export class Message {
+  userId: string;
+  chatRoomId: string;
+  message: string;
+
+  constructor() {
+    this.userId = "";
+    this.chatRoomId = "";
+    this.message = "";
+  }
+
+  public init(
+    userId: string,
+    chatRoomId: string,
+    message: string) {
+    this.userId = userId;
+    this.chatRoomId = chatRoomId;
+    this.message = message;
+  }
+}
+

@@ -23,6 +23,9 @@ namespace Sbran.Domain.Registries
             serviceRegistry.Register<IOrganizationRepository, OrganizationRepository>();
             serviceRegistry.Register<IStateRegistrationRepository, StateRegistrationRepository>();
             serviceRegistry.Register<IForeignParticipantRepository, ForeignParticipantRepository>();
+            serviceRegistry.Register<IChatRoomRepository, ChatRoomRepository>();
+            serviceRegistry.Register<IChatRoomListRepository, ChatRoomListRepository>();
+            serviceRegistry.Register<IMessagesRepository, MessagesRepository>();
         }
     }
 }

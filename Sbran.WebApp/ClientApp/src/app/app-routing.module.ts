@@ -24,7 +24,7 @@ const routes: Routes = [
   },
   { path: 'login', component: SigninComponent, canActivate: [RedirectToProfileGuard]  },
   { path: 'singup', component: SingupComponent },
-  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
+  { path: 'chat/:profileId', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/information', component: MainComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/invitation', component: InvitationComponent, canActivate: [AuthGuard] },
