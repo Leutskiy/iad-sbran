@@ -473,18 +473,18 @@ export class NewInvitationDto {
 
 export class ChatRoomsInfo {
 
-  userid: string | null;
+  account: string | null;
   image: string | null;
-  userfullname: string | null;
+  userId: string | null;
   chatRoomId: string | null;
   lastmessagedate: string | null;
   lastmessage: string | null;
 
   constructor() {
-    this.userid = this.userid;
+    this.account = this.account;
     this.image = this.image;
     this.chatRoomId = this.chatRoomId;
-    this.userfullname = this.userfullname;
+    this.userId = this.userId;
     this.lastmessage = this.lastmessage;
     this.lastmessagedate = this.lastmessagedate;
   }
@@ -496,10 +496,10 @@ export class ChatRoomsInfo {
     lastmessage: string | null,
     chatRoomId: string | null,
     lastmessagedate: string | null): void {
-    this.userid = userid ? userid : this.userid;
+    this.account = userid ? userid : this.account;
     this.image = image ? image : this.image;
     this.chatRoomId = chatRoomId ? chatRoomId : this.chatRoomId;
-    this.userfullname = userfullname ? userfullname : this.userfullname;
+    this.userId = userfullname ? userfullname : this.userId;
     this.lastmessage = lastmessage ? lastmessage : this.lastmessage;
     this.lastmessagedate = lastmessagedate ? lastmessagedate : this.lastmessagedate;
   }
@@ -536,21 +536,21 @@ export class MyMessagesInRoom {
 }
 
 export class Message {
-  userId: string;
+  account: string;
   chatRoomId: string;
   message: string;
 
   constructor() {
-    this.userId = "";
+    this.account = "";
     this.chatRoomId = "";
     this.message = "";
   }
 
   public init(
-    userId: string,
+    account: string,
     chatRoomId: string,
     message: string) {
-    this.userId = userId;
+    this.account = account;
     this.chatRoomId = chatRoomId;
     this.message = message;
   }

@@ -5,7 +5,6 @@ using Sbran.Domain.Entities.System;
 
 namespace Sbran.Domain.Configurations
 {
-
     public sealed class ChatRoomListConfiguration : IEntityTypeConfiguration<ChatRoomList>
     {
         public ChatRoomListConfiguration(string schemaName)

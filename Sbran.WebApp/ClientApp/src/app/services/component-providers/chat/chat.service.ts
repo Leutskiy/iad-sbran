@@ -26,12 +26,12 @@ export class ChatService extends ComponentDataService<Message> {
     return this.http.get<any>(`${this.uriPath}/${profileId}/allUsers/${userName}`);
   }
 
-  setDataByIdd(userId: string, message: string, id: string, profileId: string) {
+  setDataByIdd(account: string, message: string, id: string, profileId: string) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const options = { headers: headers };
 
     let messagePost = {
-      userId: userId,
+      account: account,
       chatRoomId: id,
       message: message
     }

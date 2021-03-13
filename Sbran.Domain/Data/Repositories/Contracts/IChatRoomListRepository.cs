@@ -15,6 +15,5 @@ namespace Sbran.Domain.Data.Repositories.Contracts
         Task<ChatRoomList> CreateAsync(ChatRoomList model);
 
         Task DeleteAsync(Guid id);
-
     }
 }

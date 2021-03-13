@@ -31,7 +31,7 @@ namespace Sbran.Domain.Data.Adapters
 		public DbSet<ForeignParticipant> ForeignParticipants { get; set; }
         public DbSet<ChatRoom> ChatRooms { get; set; }
         public DbSet<ChatRoomList> ChatRoomLists { get; set; }
-        public DbSet<Messages> Messages { get; set; }
+        public DbSet<ChatMessage> Messages { get; set; }
 
         /// <summary>
         /// Конструктор контекста домена
@@ -85,7 +85,7 @@ namespace Sbran.Domain.Data.Adapters
             modelBuilder.ApplyConfiguration(new ForeignParticipantConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new ChatRoomConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new ChatRoomListConfiguration(SchemaName));
-            modelBuilder.ApplyConfiguration(new MessagesConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new ChatMessageConfiguration(SchemaName));
         }
     }
 }

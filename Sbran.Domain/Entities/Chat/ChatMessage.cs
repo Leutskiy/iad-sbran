@@ -10,9 +10,9 @@ namespace Sbran.Domain.Entities.Chat
     /// <summary>
     /// Сущность сообщение
     /// </summary>
-    public sealed class Messages
+    public sealed class ChatMessage
     {
-        public Messages()
+        public ChatMessage()
         {
             Id = Guid.NewGuid();
         }
@@ -20,7 +20,7 @@ namespace Sbran.Domain.Entities.Chat
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
         /// Идентификатор пользователя
@@ -40,7 +40,7 @@ namespace Sbran.Domain.Entities.Chat
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public DateTime DateTime { get; set; }
+        public DateTimeOffset DateTime { get; set; }
 
         public ChatRoom? ChatRoom { get; set; }
 

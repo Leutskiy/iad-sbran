@@ -56,7 +56,7 @@ namespace Sbran.Domain.Data.Repositories
         /// Функция получения списка всех участников в комнате
         /// </summary>
         /// <returns></returns>
-        public async Task<List<ChatRoomList>> GetAllAsync() => await _domainContext.ChatRoomLists.ToListAsync();
+        public Task<List<ChatRoomList>> GetAllAsync() => _domainContext.ChatRoomLists.ToListAsync();
 
         /// <summary>
         /// Функция получения списка участников в комнате по id

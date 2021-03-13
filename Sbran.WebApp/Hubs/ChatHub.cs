@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using Sbran.Domain.Models;
+using Sbran.CQS.Read.Results;
 using System.Threading.Tasks;
 
 namespace Sbran.WebApp.Hubs
@@ -18,7 +18,7 @@ namespace Sbran.WebApp.Hubs
 		}
 		*/
 
-        public async Task Send(MessagesChatDto message, string to)
+        public async Task Send(ChatMessageResult message, string to)
         {
             var userName = Context?.User?.Identity?.Name ?? "";
             if (userName != "")

@@ -74,6 +74,35 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("Aliens", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("MessagesUid");
+
+                    b.Property<Guid>("ChatRoomId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ChatRoomUid");
+
+                    b.Property<DateTimeOffset>("DateTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DateTime");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("text")
+                        .HasColumnName("Message");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("UserUid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatRoomId");
+
+                    b.ToTable("ChatMessages", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatRoom", b =>
                 {
                     b.Property<Guid>("Id")
@@ -104,35 +133,6 @@ namespace Sbran.Domain.Migrations.Domain
                     b.HasIndex("ChatRoomId");
 
                     b.ToTable("ChatRoomLists", "domain");
-                });
-
-            modelBuilder.Entity("Sbran.Domain.Entities.Chat.Messages", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("MessagesUid");
-
-                    b.Property<Guid>("ChatRoomId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("ChatRoomUid");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DateTime");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("text")
-                        .HasColumnName("Message");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("UserUid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatRoomId");
-
-                    b.ToTable("Messageses", "domain");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.Contact", b =>
@@ -553,7 +553,7 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("StateRegistration");
                 });
 
-            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatRoomList", b =>
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatMessage", b =>
                 {
                     b.HasOne("Sbran.Domain.Entities.Chat.ChatRoom", "ChatRoom")
                         .WithMany()
@@ -564,7 +564,7 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("ChatRoom");
                 });
 
-            modelBuilder.Entity("Sbran.Domain.Entities.Chat.Messages", b =>
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatRoomList", b =>
                 {
                     b.HasOne("Sbran.Domain.Entities.Chat.ChatRoom", "ChatRoom")
                         .WithMany()

@@ -72,12 +72,12 @@
           <div class="messages-box">
             <div class="list-group rounded-0" *ngFor="let item of chatDataJson; let index = index">
 
-              <a (click)="chatUserSelected(''+item.userid,item.chatRoomId)" [class.bg-warning]="item.userid == selectedUserid" class="list-group-item list-group-item-action rounded-0">
+              <a (click)="chatUserSelected(''+item.account,item.chatRoomId)" [class.bg-warning]="item.account == selectedUserid" class="list-group-item list-group-item-action rounded-0">
                 <div class="media">
                   <img src="{{chatDataJson[index].image}}" alt="user" width="60" height="60" class="rounded-circle">
                   <div class="media-body ml-4">
                     <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">{{chatDataJson[index].userfullname}}</h6><small class="small font-weight-bold">{{chatDataJson[index].lastmessagedate}}</small>
+                      <h6 class="mb-0">{{chatDataJson[index].account}}</h6><small class="small font-weight-bold">{{chatDataJson[index].lastmessagedate}}</small>
                     </div>
                     <p class=" text-dark mb-0 text-small">{{chatDataJson[index].lastmessage}}</p>
                   </div>

@@ -60,6 +60,11 @@ namespace Sbran.Domain.Data.Repositories
             return employeeId;
         }
 
+        public async Task<User> GetProfileForUserName(string userName)
+        {
+            return await _systemContext.Users.FirstOrDefaultAsync(a => a.Account == userName);
+        }
+
         public async Task<Guid> GetProfileId(Guid userId)
         {
             var user = await _systemContext.Users.FirstOrDefaultAsync(user => user.Id == userId);
@@ -76,5 +81,7 @@ namespace Sbran.Domain.Data.Repositories
         {
             return _systemContext.Users.Include<User, Profile>(user => user.Profile).ToListAsync();
         }
+
+        public async Task<User> GetWithId(Guid id) => await _systemContext.Users.FirstOrDefaultAsync(e => e.ProfileId == id);
     }
 }

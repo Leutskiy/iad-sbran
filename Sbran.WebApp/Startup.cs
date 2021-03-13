@@ -253,9 +253,6 @@ namespace Sbran.WebApp
 			container.RegisterFrom<ServiceCompositionRoot>();
 			container.RegisterFrom<CommandCompositionRoot>();
 		}
-		
-
-
 	}
 }
 	

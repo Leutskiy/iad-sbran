@@ -10,7 +10,9 @@ namespace Sbran.Domain.Data.Repositories.Contracts
         Task<List<User>> GetUsersFull();
         User Create(string account, string password, Profile profile);
         Task<User> Get(string userName, string password);
+        Task<User> GetWithId(Guid id);
         Task<Guid> GetEmployeeId(Guid userId);
         Task<Guid> GetProfileId(Guid userId);
+        Task<User> GetProfileForUserName(string userName);
     }
 }

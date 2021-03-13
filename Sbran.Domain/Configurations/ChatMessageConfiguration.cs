@@ -5,18 +5,18 @@ using Sbran.Domain.Entities.System;
 
 namespace Sbran.Domain.Configurations
 {
-    public sealed class MessagesConfiguration : IEntityTypeConfiguration<Messages>
+    public sealed class ChatMessageConfiguration : IEntityTypeConfiguration<ChatMessage>
     {
-        public MessagesConfiguration(string schemaName)
+        public ChatMessageConfiguration(string schemaName)
         {
             SchemaName = schemaName;
         }
 
-        public string TableName => "Messageses";
+        public string TableName => "ChatMessages";
 
         public string SchemaName { get; private set; }
 
-        public void Configure(EntityTypeBuilder<Messages> builder)
+        public void Configure(EntityTypeBuilder<ChatMessage> builder)
         {
             builder.ToTable(TableName, SchemaName);
 

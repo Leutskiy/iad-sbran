@@ -16,7 +16,5 @@ namespace Sbran.Domain.Data.Repositories.Contracts
 
         Task DeleteAsync(Guid id);
 
-        Task<List<ChatRoomDto>> GetMyRooms(Guid profileId);
-        Task<List<ChatRoomDto>> GetAllRooms(Guid profileId, string name);
     }
 }

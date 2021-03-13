@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using Sbran.Domain.Entities;
 using Sbran.Domain.Entities.System;
+using Sbran.Domain.Entities.Chat;
+using System;
 
 namespace Sbran.CQS.Converters
 {
-	public static class DomainEntityConverter
+    public static class DomainEntityConverter
     {
         public static ProfileResult ConvertToResult(Profile profile)
         {
@@ -43,12 +45,12 @@ namespace Sbran.CQS.Converters
                 PatronymicNameEng = passport.PatronymicNameEng,
                 BirthPlace = passport.BirthPlace,
                 BirthCountry = passport.BirthCountry,
-                Citizenship =  passport.Citizenship,
-                Residence =  passport.Residence,
-                ResidenceCountry =  passport.ResidenceCountry,
-                ResidenceRegion =  passport.ResidenceRegion,
-                IdentityDocument =  passport.IdentityDocument,
-                IssuePlace =  passport.IssuePlace,
+                Citizenship = passport.Citizenship,
+                Residence = passport.Residence,
+                ResidenceCountry = passport.ResidenceCountry,
+                ResidenceRegion = passport.ResidenceRegion,
+                IdentityDocument = passport.IdentityDocument,
+                IssuePlace = passport.IssuePlace,
                 DepartmentCode = passport.DepartmentCode,
                 BirthDate = passport.BirthDate,
                 IssueDate = passport.IssueDate,
@@ -179,6 +181,39 @@ namespace Sbran.CQS.Converters
                 Employee = employeeResult,
                 VisitDetail = visitDetailResult,
                 ForeignParticipants = foreignParticipantResultCollection
+            };
+        }
+
+        public static ChatRoomResult ConvertToResult(
+            User user,
+            ChatRoomList chatRoomList,
+            ChatMessage chatMessage
+            )
+        {
+            return new ChatRoomResult
+            {
+                userid = user.Id,
+                account = user.Account ?? "",
+                //Пока что хардкор, в след раз поменяю на Base64
+                image = "../../../assets/images/profilephotos/lora.jpg",
+                chatRoomId = chatRoomList?.ChatRoomId ?? Guid.NewGuid(),
+                lastmessage = chatMessage?.Message ?? "",
+                lastmessagedate = chatMessage?.DateTime ?? null,
+            };
+        }
+
+        public static ChatMessageResult ConvertToResult(
+            User user,
+            User userTo,
+            ChatMessage chatMessage
+            )
+        {
+            return new ChatMessageResult
+            {
+                Message = chatMessage.Message ?? "",
+                DateTime = chatMessage.DateTime,
+                profileTo = userTo.ProfileId,
+                profileId = user.ProfileId
             };
         }
     }

@@ -12,66 +12,73 @@ using System.Threading.Tasks;
 namespace Sbran.Domain.Data.Repositories
 {
     /// <summary>
-    /// Репозиторий комнаты
+    /// Репозиторий сообщения
     /// </summary>
-    public sealed class ChatRoomRepository : IChatRoomRepository
+    public sealed class СhatMessageRepository : IChatMessageRepository
     {
         private readonly DomainContext _domainContext;
         /// <summary>
         /// Инициализация репозитория
         /// </summary>
         /// <param name="domainContext"></param>
-        public ChatRoomRepository(DomainContext domainContext)
+        public СhatMessageRepository(DomainContext domainContext)
         {
             _domainContext = domainContext;
         }
 
         /// <summary>
-        /// Функция создания комнаты
+        /// Функция создания сообщения
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<ChatRoom> CreateAsync(ChatRoom model)
+        public async Task<ChatMessage> CreateAsync(ChatMessage chatMessage)
         {
-            await _domainContext.ChatRooms.AddAsync(model);
-            await _domainContext.SaveChangesAsync();
-            return model;
+            await _domainContext.AddAsync(chatMessage);
+            return chatMessage;
         }
 
         /// <summary>
-        /// Функция удаления комнаты
+        /// Функция удаления сообщения
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var model = await _domainContext.ChatRooms.FirstOrDefaultAsync(e => e.Id == id);
+            var model = await _domainContext.Messages.FirstOrDefaultAsync(e => e.Id == id);
             if (model == null)
             {
                 throw new Exception($"Сущность не найдена для id: {id}");
             }
-            _domainContext.ChatRooms.Remove(model);
+            _domainContext.Messages.Remove(model);
         }
 
         /// <summary>
-        /// Функция получения списка всех комнат
+        /// Функция получения списка всех сообщений
         /// </summary>
         /// <returns></returns>
-        public Task<List<ChatRoom>> GetAllAsync() => _domainContext.ChatRooms.ToListAsync();
+        public Task<List<ChatMessage>> GetAllAsync() => _domainContext.Messages.ToListAsync();
 
         /// <summary>
-        /// Функция получения комнаты по id
+        /// Функция получения сообщения по id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ChatRoom> GetAsync(Guid id)
+        public async Task<ChatMessage> GetAsync(Guid id)
         {
-            var model = await _domainContext.ChatRooms.FirstOrDefaultAsync(e => e.Id == id);
+            var model = await _domainContext.Messages.FirstOrDefaultAsync(e => e.Id == id);
             if (model == null)
             {
-                return null;
+                throw new Exception($"Сущность не найдена для id: {id}");
             }
             return model;
         }
+
+        public async Task<List<ChatMessage>> GetForChatRoomId(Guid id)
+        {
+            return await _domainContext.Messages
+                .Where(e => e.ChatRoomId == id)
+                .ToListAsync();
+        }
+
     }
 }

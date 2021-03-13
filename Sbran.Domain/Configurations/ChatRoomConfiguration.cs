@@ -4,7 +4,6 @@ using Sbran.Domain.Entities.Chat;
 
 namespace Sbran.Domain.Configurations
 {
-
     public sealed class ChatRoomConfiguration : IEntityTypeConfiguration<ChatRoom>
     {
         public ChatRoomConfiguration(string schemaName)
@@ -22,7 +21,7 @@ namespace Sbran.Domain.Configurations
 
             builder.HasKey(chatroom => chatroom.Id);
 
-            builder.Property(alien => alien.Id).HasColumnName("ChatRoomUid").ValueGeneratedNever();
+            builder.Property(chatroom => chatroom.Id).HasColumnName("ChatRoomUid").ValueGeneratedNever();
         }
     }
 }

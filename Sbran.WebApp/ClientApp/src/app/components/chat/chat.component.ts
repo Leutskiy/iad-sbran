@@ -73,10 +73,10 @@ export class ChatComponent implements OnInit {
       let element = new MyMessagesInRoom();
       element = JSON.parse(JSON.stringify(message));
       //console.log("profileId " + element.profileId);
-      // console.log("profileTo " + element.profileTo);
-      // console.log("this.profileId " + this.profileId);
-      //  console.log("this.receiver " + this.receiver);
-      //  console.log("userName " + userName);
+      //console.log("profileTo " + element.profileTo);
+      //console.log("this.profileId " + this.profileId);
+      //console.log("this.receiver " + this.receiver);
+      //console.log("userName " + userName);
       if (userName == this.receiver && element.profileId == this.profileId) {
         this.messages.push(element);
       }
@@ -106,6 +106,7 @@ export class ChatComponent implements OnInit {
     objDiv.scrollTop = 10000;
     this.chatService.setDataByIdd(this.receiver, message, this.chatRoomId, this.profileId).subscribe(
       response => {
+        //console.log(response);
         this.hubConnection.invoke("Send", response, this.receiver);
       },
       error => {
