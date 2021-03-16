@@ -82,6 +82,6 @@ namespace Sbran.Domain.Data.Repositories
             return _systemContext.Users.Include<User, Profile>(user => user.Profile).ToListAsync();
         }
 
-        public async Task<User> GetWithId(Guid id) => await _systemContext.Users.FirstOrDefaultAsync(e => e.ProfileId == id);
+        public async Task<User> GetWithId(Guid id) => await _systemContext.Users.Include(e => e.Profile).FirstOrDefaultAsync(e => e.ProfileId == id);
     }
 }

@@ -103,6 +103,33 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("ChatMessages", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatMessageFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ChatMessageFileUid");
+
+                    b.Property<Guid>("ChatMessageId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ChatMessageUid");
+
+                    b.Property<byte[]>("FileBinary")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("File");
+
+                    b.Property<string>("fileName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("FileName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatMessageId");
+
+                    b.ToTable("ChatMessageFiles", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatRoom", b =>
                 {
                     b.Property<Guid>("Id")
@@ -562,6 +589,17 @@ namespace Sbran.Domain.Migrations.Domain
                         .IsRequired();
 
                     b.Navigation("ChatRoom");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatMessageFile", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Chat.ChatMessage", "ChatMessage")
+                        .WithMany()
+                        .HasForeignKey("ChatMessageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChatMessage");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatRoomList", b =>

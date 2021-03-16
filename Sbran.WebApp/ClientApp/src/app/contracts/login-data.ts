@@ -10,11 +10,11 @@ export interface RegistrationData {
 }
 
 export class User {
-    id: number;
-    username: string;
-    password: string;
-    profileId?: number;
-    token?: string;
+  id: number;
+  username: string;
+  password: string;
+  profileId?: number;
+  token?: string;
 }
 
 export class Contact {
@@ -41,13 +41,13 @@ export class Contact {
     homePhoneNumber: string | null,
     workPhoneNumber: string | null,
     mobilePhoneNumber: string | null): void {
-      this.id = id;
-      this.email = email;
-      this.postcode = postcode;
-      this.homePhoneNumber = homePhoneNumber;
-      this.workPhoneNumber = workPhoneNumber;
-      this.mobilePhoneNumber = mobilePhoneNumber;
-    }
+    this.id = id;
+    this.email = email;
+    this.postcode = postcode;
+    this.homePhoneNumber = homePhoneNumber;
+    this.workPhoneNumber = workPhoneNumber;
+    this.mobilePhoneNumber = mobilePhoneNumber;
+  }
 }
 
 export class Job {
@@ -62,9 +62,9 @@ export class Job {
   public init(
     workPlace: string | null,
     position: string | null): void {
-      this.workPlace = workPlace;
-      this.position = position;
-    }
+    this.workPlace = workPlace;
+    this.position = position;
+  }
 }
 
 export class ScientificInfo {
@@ -82,10 +82,10 @@ export class ScientificInfo {
     academicDegree: string | null,
     academicRank: string | null,
     education: string | null): void {
-      this.academicDegree = academicDegree;
-      this.academicRank = academicRank;
-      this.education = education;
-    }
+    this.academicDegree = academicDegree;
+    this.academicRank = academicRank;
+    this.education = education;
+  }
 }
 
 export class Profile {
@@ -106,11 +106,11 @@ export class Profile {
     userId: string,
     avatar: any[],
     webPages: string[] | null): void {
-      this.id = id;
-      this.userId = userId;
-      this.avatar = avatar;
-      this.webPages = webPages;
-    }
+    this.id = id;
+    this.userId = userId;
+    this.avatar = avatar;
+    this.webPages = webPages;
+  }
 }
 
 export class UserInfo {
@@ -157,20 +157,20 @@ export class UserInfo {
     position: string | null,
     email: string | null,
     mobilePhoneNumber: string | null): void {
-      this.mobilePhoneNumber = mobilePhoneNumber ? mobilePhoneNumber : this.mobilePhoneNumber;
-      this.academicDegree = academicDegree ? academicDegree : this.academicDegree;
-      this.academicRank = academicRank ? academicRank : this.academicRank;
-      this.education = education ? education : this.education;
-      this.shortName = shortName ? shortName : this.shortName;
-      this.workPlace = workPlace ? workPlace : this.workPlace;
-      this.position = position ? position : this.position;
-      this.avatarContent = avatarBase64String
-        ? `data:image/jpeg;base64,${avatarBase64String}`
-        : this.defaulAvatarValue;
-      this.email = email ? email : this.email;
-      this.fio = fio ? fio : this.fio;
-      this.fax = fax ? fax : this.fax;
-    }
+    this.mobilePhoneNumber = mobilePhoneNumber ? mobilePhoneNumber : this.mobilePhoneNumber;
+    this.academicDegree = academicDegree ? academicDegree : this.academicDegree;
+    this.academicRank = academicRank ? academicRank : this.academicRank;
+    this.education = education ? education : this.education;
+    this.shortName = shortName ? shortName : this.shortName;
+    this.workPlace = workPlace ? workPlace : this.workPlace;
+    this.position = position ? position : this.position;
+    this.avatarContent = avatarBase64String
+      ? `data:image/jpeg;base64,${avatarBase64String}`
+      : this.defaulAvatarValue;
+    this.email = email ? email : this.email;
+    this.fio = fio ? fio : this.fio;
+    this.fax = fax ? fax : this.fax;
+  }
 }
 
 export class StateRegistration {
@@ -188,10 +188,10 @@ export class StateRegistration {
     id: string,
     inn: string | null,
     ogrnip: string | null): void {
-      this.id = id;
-      this.inn = inn;
-      this.ogrnip = ogrnip;
-    }
+    this.id = id;
+    this.inn = inn;
+    this.ogrnip = ogrnip;
+  }
 }
 
 export class Organization {
@@ -219,13 +219,13 @@ export class Organization {
     stateRegistrationId: string | null,
     inn: string | null,
     ogrnip: string | null): void {
-      this.id = id;
-      this.name = name;
-      this.shortName = shortName;
-      this.legalAddress = legalAddress;
-      this.scientificActivity = scientificActivity;
-      this.stateRegistration.init(stateRegistrationId, inn, ogrnip);
-    }
+    this.id = id;
+    this.name = name;
+    this.shortName = shortName;
+    this.legalAddress = legalAddress;
+    this.scientificActivity = scientificActivity;
+    this.stateRegistration.init(stateRegistrationId, inn, ogrnip);
+  }
 }
 
 export class Employee {
@@ -254,10 +254,10 @@ export class Employee {
     education: string | null,
     workPlace: string | null,
     position: string | null): void {
-      this.id = id;
-      this.job.init(workPlace, position);
-      this.scientificInfo.init(academicDegree, academicRank, education);
-    }
+    this.id = id;
+    this.job.init(workPlace, position);
+    this.scientificInfo.init(academicDegree, academicRank, education);
+  }
 }
 
 export class MessageDto {
@@ -362,26 +362,26 @@ export class Passport {
     issuePlace: string | null,
     departmentCode: string | null,
     identityDocument: string | null): void {
-      this.id = id;
-      this.nameRus = nameRus;
-      this.nameEng = nameEng;
-      this.surnameRus = surnameRus;
-      this.surnameEng = surnameEng;
-      this.patronymicNameRus = patronymicNameRus;
-      this.patronymicNameEng = patronymicNameEng;
-      this.gender = gender;
-      this.birthDate = birthDate;
-      this.birthPlace = birthPlace;
-      this.birthCountry = birthCountry;
-      this.residence = residence;
-      this.citizenship = citizenship;
-      this.residenceRegion = residenceRegion;
-      this.residenceCountry = residenceCountry;
-      this.issueDate = issueDate;
-      this.issuePlace = issuePlace;
-      this.departmentCode = departmentCode;
-      this.identityDocument = identityDocument;
-    }
+    this.id = id;
+    this.nameRus = nameRus;
+    this.nameEng = nameEng;
+    this.surnameRus = surnameRus;
+    this.surnameEng = surnameEng;
+    this.patronymicNameRus = patronymicNameRus;
+    this.patronymicNameEng = patronymicNameEng;
+    this.gender = gender;
+    this.birthDate = birthDate;
+    this.birthPlace = birthPlace;
+    this.birthCountry = birthCountry;
+    this.residence = residence;
+    this.citizenship = citizenship;
+    this.residenceRegion = residenceRegion;
+    this.residenceCountry = residenceCountry;
+    this.issueDate = issueDate;
+    this.issuePlace = issuePlace;
+    this.departmentCode = departmentCode;
+    this.identityDocument = identityDocument;
+  }
 }
 
 /* Описание DTO для просмотра и изменения данных*/
@@ -473,6 +473,7 @@ export class NewInvitationDto {
 
 export class ChatRoomsInfo {
 
+  private defaulAvatarValue: string = "assets/images/avatar.jpg";
   account: string | null;
   image: string | null;
   userId: string | null;
@@ -497,7 +498,9 @@ export class ChatRoomsInfo {
     chatRoomId: string | null,
     lastmessagedate: string | null): void {
     this.account = userid ? userid : this.account;
-    this.image = image ? image : this.image;
+    this.image = image ?
+      `data:image/jpeg;base64,${image}`
+      : this.defaulAvatarValue;;
     this.chatRoomId = chatRoomId ? chatRoomId : this.chatRoomId;
     this.userId = userfullname ? userfullname : this.userId;
     this.lastmessage = lastmessage ? lastmessage : this.lastmessage;
@@ -512,6 +515,9 @@ export class MyMessagesInRoom {
   dateTime: string | null;
   profileId: string | null;
   profileTo: string | null;
+  isFile: boolean | null;
+  fileId: string | null;
+  fileName: string | null;
 
   constructor() {
     this.isValid = this.isValid;
@@ -519,6 +525,9 @@ export class MyMessagesInRoom {
     this.dateTime = this.dateTime;
     this.profileId = this.profileId;
     this.profileTo = this.profileTo;
+    this.isFile = this.isFile;
+    this.fileId = this.fileId;
+    this.fileName = this.fileName;
   }
 
   public init(
@@ -526,12 +535,18 @@ export class MyMessagesInRoom {
     message: string | null,
     profileId: string | null,
     profileTo: string | null,
+    isFile: boolean | null,
+    fileId: string | null,
+    fileName: string | null,
     dateTime: string | null): void {
     this.isValid = isValid ? isValid : this.isValid;
     this.message = message ? message : this.message;
     this.profileId = profileId ? profileId : this.profileId;
     this.dateTime = dateTime ? dateTime : this.dateTime;
     this.profileTo = profileTo ? profileTo : this.profileTo;
+    this.isFile = isFile ? isFile : this.isFile;
+    this.fileId = fileId ? fileId : this.fileId;
+    this.fileName = fileName ? fileName : this.fileName;
   }
 }
 

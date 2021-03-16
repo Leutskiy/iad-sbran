@@ -24,6 +24,21 @@ namespace Sbran.CQS.Read.Results
         /// <summary>
         /// Идентификатор
         /// </summary>
+        public bool IsFile { get; set; }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public Guid? fileId { get; set; }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public string? fileName { get; set; }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
         public DateTimeOffset DateTime { get; set; }
 
         /// <summary>

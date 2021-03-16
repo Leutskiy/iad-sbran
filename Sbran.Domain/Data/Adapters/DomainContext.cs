@@ -10,28 +10,29 @@ namespace Sbran.Domain.Data.Adapters
     /// </summary>
     public sealed class DomainContext : DbContext
     {
-		public DbSet<Alien> Aliens { get; set; }
+        public DbSet<Alien> Aliens { get; set; }
 
-		public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
-		public DbSet<Document> Documents { get; set; }
+        public DbSet<Document> Documents { get; set; }
 
-		public DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
-		public DbSet<Passport> Passports { get; set; }
+        public DbSet<Passport> Passports { get; set; }
 
-		public DbSet<Invitation> Invitations { get; set; }
+        public DbSet<Invitation> Invitations { get; set; }
 
-		public DbSet<Organization> Organizations { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
 
-		public DbSet<VisitDetail> VisitDetails { get; set; }
+        public DbSet<VisitDetail> VisitDetails { get; set; }
 
-		public DbSet<StateRegistration> StateRegistrations { get; set; }
+        public DbSet<StateRegistration> StateRegistrations { get; set; }
 
-		public DbSet<ForeignParticipant> ForeignParticipants { get; set; }
+        public DbSet<ForeignParticipant> ForeignParticipants { get; set; }
         public DbSet<ChatRoom> ChatRooms { get; set; }
         public DbSet<ChatRoomList> ChatRoomLists { get; set; }
-        public DbSet<ChatMessage> Messages { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<ChatMessageFile> ChatMessageFiles { get; set; }
 
         /// <summary>
         /// Конструктор контекста домена
@@ -86,6 +87,7 @@ namespace Sbran.Domain.Data.Adapters
             modelBuilder.ApplyConfiguration(new ChatRoomConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new ChatRoomListConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new ChatMessageConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new ChatMessageFileConfiguration(SchemaName));
         }
     }
 }

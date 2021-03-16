@@ -24,7 +24,7 @@ namespace Sbran.CQS.Read.Results
         /// <summary>
         /// путь к картинке
         /// </summary>
-        public string? image { get; set; }
+        public byte[]? image { get; set; }
 
         /// <summary>
         /// идентификатор комнаты

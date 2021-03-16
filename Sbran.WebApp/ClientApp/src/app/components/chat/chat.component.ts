@@ -7,6 +7,7 @@ import { Target } from '@angular/compiler';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { timer } from 'rxjs';
+import { read } from 'fs';
 
 declare var $: any;
 
@@ -106,13 +107,36 @@ export class ChatComponent implements OnInit {
     objDiv.scrollTop = 10000;
     this.chatService.setDataByIdd(this.receiver, message, this.chatRoomId, this.profileId).subscribe(
       response => {
-        //console.log(response);
+        console.log(response);
         this.hubConnection.invoke("Send", response, this.receiver);
       },
       error => {
         //console.log(error);
       }
     );
+  }
+
+  public fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0 && fileList.length < 2) {
+      //console.log("sendFile");
+      let me = this;
+      let file: File = fileList[0];
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        var b64: string = typeof reader.result === 'string' ? reader.result : Buffer.from(reader.result).toString();
+        b64 = b64.substr(b64.indexOf(',') + 1);
+        //console.log(b64);
+        me.chatService.sendFile(me.receiver, me.profileId, me.chatRoomId, b64, file.name).subscribe(
+          response => {
+            me.hubConnection.invoke("Send", response, me.receiver);
+          },
+          error => {
+            console.log(error);
+          });
+      }
+    }
   }
 
 
@@ -138,7 +162,7 @@ export class ChatComponent implements OnInit {
     this.chatRoomId = chatRoomId;
     this.selectedUserid = userid;
     this.chatService.getDataByMyChats(chatRoomId, this.receiver).subscribe(userInfoResult => {
-      //console.log(userInfoResult);
+      console.log(userInfoResult);
       this.messages = JSON.parse(JSON.stringify(userInfoResult));
       //console.log(this.messages);
       var objDiv = document.getElementById("chatroom");
@@ -158,12 +182,38 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  public getFile(fileId: string) {
+    return this.chatService.getFile(fileId);
+  }
+
+
   private getMyChats(profileId: string): void {
     this.chatService.getDataById(profileId).subscribe(userInfoResult => {
-      //console.log(userInfoResult);
+      console.log(userInfoResult);
       this.chatDataJson = JSON.parse(JSON.stringify(userInfoResult));
       //console.log(this.chatDataJson);
     });
   }
 
+  private _base64ToArrayBuffer(base64): any[] {
+    let byteArray = [];
+    let binary_string = window.atob(base64);
+    let length = binary_string.length;
+    let bytes = new Uint8Array(length);
+
+    for (let index = 0; index < length; index++) {
+      byteArray.push(binary_string.charCodeAt(index));
+    }
+
+    return byteArray;
+  }
+
+  private getBase64(file, onLoadCallback) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(reader.result); };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
 }

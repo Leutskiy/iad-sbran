@@ -70,102 +70,27 @@
           </div>
 
           <div class="messages-box">
-            <div class="list-group rounded-0" *ngFor="let item of chatDataJson; let index = index">
+            <div class="list-group rounded-0" *ngFor="let item of chatDataJson;">
 
               <a (click)="chatUserSelected(''+item.account,item.chatRoomId)" [class.bg-warning]="item.account == selectedUserid" class="list-group-item list-group-item-action rounded-0">
                 <div class="media">
-                  <img src="{{chatDataJson[index].image}}" alt="user" width="60" height="60" class="rounded-circle">
+                  <div *ngIf="item.image;else other_default_avatar">
+                    <img src="{{item.image}}" alt="user" width="60" height="60" class="rounded-circle">
+                  </div>
+                  <ng-template #other_default_avatar>
+                    <img src="assets/images/avatar.jpg" alt="user" width="60" height="60" class="rounded-circle">
+                  </ng-template>
                   <div class="media-body ml-4">
                     <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">{{chatDataJson[index].account}}</h6><small class="small font-weight-bold">{{chatDataJson[index].lastmessagedate}}</small>
+                      <h6 class="mb-0">{{item.account}}</h6><small class="small font-weight-bold">{{item.lastmessagedate}}</small>
                     </div>
-                    <p class=" text-dark mb-0 text-small">{{chatDataJson[index].lastmessage}}</p>
+                    <p class="text-dark mb-0 text-small">
+                      {{item.lastmessage}}
+                    <p class="text-dark mb-0 text-small">{{item.fileName}}</p>
+
                   </div>
                 </div>
               </a>
-
-              <!--<a (click)="chatUserSelected($event)" [attr.data-userid]="2" class="list-group-item list-group-item-action rounded-0">
-                <div class="media">
-                  <img src="../../../assets/images/profilephotos/alisa.jpg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Алиса Буковская</h6><small class="small font-weight-bold">Вчера</small>
-                    </div>
-                    <p class=" text-muted mb-0 text-small">Вы: Отличная работа.</p>
-                  </div>
-                </div>
-              </a>
-
-              <a (click)="chatUserSelected($event)" [attr.data-userid]="3" class="list-group-item list-group-item-action rounded-0">
-                <div class="media">
-                  <img src="../../../assets/images/profilephotos/lora.jpg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Лора Кузова</h6><small class="small font-weight-bold">Вчера</small>
-                    </div>
-                    <p class=" text-muted mb-0 text-small">Встречу перенесли на 11-го.</p>
-                  </div>
-                </div>
-              </a>
-
-              <div (click)="chatUserSelected($event)" [attr.data-userid]="4" class="list-group-item list-group-item-action rounded-0">
-                <div class="media">
-                  <img src="../../../assets/images/profilephotos/nastya.jpg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Настя Трофимова</h6><small class="small font-weight-bold">03.02.2021</small>
-                    </div>
-                    <p class=" text-muted mb-0 text-small">Я отправил вам отчёты</p>
-                  </div>
-                </div>
-              </div>
-
-              <a (click)="chatUserSelected($event)" [attr.data-userid]="5" class="list-group-item list-group-item-action rounded-0">
-                <div class="media">
-                  <img src="../../../assets/images/profilephotos/tom.jpg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Рахаб Магамедов</h6><small class="small font-weight-bold">25.01.2021</small>
-                    </div>
-                    <p class=" text-muted mb-0 text-small">Презентация была отличной.</p>
-                  </div>
-                </div>
-              </a>-->
-              <!--<a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
-                <div class="media">
-                  <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">2 Sep</small>
-                    </div>
-                    <p class=" text-muted mb-0 text-small">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                  </div>
-                </div>
-              </a>
-
-              <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
-                <div class="media">
-                  <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">30 Aug</small>
-                    </div>
-                    <p class=" text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-
-              <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
-                <div class="media">
-                  <img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">21 Aug</small>
-                    </div>
-                    <p class=" text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>-->
 
             </div>
           </div>
@@ -182,6 +107,9 @@
                 <div class="media-body ml-3">
                   <div class="bg-light rounded py-2 px-3 mb-2">
                     <p class="text-small mb-0 text-muted">{{item.message}}</p>
+                    <div *ngIf="item.isFile">
+                      <p class="text-small mb-0 text-muted"><a href="api/v1/chat/getfile/{{item.fileId}}">{{item.fileName}}</a></p>
+                    </div>
                   </div>
                   <p class="small text-muted">{{item.dateTime}}</p>
                 </div>
@@ -194,6 +122,9 @@
                 <div class="media-body">
                   <div class="bg-warning rounded py-2 px-3 mb-2">
                     <p class="text-small mb-0 text-dark">{{item.message}}</p>
+                    <div *ngIf="item.isFile">
+                      <p class="text-small mb-0 text-muted"><a href="api/v1/chat/getfile/{{item.fileId}}">{{item.fileName}}</a></p>
+                    </div>
                   </div>
                   <p class="small text-muted">{{item.dateTime}}</p>
                 </div>
@@ -203,18 +134,26 @@
           </ng-container>
 
         </div>
+        <div class="row">
+          <div class="col-12">
 
-        <!-- Typing area -->
-        <form action="#" class="bg-light" (submit)="sendMessage(message.value)">
-          <div class="input-group">
-            <!--<input type="text" id="receiver" value="{{receiver}}" placeholder="Введите получателя" />-->
-            <input #message type="text" #searchInput id="message" autocomplete="off" placeholder="Введите сообщение" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
-            <div class="input-group-append">
-              <button id="button-addon2" type="submit" class="btn btn-warning"> <i class="fa fa-check"></i></button>
-            </div>
+            <!-- Typing area -->
+            <form action="#" class="bg-light" (submit)="sendMessage(message.value)">
+              <div class="input-group">
+                <label class="custom-file-upload">
+                  <input type="file" (change)="fileChange($event)" />
+                  <i class="fa fa-cloud-upload"></i>
+                </label>
+                <!--<input type="file" (change)="fileChange($event)" placeholder="Upload file">-->
+                <!--<input type="text" id="receiver" value="{{receiver}}" placeholder="Введите получателя" />-->
+                <input #message type="text" #searchInput id="message" autocomplete="off" placeholder="Введите сообщение" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                <div class="input-group-append">
+                  <button id="button-addon2" type="submit" class="btn btn-warning"> <i class="fa fa-check"></i></button>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-
+        </div>
 
         <!--<div id="loginBlock">
           Токен:<br />

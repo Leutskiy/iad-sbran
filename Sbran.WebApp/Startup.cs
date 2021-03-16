@@ -93,7 +93,7 @@ namespace Sbran.WebApp
                 Pooling = true
             };
 
-            var connectionString = Configuration.GetConnectionString("PostgreSQLConnection");
+            var connectionString = Configuration.GetConnectionString("PostgreSQLConnectionForFreelansDelevoper");
 
             services
                 // .AddEntityFrameworkNpgsql() Depricated
@@ -176,7 +176,7 @@ namespace Sbran.WebApp
                 {
                     builder.AllowAnyMethod()
                     .AllowAnyHeader()
-                    .WithOrigins("https://localhost:5001")
+                    .WithOrigins("https://localhost:44343")
                     .AllowCredentials();
                 });
             });
@@ -231,8 +231,8 @@ namespace Sbran.WebApp
 
 				if (env.IsDevelopment())
 				{
-                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    //spa.UseAngularCliServer(npmScript: "start");
                 }
 			});
 		}

@@ -194,8 +194,8 @@ namespace Sbran.CQS.Converters
             {
                 userid = user.Id,
                 account = user.Account ?? "",
-                //Пока что хардкор, в след раз поменяю на Base64
-                image = "../../../assets/images/profilephotos/lora.jpg",
+                //Пока что хардкор
+                image = user.Profile.Photo,
                 chatRoomId = chatRoomList?.ChatRoomId ?? Guid.NewGuid(),
                 lastmessage = chatMessage?.Message ?? "",
                 lastmessagedate = chatMessage?.DateTime ?? null,
@@ -214,6 +214,18 @@ namespace Sbran.CQS.Converters
                 DateTime = chatMessage.DateTime,
                 profileTo = userTo.ProfileId,
                 profileId = user.ProfileId
+            };
+        }
+
+        public static ChatMessageFileResult ConvertToResult(
+            ChatMessageFile chatMessageFile
+            )
+        {
+            return new ChatMessageFileResult
+            {
+                ChatMessageId = chatMessageFile.ChatMessageId,
+                FileBinary = chatMessageFile.FileBinary,
+                Id = chatMessageFile.Id
             };
         }
     }

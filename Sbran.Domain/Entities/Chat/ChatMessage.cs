@@ -44,6 +44,8 @@ namespace Sbran.Domain.Entities.Chat
 
         public ChatRoom? ChatRoom { get; set; }
 
+       //public List<ChatMessageFile> ChatMessageFiles { get; set; }
+
         /// <summary>
         /// Задать пользователя
         /// </summary>

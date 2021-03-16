@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Entities.Chat;
 using Sbran.CQS.Read.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace Sbran.WebApp.Controllers
 {
@@ -25,23 +26,24 @@ namespace Sbran.WebApp.Controllers
         private readonly ChatMessageWriteCommand _chatMessageWriteCommand;
         private readonly IChatMessageReadCommand _chatMessageReadCommand;
         private readonly IChatRoomRepository _chatRoomRepository;
+        private readonly ChatMessageFileWriteCommand _chatMessageFileWriteCommand;
+        private readonly IChatMessageFileRepository _chatMessageFileRepository;
 
         public ChatController(
             IChatRoomReadCommand chatRoomReadCommand,
             ChatMessageWriteCommand chatMessageWriteCommand,
             IChatMessageReadCommand chatMessageReadCommand,
-            IChatRoomRepository chatRoomRepository
+            IChatRoomRepository chatRoomRepository,
+            ChatMessageFileWriteCommand chatMessageFileWriteCommand,
+            IChatMessageFileRepository chatMessageFileRepository
             )
         {
-            Contract.Argument.IsNotNull(chatRoomReadCommand, nameof(chatRoomReadCommand));
-            Contract.Argument.IsNotNull(chatMessageWriteCommand, nameof(chatMessageWriteCommand));
-            Contract.Argument.IsNotNull(chatMessageReadCommand, nameof(chatMessageReadCommand));
-            Contract.Argument.IsNotNull(chatRoomRepository, nameof(chatRoomRepository));
-
             _chatRoomReadCommand = chatRoomReadCommand;
             _chatMessageWriteCommand = chatMessageWriteCommand;
             _chatMessageReadCommand = chatMessageReadCommand;
             _chatRoomRepository = chatRoomRepository;
+            _chatMessageFileWriteCommand = chatMessageFileWriteCommand;
+            _chatMessageFileRepository = chatMessageFileRepository;
         }
 
         [HttpGet]
@@ -81,6 +83,22 @@ namespace Sbran.WebApp.Controllers
             Contract.Argument.IsNotEmptyGuid(profileId, nameof(profileId));
             var temp = await _chatRoomReadCommand.GetAllRooms(profileId, userName);
             return temp;
+        }
+
+        [HttpPost]
+        [Route("sendfile")]
+        public async Task<ChatMessageResult> SendFile([FromBody] ChatMessageFileDto file)
+        {
+            return await _chatMessageFileWriteCommand.CreateFile(file);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getFile/{chatMessageFileId:guid}")]
+        public async Task<IActionResult> GetFile(Guid chatMessageFileId)
+        {
+            var file = _chatMessageFileRepository.GetById(chatMessageFileId);
+            return File(file.FileBinary, "application/octet-stream", file.fileName);
         }
 
     }

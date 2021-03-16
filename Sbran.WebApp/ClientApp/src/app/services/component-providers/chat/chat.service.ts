@@ -18,6 +18,10 @@ export class ChatService extends ComponentDataService<Message> {
     return this.http.get<any>(`${this.uriPath}/${profileId}/myrooms`);
   }
 
+  getFile(fileId: string) {
+    return this.http.get<any>(`${this.uriPath}/getFile/${fileId}`, {});
+  }
+
   getDataByMyChats(chatRoomId: string, userId: string) {
     return this.http.get<any>(`${this.uriPath}/${chatRoomId}/${userId}`);
   }
@@ -38,4 +42,30 @@ export class ChatService extends ComponentDataService<Message> {
 
     return this.client.post<any>(`${this.uriPath}/${id}/send/${profileId}`, messagePost, options);
   }
+
+  sendFile(account: string, profileId: string, chatRoomId: string, event, fileName: string) {
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const options = { headers: headers };
+
+    //let dataArray = new Uint8Array(event);
+    //const STRING_CHAR = dataArray.reduce((data, byte) => {
+    //  return data + String.fromCharCode(byte);
+    //}, '');
+
+    //let base64String = btoa(STRING_CHAR);
+
+    let file = {
+      fileBinary: event,
+      profileId: profileId,
+      chatRoomId: chatRoomId,
+      fileName: fileName,
+      account: account
+    }
+
+    console.log(file);
+    return this.client.post<any>(`${this.uriPath}/SendFile`, file, options);
+  }
+
+
 }

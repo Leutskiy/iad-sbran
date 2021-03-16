@@ -21,6 +21,7 @@ namespace Sbran.CQS.Registries
             serviceRegistry.Register<EmployeeReadCommand>();
 
             serviceRegistry.Register<ChatMessageWriteCommand>();
+            serviceRegistry.Register<ChatMessageFileWriteCommand>();
 
             serviceRegistry.Register<IReadCommand<AlienResult>, AlienReadCommand>();
             serviceRegistry.Register<IReadCommand<ProfileResult>, ProfileReadCommand>();
@@ -30,6 +31,7 @@ namespace Sbran.CQS.Registries
 
             serviceRegistry.Register<IChatRoomReadCommand, ChatRoomReadCommand>();
             serviceRegistry.Register<IChatMessageReadCommand, ChatMessageReadCommand>();
+            serviceRegistry.Register<IReadCommand<ChatMessageFileResult>, ChatMessageFileReadCommand>();
 
             serviceRegistry.Register<IReadCommand<InvitationResult>, InvitationReadCommand>();
             serviceRegistry.Register<IReadCommand<VisitDetailResult>, VisitDetailReadCommand>();

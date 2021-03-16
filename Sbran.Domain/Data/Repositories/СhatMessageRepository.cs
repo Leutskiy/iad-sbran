@@ -44,19 +44,19 @@ namespace Sbran.Domain.Data.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var model = await _domainContext.Messages.FirstOrDefaultAsync(e => e.Id == id);
+            var model = await _domainContext.ChatMessages.FirstOrDefaultAsync(e => e.Id == id);
             if (model == null)
             {
                 throw new Exception($"Сущность не найдена для id: {id}");
             }
-            _domainContext.Messages.Remove(model);
+            _domainContext.ChatMessages.Remove(model);
         }
 
         /// <summary>
         /// Функция получения списка всех сообщений
         /// </summary>
         /// <returns></returns>
-        public Task<List<ChatMessage>> GetAllAsync() => _domainContext.Messages.ToListAsync();
+        public Task<List<ChatMessage>> GetAllAsync() => _domainContext.ChatMessages.ToListAsync();
 
         /// <summary>
         /// Функция получения сообщения по id
@@ -65,7 +65,7 @@ namespace Sbran.Domain.Data.Repositories
         /// <returns></returns>
         public async Task<ChatMessage> GetAsync(Guid id)
         {
-            var model = await _domainContext.Messages.FirstOrDefaultAsync(e => e.Id == id);
+            var model = await _domainContext.ChatMessages.FirstOrDefaultAsync(e => e.Id == id);
             if (model == null)
             {
                 throw new Exception($"Сущность не найдена для id: {id}");
@@ -75,7 +75,7 @@ namespace Sbran.Domain.Data.Repositories
 
         public async Task<List<ChatMessage>> GetForChatRoomId(Guid id)
         {
-            return await _domainContext.Messages
+            return await _domainContext.ChatMessages
                 .Where(e => e.ChatRoomId == id)
                 .ToListAsync();
         }
