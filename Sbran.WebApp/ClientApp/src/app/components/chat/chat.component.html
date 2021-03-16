@@ -75,7 +75,7 @@
               <a (click)="chatUserSelected(''+item.account,item.chatRoomId)" [class.bg-warning]="item.account == selectedUserid" class="list-group-item list-group-item-action rounded-0">
                 <div class="media">
                   <div *ngIf="item.image;else other_default_avatar">
-                    <img src="{{item.image}}" alt="user" width="60" height="60" class="rounded-circle">
+                    <img src="data:image/jpeg;base64,{{item.image}}" alt="user" width="60" height="60" class="rounded-circle">
                   </div>
                   <ng-template #other_default_avatar>
                     <img src="assets/images/avatar.jpg" alt="user" width="60" height="60" class="rounded-circle">
