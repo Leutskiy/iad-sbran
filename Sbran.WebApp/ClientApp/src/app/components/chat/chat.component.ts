@@ -101,40 +101,44 @@ export class ChatComponent implements OnInit {
   }
 
   public sendMessage(message: string): void {
-    // отправка сообщения на сервер
-    this.searchInput.nativeElement.value = '';
-    var objDiv = document.getElementById("chatroom");
-    objDiv.scrollTop = 10000;
-    this.chatService.setDataByIdd(this.receiver, message, this.chatRoomId, this.profileId).subscribe(
-      response => {
-        console.log(response);
-        this.hubConnection.invoke("Send", response, this.receiver);
-      },
-      error => {
-        //console.log(error);
-      }
-    );
+    if (this.receiver != null) {
+      // отправка сообщения на сервер
+      this.searchInput.nativeElement.value = '';
+      var objDiv = document.getElementById("chatroom");
+      objDiv.scrollTop = 10000;
+      this.chatService.setDataByIdd(this.receiver, message, this.chatRoomId, this.profileId).subscribe(
+        response => {
+          console.log(response);
+          this.hubConnection.invoke("Send", response, this.receiver);
+        },
+        error => {
+          //console.log(error);
+        }
+      );
+    }
   }
 
   public fileChange(event) {
-    let fileList: FileList = event.target.files;
-    if (fileList.length > 0 && fileList.length < 2) {
-      //console.log("sendFile");
-      let me = this;
-      let file: File = fileList[0];
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function () {
-        var b64: string = typeof reader.result === 'string' ? reader.result : Buffer.from(reader.result).toString();
-        b64 = b64.substr(b64.indexOf(',') + 1);
-        //console.log(b64);
-        me.chatService.sendFile(me.receiver, me.profileId, me.chatRoomId, b64, file.name).subscribe(
-          response => {
-            me.hubConnection.invoke("Send", response, me.receiver);
-          },
-          error => {
-            console.log(error);
-          });
+    if (this.receiver != null) {
+      let fileList: FileList = event.target.files;
+      if (fileList.length > 0 && fileList.length < 2) {
+        //console.log("sendFile");
+        let me = this;
+        let file: File = fileList[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+          var b64: string = typeof reader.result === 'string' ? reader.result : Buffer.from(reader.result).toString();
+          b64 = b64.substr(b64.indexOf(',') + 1);
+          //console.log(b64);
+          me.chatService.sendFile(me.receiver, me.profileId, me.chatRoomId, b64, file.name).subscribe(
+            response => {
+              me.hubConnection.invoke("Send", response, me.receiver);
+            },
+            error => {
+              console.log(error);
+            });
+        }
       }
     }
   }

@@ -89,6 +89,18 @@ namespace Sbran.WebApp.Controllers
         [Route("sendfile")]
         public async Task<ChatMessageResult> SendFile([FromBody] ChatMessageFileDto file)
         {
+            var chatRoom = await _chatRoomRepository.GetAsync(file.chatRoomId);
+            if (chatRoom == null)
+            {
+                var messageDto = new MessageDto()
+                {
+                    account = file.account,
+                    chatRoomId = file.chatRoomId,
+                    message = ""
+                };
+                await _chatMessageWriteCommand.CreateForEmptyRoomAsync(file.profileId, messageDto);
+                return await _chatMessageFileWriteCommand.CreateFile(file);
+            }
             return await _chatMessageFileWriteCommand.CreateFile(file);
         }
 

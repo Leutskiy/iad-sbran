@@ -69,7 +69,7 @@ namespace Sbran.CQS.Read
                 IsFile = true,
                 Message = "",
                 profileId = file.profileId,
-                profileTo = userTo.Id,
+                profileTo = userTo.ProfileId,
             };
         }
 
