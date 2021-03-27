@@ -86,6 +86,8 @@ namespace Sbran.CQS.Converters
                 PeriodInDays = visitDetail.PeriodDays,
                 ArrivalDate = visitDetail.ArrivalDate,
                 DepartureDate = visitDetail.DepartureDate,
+                TypeReception = visitDetail.TypeReception,
+                FinancialCondition = visitDetail.FinancialCondition
             };
         }
 
@@ -139,7 +141,13 @@ namespace Sbran.CQS.Converters
                 AcademicRank = employee.AcademicRank,
                 Education = employee.Education,
                 Position = employee.Position,
-                WorkPlace = employee.WorkPlace
+                WorkPlace = employee.WorkPlace,
+                Invitations = employee.Invitations,
+                Departures = employee.Departures,
+                Publications = employee.Publications,
+                Memberships = employee.Memberships,
+                ScientificInterests = employee.ScientificInterests,
+                ConsularOffices = employee.ConsularOffices
             };
         }
 
@@ -180,6 +188,8 @@ namespace Sbran.CQS.Converters
                 Alien = alienResult,
                 Employee = employeeResult,
                 VisitDetail = visitDetailResult,
+                InvitationStatus = invitation.Status,
+                ReportId = invitation.ReportId,
                 ForeignParticipants = foreignParticipantResultCollection
             };
         }

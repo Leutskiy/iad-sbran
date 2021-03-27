@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Sbran.Domain.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace Sbran.CQS.Read.Results
 {
@@ -61,5 +63,31 @@ namespace Sbran.CQS.Read.Results
         /// Должность
         /// </summary>
         public string? Position { get; set; }
+
+        /// <summary>
+        /// приглашения
+        /// </summary>
+        public List<Invitation> Invitations { get; set; }
+        /// <summary>
+        /// Выезды
+        /// </summary>
+        public List<Departure> Departures { get; set; }
+        /// <summary>
+        /// Выезды
+        /// </summary>
+        public List<Membership> Memberships { get; set; }
+        /// <summary>
+        /// Выезды
+        /// </summary>
+        public List<Publication> Publications { get; set; }
+        /// <summary>
+        /// Выезды
+        /// </summary>
+        public List<ScientificInterests> ScientificInterests { get; set; }
+        /// <summary>
+        /// Выезды
+        /// </summary>
+        public List<ConsularOffice> ConsularOffices { get; set; }
+
     }
 }

@@ -1,3 +1,5 @@
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+
 export interface LoginData {
   login: string,
   password: string
@@ -118,6 +120,9 @@ export class UserInfo {
   private defaulAvatarValue: string = "assets/images/avatar.jpg";
 
   profile: Profile;
+  scientificInterests: string | null;
+  consularOffices: string | null;
+  memberships: string | null;
   fio: string | null;
   fax: string | null;
   academicDegree: string | null;
@@ -129,6 +134,11 @@ export class UserInfo {
   email: string | null;
   mobilePhoneNumber: string | null;
   avatarContent: string | null;
+
+  invitesCount: number | null;
+  departuresCount: number | null;
+  publishsCount: number | null;
+  membershipsCount: number | null;
 
   constructor() {
     this.profile = new Profile();
@@ -143,6 +153,13 @@ export class UserInfo {
     this.email = this.defaultFieldValue;
     this.mobilePhoneNumber = this.defaultFieldValue;
     this.avatarContent = null;
+    this.invitesCount = 0;
+    this.departuresCount = 0;
+    this.publishsCount = 0;
+    this.membershipsCount = 0;
+    this.scientificInterests = "";
+    this.consularOffices = "";
+    this.memberships = "";
   }
 
   public init(
@@ -156,7 +173,15 @@ export class UserInfo {
     workPlace: string | null,
     position: string | null,
     email: string | null,
-    mobilePhoneNumber: string | null): void {
+    mobilePhoneNumber: string | null,
+    invitesCount: number | null,
+    departuresCount: number | null,
+    publishsCount: number | null,
+    membershipsCount: number | null,
+    scientificInterests: string | null,
+    consularOffices: string | null,
+    memberships: string | null,
+  ): void {
     this.mobilePhoneNumber = mobilePhoneNumber ? mobilePhoneNumber : this.mobilePhoneNumber;
     this.academicDegree = academicDegree ? academicDegree : this.academicDegree;
     this.academicRank = academicRank ? academicRank : this.academicRank;
@@ -170,6 +195,14 @@ export class UserInfo {
     this.email = email ? email : this.email;
     this.fio = fio ? fio : this.fio;
     this.fax = fax ? fax : this.fax;
+    this.invitesCount = invitesCount ? invitesCount : this.invitesCount;
+    this.departuresCount = departuresCount ? departuresCount : this.departuresCount;
+    this.publishsCount = publishsCount ? publishsCount : this.publishsCount;
+    this.membershipsCount = membershipsCount ? membershipsCount : this.membershipsCount;
+
+    this.scientificInterests = scientificInterests ? scientificInterests : this.scientificInterests;
+    this.consularOffices = consularOffices ? consularOffices : this.consularOffices;
+    this.memberships = memberships ? memberships : this.memberships;
   }
 }
 
@@ -265,6 +298,7 @@ export class MessageDto {
   public messageText: string = '';
 }
 
+
 export enum Gender {
   male,
   female,
@@ -275,6 +309,11 @@ export enum VisaMultiplicity {
   single,
   double,
   multiple
+}
+
+export enum FinancialCondition {
+  host,
+  accepted
 }
 
 export interface Passport2 {
@@ -430,6 +469,8 @@ export class VisitDetail {
   visaCity: string | null;
   visaCountry: string | null;
   visaMultiplicity: VisaMultiplicity | null;
+  financialCondition: FinancialCondition | null;
+  typeReception: string | null;
 }
 
 export class ForeignParticipant {
@@ -444,6 +485,8 @@ export class ForeignParticipant {
 
 export class Invitation {
   id: string;
+  reportId: string | null;
+  invitationStatus: InvitationStatus | null;
   alien: Alien;
   employee: Employee;
   visitDetail: VisitDetail | null;
@@ -452,6 +495,8 @@ export class Invitation {
   constructor() {
     this.id = "";
     this.alien = new Alien();
+    this.reportId = "";
+    this.invitationStatus = InvitationStatus.Creating;
     this.employee = new Employee();
     this.visitDetail = new VisitDetail();
     this.foreignParticipants = [];
@@ -568,6 +613,136 @@ export class Message {
     this.account = account;
     this.chatRoomId = chatRoomId;
     this.message = message;
+  }
+}
+
+export class Departure {
+  id: string | null;
+  sendingCountry: string | null;
+  cityOfBusiness: string | null;
+  sourceOfFinancing: string | null;
+  basicOfDeparture: string | null;
+  hostOrganization: string | null;
+  placeOfResidence: string | null;
+  purposeOfTheTrip: string | null;
+  justificationOfTheBusiness: string | null;
+  dateStart: Date | string | null;
+  departureStatus: DepartureStatus | null;
+  reportId: string | null;
+  dateEnd: Date | string | null;
+  employeeId: string | null;
+}
+
+
+export class ConsularOffice {
+  id: string | null;
+  nameOfTheConsularPost: string | null;
+  countryOfLocation: string | null;
+  cityOfLocation: string | null;
+  employeeId: string | null;
+}
+
+
+export class InternationalAgreement {
+  id: string | null;
+  theNameOfTheAgreement: string | null;
+  theFirstPartyToTheAgreement: string | null;
+  theSecondPartyToTheAgreement: string | null;
+  placeOfSigning: string | null;
+  textOfTheAgreement: string | null;
+  dateOfEntry: Date | string | null;
+  employeeId: string | null;
+}
+
+
+export class Membership {
+  id: string | null;
+  nameOfCompany: string | null;
+  statusInTheOrganization: string | null;
+  siteOfTheOrganization: string | null;
+  dateOfEntry: Date | string | null;
+  employeeId: string | null;
+}
+
+
+export class Publication {
+  id: string | null;
+  scientificAdvisor: string | null;
+  titleOfTheArticle: string | null;
+  abstract: string | null;
+  keywords: string | null;
+  mainTextOfTheArticle: string | null;
+  literature: string | null;
+  employeeId: string | null;
+}
+
+
+export class ScientificInterests {
+  id: string | null;
+  NameOfScientificInterests: string | null;
+  employeeId: string | null;
+}
+
+
+export enum ReportType {
+  /// <summary>
+  /// Приглашение
+  /// </summary>
+  Invition,
+  /// <summary>
+  /// Выезд
+  /// </summary>
+  Departure
+}
+
+export enum DepartureStatus {
+  /// <summary>
+  /// Не согласовано
+  /// </summary>
+  NonAgreement,
+
+  /// <summary>
+  /// Согласовано
+  /// </summary>
+  Agreement
+}
+
+export enum InvitationStatus {
+  /// <summary>
+  /// Создание
+  /// </summary>
+  Creating,
+
+  /// <summary>
+  /// Отправка в МВД
+  /// </summary>
+  Sending,
+
+  /// <summary>
+  /// Согласовано
+  /// </summary>
+  Agreement
+}
+
+export class Report {
+  id: string | null;
+  mainPart: string | null;
+  findings: string | null;
+  suggestion: string | null;
+  foreignInterest: string | null;
+
+  description: string | null;
+  fileBinary: string | null;
+  fileName: string | null;
+  reportType: ReportType | null;
+  parentId: string | null;
+  appendixId: string | null;
+
+  constructor() {
+    this.mainPart = "";
+    this.findings = "";
+    this.suggestion = "";
+    this.foreignInterest = "";
   }
 }
 

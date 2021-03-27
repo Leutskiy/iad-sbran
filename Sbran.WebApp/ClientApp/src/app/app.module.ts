@@ -36,6 +36,13 @@ import { EmployeeStateRegistrationComponent } from './components/state-registrat
 import { AlienStateRegistrationInvitationComponent } from './components/state-registration/alien-state-registration-invitation.component';
 import { VisitDetailsInvitationComponent } from './components/visit-details/visit-details.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { DepartureComponent } from './components/departure/departure.component';
+import { ConsularOfficeComponent } from './components/consularOffice/consularOffice.component';
+import { InternationalAgreementComponent } from './components/internationalAgreement/internationalAgreement.component';
+import { MembershipComponent } from './components/membership/membership.component';
+import { PublicationComponent } from './components/publication/publication.component';
+import { ScientificInterestsComponent } from './components/scientificInterests/scientificInterests.component';
+import { ReportComponent } from './components/report/report.component';
 
 @NgModule({
   declarations: [
@@ -60,9 +67,16 @@ import { ChatComponent } from './components/chat/chat.component';
     NewInvitationFormComponent,
     InvitationComponent,
     NotFoundPageComponent,
+    DepartureComponent,
     FileUploadComponent,
     LoadingScreenComponent,
+    ConsularOfficeComponent,
+    InternationalAgreementComponent,
+    MembershipComponent,
+    PublicationComponent,
+    ScientificInterestsComponent,
     VisitDetailsInvitationComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

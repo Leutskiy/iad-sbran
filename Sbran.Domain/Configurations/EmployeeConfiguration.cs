@@ -42,7 +42,7 @@ namespace Sbran.Domain.Configurations
                 .HasOne(employee => employee.Manager)
                 .WithMany()
                 .HasForeignKey(employee => employee.ManagerId);
-                //.HasPrincipalKey<User>(user => user.Id);
+            //.HasPrincipalKey<User>(user => user.Id);
 
             builder
                 .HasOne(employee => employee.Contact)
@@ -70,6 +70,26 @@ namespace Sbran.Domain.Configurations
 
             builder
                 .HasMany(employee => employee.Invitations)
+                .WithOne();
+
+            builder
+                .HasMany(employee => employee.Departures)
+                .WithOne();
+
+            builder
+                .HasMany(employee => employee.Publications)
+                .WithOne();
+
+            builder
+                .HasMany(employee => employee.Memberships)
+                .WithOne();
+
+            builder
+                .HasMany(employee => employee.ConsularOffices)
+                .WithOne();
+
+            builder
+                .HasMany(employee => employee.ScientificInterests)
                 .WithOne();
         }
     }

@@ -74,6 +74,35 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("Aliens", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Appendix", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("Description");
+
+                    b.Property<byte[]>("FileBinary")
+                        .HasColumnType("bytea")
+                        .HasColumnName("FileBinary");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("text")
+                        .HasColumnName("FileName");
+
+                    b.Property<Guid>("ReportId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DepartureReportUid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("Appendixs", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatMessage", b =>
                 {
                     b.Property<Guid>("Id")
@@ -162,6 +191,40 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("ChatRoomLists", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.ConsularOffice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<string>("CityOfLocation")
+                        .HasColumnType("text")
+                        .HasColumnName("CityOfLocation");
+
+                    b.Property<string>("CountryOfLocation")
+                        .HasColumnType("text")
+                        .HasColumnName("CountryOfLocation");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("EmployeeUid");
+
+                    b.Property<Guid?>("EmployeeId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("NameOfTheConsularPost")
+                        .HasColumnType("text")
+                        .HasColumnName("NameOfTheConsularPost");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("EmployeeId1");
+
+                    b.ToTable("ConsularOffices", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Contact", b =>
                 {
                     b.Property<Guid>("Id")
@@ -191,6 +254,78 @@ namespace Sbran.Domain.Migrations.Domain
                     b.HasKey("Id");
 
                     b.ToTable("Contacts", "domain");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Departure", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<string>("BasicOfDeparture")
+                        .HasColumnType("text")
+                        .HasColumnName("BasicOfDeparture");
+
+                    b.Property<string>("CityOfBusiness")
+                        .HasColumnType("text")
+                        .HasColumnName("CityOfBusiness");
+
+                    b.Property<DateTime?>("DateEnd")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateEnd");
+
+                    b.Property<DateTime?>("DateStart")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateStart");
+
+                    b.Property<int?>("DepartureStatus")
+                        .HasColumnType("integer")
+                        .HasColumnName("DepartureStatus");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("EmployeeUid");
+
+                    b.Property<Guid?>("EmployeeId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("HostOrganization")
+                        .HasColumnType("text")
+                        .HasColumnName("HostOrganization");
+
+                    b.Property<string>("JustificationOfTheBusiness")
+                        .HasColumnType("text")
+                        .HasColumnName("JustificationOfTheBusiness");
+
+                    b.Property<string>("PlaceOfResidence")
+                        .HasColumnType("text")
+                        .HasColumnName("PlaceOfResidence");
+
+                    b.Property<string>("PurposeOfTheTrip")
+                        .HasColumnType("text")
+                        .HasColumnName("PurposeOfTheTrip");
+
+                    b.Property<Guid?>("ReportId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ReportUid");
+
+                    b.Property<string>("SendingCountry")
+                        .HasColumnType("text")
+                        .HasColumnName("SendingCountry");
+
+                    b.Property<string>("SourceOfFinancing")
+                        .HasColumnType("text")
+                        .HasColumnName("SourceOfFinancing");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("EmployeeId1");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("Departures", "domain");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.Document", b =>
@@ -324,6 +459,47 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("ForeignParticipants", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.InternationalAgreement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<DateTime?>("DateOfEntry")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateOfEntry");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("EmployeeUid");
+
+                    b.Property<string>("PlaceOfSigning")
+                        .HasColumnType("text")
+                        .HasColumnName("PlaceOfSigning");
+
+                    b.Property<string>("TextOfTheAgreement")
+                        .HasColumnType("text")
+                        .HasColumnName("TextOfTheAgreement");
+
+                    b.Property<string>("TheFirstPartyToTheAgreement")
+                        .HasColumnType("text")
+                        .HasColumnName("TheFirstPartyToTheAgreement");
+
+                    b.Property<string>("TheNameOfTheAgreement")
+                        .HasColumnType("text")
+                        .HasColumnName("TheNameOfTheAgreement");
+
+                    b.Property<string>("TheSecondPartyToTheAgreement")
+                        .HasColumnType("text")
+                        .HasColumnName("TheSecondPartyToTheAgreement");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("InternationalAgreements", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Invitation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -341,6 +517,9 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uuid")
                         .HasColumnName("EmployeeUid");
+
+                    b.Property<Guid?>("ReportId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer")
@@ -360,10 +539,50 @@ namespace Sbran.Domain.Migrations.Domain
 
                     b.HasIndex("EmployeeId");
 
+                    b.HasIndex("ReportId");
+
                     b.HasIndex("VisitDetailId")
                         .IsUnique();
 
                     b.ToTable("Invitations", "domain");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Membership", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<DateTime?>("DateOfEntry")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DateOfEntry");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("EmployeeUid");
+
+                    b.Property<Guid?>("EmployeeId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("NameOfCompany")
+                        .HasColumnType("text")
+                        .HasColumnName("NameOfCompany");
+
+                    b.Property<string>("SiteOfTheOrganization")
+                        .HasColumnType("text")
+                        .HasColumnName("SiteOfTheOrganization");
+
+                    b.Property<string>("StatusInTheOrganization")
+                        .HasColumnType("text")
+                        .HasColumnName("StatusInTheOrganization");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("EmployeeId1");
+
+                    b.ToTable("Memberships", "domain");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.Organization", b =>
@@ -483,6 +702,108 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("Passports", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Publication", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<string>("Abstract")
+                        .HasColumnType("text")
+                        .HasColumnName("Abstract");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("EmployeeUid");
+
+                    b.Property<Guid?>("EmployeeId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Keywords")
+                        .HasColumnType("text")
+                        .HasColumnName("Keywords");
+
+                    b.Property<string>("Literature")
+                        .HasColumnType("text")
+                        .HasColumnName("Literature");
+
+                    b.Property<string>("MainTextOfTheArticle")
+                        .HasColumnType("text")
+                        .HasColumnName("MainTextOfTheArticle");
+
+                    b.Property<string>("ScientificAdvisor")
+                        .HasColumnType("text")
+                        .HasColumnName("ScientificAdvisor");
+
+                    b.Property<string>("TitleOfTheArticle")
+                        .HasColumnType("text")
+                        .HasColumnName("TitleOfTheArticle");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("EmployeeId1");
+
+                    b.ToTable("Publications", "domain");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Report", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<string>("Findings")
+                        .HasColumnType("text")
+                        .HasColumnName("Findings");
+
+                    b.Property<string>("ForeignInterest")
+                        .HasColumnType("text")
+                        .HasColumnName("ForeignInterest");
+
+                    b.Property<string>("MainPart")
+                        .HasColumnType("text")
+                        .HasColumnName("MainPart");
+
+                    b.Property<int>("ReportType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Suggestion")
+                        .HasColumnType("text")
+                        .HasColumnName("Suggestion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reports", "domain");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.ScientificInterests", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("EmployeeUid");
+
+                    b.Property<Guid?>("EmployeeId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("NameOfScientificInterests")
+                        .HasColumnType("text")
+                        .HasColumnName("ScientificAdvisor");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("EmployeeId1");
+
+                    b.ToTable("ScientificInterestss", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.StateRegistration", b =>
                 {
                     b.Property<Guid>("Id")
@@ -520,6 +841,10 @@ namespace Sbran.Domain.Migrations.Domain
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("DepartureDate");
 
+                    b.Property<int?>("FinancialCondition")
+                        .HasColumnType("integer")
+                        .HasColumnName("FinancialCondition");
+
                     b.Property<string>("Goal")
                         .HasColumnType("text")
                         .HasColumnName("Goal");
@@ -527,6 +852,10 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Property<long?>("PeriodDays")
                         .HasColumnType("bigint")
                         .HasColumnName("PeriodDays");
+
+                    b.Property<string>("TypeReception")
+                        .HasColumnType("text")
+                        .HasColumnName("TypeReception");
 
                     b.Property<string>("VisaCity")
                         .HasColumnType("text")
@@ -580,6 +909,17 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("StateRegistration");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Appendix", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Report", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Report");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Chat.ChatMessage", b =>
                 {
                     b.HasOne("Sbran.Domain.Entities.Chat.ChatRoom", "ChatRoom")
@@ -611,6 +951,44 @@ namespace Sbran.Domain.Migrations.Domain
                         .IsRequired();
 
                     b.Navigation("ChatRoom");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.ConsularOffice", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sbran.Domain.Entities.Employee", null)
+                        .WithMany("ConsularOffices")
+                        .HasForeignKey("EmployeeId1");
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Departure", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sbran.Domain.Entities.Employee", null)
+                        .WithMany("Departures")
+                        .HasForeignKey("EmployeeId1");
+
+                    b.HasOne("Sbran.Domain.Entities.Report", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Report");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.Document", b =>
@@ -670,6 +1048,17 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("Passport");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.InternationalAgreement", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Invitation", b =>
                 {
                     b.HasOne("Sbran.Domain.Entities.Alien", "Alien")
@@ -684,6 +1073,10 @@ namespace Sbran.Domain.Migrations.Domain
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Sbran.Domain.Entities.Report", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId");
+
                     b.HasOne("Sbran.Domain.Entities.VisitDetail", "VisitDetail")
                         .WithOne()
                         .HasForeignKey("Sbran.Domain.Entities.Invitation", "VisitDetailId");
@@ -692,7 +1085,24 @@ namespace Sbran.Domain.Migrations.Domain
 
                     b.Navigation("Employee");
 
+                    b.Navigation("Report");
+
                     b.Navigation("VisitDetail");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Membership", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sbran.Domain.Entities.Employee", null)
+                        .WithMany("Memberships")
+                        .HasForeignKey("EmployeeId1");
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.Organization", b =>
@@ -704,9 +1114,49 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("StateRegistration");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Publication", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sbran.Domain.Entities.Employee", null)
+                        .WithMany("Publications")
+                        .HasForeignKey("EmployeeId1");
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.ScientificInterests", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sbran.Domain.Entities.Employee", null)
+                        .WithMany("ScientificInterests")
+                        .HasForeignKey("EmployeeId1");
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Employee", b =>
                 {
+                    b.Navigation("ConsularOffices");
+
+                    b.Navigation("Departures");
+
                     b.Navigation("Invitations");
+
+                    b.Navigation("Memberships");
+
+                    b.Navigation("Publications");
+
+                    b.Navigation("ScientificInterests");
                 });
 
             modelBuilder.Entity("Sbran.Domain.Entities.Invitation", b =>

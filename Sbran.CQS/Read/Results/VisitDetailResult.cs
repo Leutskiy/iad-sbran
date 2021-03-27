@@ -3,10 +3,10 @@ using Sbran.Domain.Entities;
 
 namespace Sbran.CQS.Read.Results
 {
-	/// <summary>
-	/// Данные по деталям визита
-	/// </summary>
-	public sealed class VisitDetailResult
+    /// <summary>
+    /// Данные по деталям визита
+    /// </summary>
+    public sealed class VisitDetailResult
     {
         /// <summary>
         /// Идентификатор
@@ -62,5 +62,15 @@ namespace Sbran.CQS.Read.Results
         /// Кратность визы
         /// </summary>
         public VisaMultiplicity? VisaMultiplicity { get; set; }
+
+        /// <summary>
+        /// Тип приема
+        /// </summary>
+        public string? TypeReception { get; set; }
+
+        /// <summary>
+        /// Финансовые условия
+        /// </summary>
+        public FinancialCondition? FinancialCondition { get; set; }
     }
 }

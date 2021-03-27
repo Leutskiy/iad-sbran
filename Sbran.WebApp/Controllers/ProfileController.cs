@@ -10,14 +10,16 @@ using Sbran.CQS.Read.Contracts;
 using Sbran.CQS.Read.Results;
 using Sbran.Domain.Models;
 using Sbran.Shared.Contracts;
+using Sbran.Domain.Entities;
+using System.Collections.Generic;
 
 namespace Sbran.WebApp.Controllers
 {
-	///TODO: лучше назвать как ProfileEmployee
-	/// <summary>
-	/// Контроллер профиля
-	/// </summary>
-	[ApiController]
+    ///TODO: лучше назвать как ProfileEmployee
+    /// <summary>
+    /// Контроллер профиля
+    /// </summary>
+    [ApiController]
     [Authorize]
     [Route("api/v1/[controller]")]
     public class ProfileController : ControllerBase
@@ -57,7 +59,13 @@ namespace Sbran.WebApp.Controllers
                 Fax = null,
                 MobilePhoneNumber = employeeResult.Contact?.MobilePhoneNumber,
                 WorkPlace = employeeResult.WorkPlace,
-                Position = employeeResult.Position
+                Position = employeeResult.Position,
+                InvitesCount = employeeResult.Invitations.Count,
+                DeparturesCount = employeeResult.Departures.Count,
+                MembershipsCount = employeeResult.Memberships.Count,
+                PublishsCount = employeeResult.Publications.Count,
+                ScientificInterests = ConvertScientificInterestsListForString(employeeResult.ScientificInterests),
+                Memberships = ConvertMembershipsListForString(employeeResult.Memberships)
             };
 
             var objectJson = JsonSerializer.SerializeToUtf8Bytes(userInfo, new JsonSerializerOptions
@@ -65,7 +73,7 @@ namespace Sbran.WebApp.Controllers
                 WriteIndented = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
-            
+
             var mediaType = new MediaTypeHeaderValue("application/octet-stream");
             var result = new FileContentResult(objectJson, mediaType);
 
@@ -77,6 +85,26 @@ namespace Sbran.WebApp.Controllers
         public Task UpdateAsync(Guid profileId, ProfileDto profileDto)
         {
             return _profileWriteCommand.UpdateAsync(profileId, profileDto);
+        }
+
+        private string ConvertScientificInterestsListForString(List<ScientificInterests> list)
+        {
+            var result = "";
+            for (int i = 0; i < list.Count; i++)
+            {
+                result += i != list.Count - 1 ? list[i].NameOfScientificInterests + ", " : list[i].NameOfScientificInterests;
+            }
+            return result;
+        }
+
+        private string ConvertMembershipsListForString(List<Membership> list)
+        {
+            var result = "";
+            for (int i = 0; i < list.Count; i++)
+            {
+                result += i != list.Count - 1 ? list[i].NameOfCompany + ", " : list[i].NameOfCompany;
+            }
+            return result;
         }
     }
 }

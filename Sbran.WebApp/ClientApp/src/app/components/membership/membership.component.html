@@ -1,0 +1,91 @@
+<div *ngIf="tableMode; else CreateOrUpdate">
+  <div class="container">
+    <div class="table-wrapper">
+      <!-- Заголовок таблицы -->
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-12 d-inline-flex">
+            <div class="mr-auto"><h2><b>Членство</b></h2></div>
+            <div class="input-group w-auto">
+              <div class="input-group-append">
+
+                <!-- Тут короче фикс под себя надо-->
+                <button type="button" class="btn btn-warning ml-2" (click)="add()">
+                  <span><b>Новое</b></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Таблица приглашений -->
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Наименование организации</th>
+            <th scope="col">Cтатус в организации</th>
+            <th scope="col">Сайт организации</th>
+            <th scope="col">Дата вступления</th>
+            <th scope="col">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let membership of memberships; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{membership.nameOfCompany}}</td>
+            <td>{{membership.statusInTheOrganization}}</td>
+            <td>{{membership.siteOfTheOrganization}}</td>
+            <td>{{membership.dateOfEntry}}</td>
+            <td class="text-center">
+              <a class="view" (click)="edit(membership)">
+                <i class="fa fa-share-square-o"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #CreateOrUpdate>
+  <div class="input-group mt-3 mb-3">
+
+    <!-- наименование организации-->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Наименование организации</label>
+        <input type="text" [(ngModel)]="membership.nameOfCompany" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Cтатус в организации</label>
+        <input type="text" [(ngModel)]="membership.statusInTheOrganization" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Сайт организации</label>
+        <input type="text" [(ngModel)]="membership.siteOfTheOrganization" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Дата вступления</label>
+        <input type="date" [(ngModel)]="membership.dateOfEntry" class="form-control" />
+      </div>
+    </div>
+
+     <div class="col-md-12">
+      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+      <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+    </div>
+
+  </div>
+</ng-template>

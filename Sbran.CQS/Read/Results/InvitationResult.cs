@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sbran.Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Sbran.CQS.Read.Results
@@ -17,6 +18,16 @@ namespace Sbran.CQS.Read.Results
         /// Данные по иностранцу
         /// </summary>
         public AlienResult? Alien { get; set; }
+
+        /// <summary>
+        /// Статус
+        /// </summary>
+        public InvitationStatus? InvitationStatus { get; set; }
+
+        /// <summary>
+        /// Индикатор отчета
+        /// </summary>
+        public Guid? ReportId { get; set; }
 
         /// <summary>
         /// Данные по сотруднику

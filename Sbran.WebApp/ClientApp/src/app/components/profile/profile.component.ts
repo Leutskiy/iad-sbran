@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { UserInfo } from '../../contracts/login-data';
 import { ProfileDataService } from '../../services/component-providers/profile/profile-data.service';
 
@@ -33,32 +33,40 @@ export class ProfileComponent implements OnInit {
 
   private getProfileData(profileId: string, employeeId: string): void {
     this.profileDataService.getDataById(profileId, employeeId).subscribe(userInfoResult => {
-        this.userInfo.profile.init(
-          userInfoResult.profile.id,
-          userInfoResult.profile.userId,
-          this._base64ToArrayBuffer(userInfoResult.profile.avatar),
-          this._parse(userInfoResult.profile.webPages));
+ 
+      this.userInfo.profile.init(
+        userInfoResult.profile.id,
+        userInfoResult.profile.userId,
+        this._base64ToArrayBuffer(userInfoResult.profile.avatar),
+        this._parse(userInfoResult.profile.webPages));
 
-        this.userInfo.init(
-          userInfoResult.fio,
-          userInfoResult.fax,
-          userInfoResult.profile.avatar,
-          userInfoResult.academicDegree,
-          userInfoResult.academicRank,
-          userInfoResult.education,
-          userInfoResult.shortName,
-          userInfoResult.workPlace,
-          userInfoResult.position,
-          userInfoResult.email,
-          userInfoResult.mobilePhoneNumber
-        );
-      });
+      this.userInfo.init(
+        userInfoResult.fio,
+        userInfoResult.fax,
+        userInfoResult.profile.avatar,
+        userInfoResult.academicDegree,
+        userInfoResult.academicRank,
+        userInfoResult.education,
+        userInfoResult.shortName,
+        userInfoResult.workPlace,
+        userInfoResult.position,
+        userInfoResult.email,
+        userInfoResult.mobilePhoneNumber,
+        userInfoResult.invitesCount,
+        userInfoResult.departuresCount,
+        userInfoResult.publishsCount,
+        userInfoResult.membershipsCount,
+        userInfoResult.scientificInterests,
+        userInfoResult.consularOffices,
+        userInfoResult.memberships,
+      );
+    });
   }
 
   private _parse(data: string): string[] | null {
     if (data) {
       var separatedData = data.split(",");
-      return separatedData.map(function(partData) { return partData.trim();  });
+      return separatedData.map(function (partData) { return partData.trim(); });
     }
 
     return null;
@@ -71,9 +79,11 @@ export class ProfileComponent implements OnInit {
     let bytes = new Uint8Array(length);
 
     for (let index = 0; index < length; index++) {
-        byteArray.push(binary_string.charCodeAt(index));
+      byteArray.push(binary_string.charCodeAt(index));
     }
 
     return byteArray;
   }
+
+
 }

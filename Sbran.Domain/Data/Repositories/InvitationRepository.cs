@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
 {
-	/// <summary>
-	/// Репозиторий приглашений
-	/// </summary>
-	public sealed class InvitationRepository : IInvitationRepository
+    /// <summary>
+    /// Репозиторий приглашений
+    /// </summary>
+    public sealed class InvitationRepository : IInvitationRepository
     {
         private readonly IAlienRepository _alienRepository;
         private readonly IVisitDetailRepository _visitDetailRepository;
@@ -128,9 +128,31 @@ namespace Sbran.Domain.Data.Repositories
             return invitation;
         }
 
-		public Task<List<Invitation>> GetAllAsync()
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public Task<List<Invitation>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task SetReport(Guid id, Guid parentId)
+        {
+            var invitation = await _domainContext.Invitations.FirstOrDefaultAsync(e => e.Id == parentId);
+            if (invitation != null)
+            {
+                invitation.ReportId = id;
+                _domainContext.Update(invitation);
+                await _domainContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task Agree(Guid id)
+        {
+            var invitation = await _domainContext.Invitations.FirstOrDefaultAsync(e => e.Id == id);
+            if (invitation != null)
+            {
+                invitation.SetInvitationStatus(Enums.InvitationStatus.Agreement);
+                _domainContext.Update(invitation);
+                await _domainContext.SaveChangesAsync();
+            }
+        }
+    }
 }

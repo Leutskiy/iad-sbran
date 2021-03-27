@@ -33,6 +33,14 @@ namespace Sbran.Domain.Data.Adapters
         public DbSet<ChatRoomList> ChatRoomLists { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<ChatMessageFile> ChatMessageFiles { get; set; }
+        public DbSet<Departure> Departures { get; set; }
+        public DbSet<ConsularOffice> ConsularOffices { get; set; }
+        public DbSet<InternationalAgreement> InternationalAgreements { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
+        public DbSet<Publication> Publications { get; set; }
+        public DbSet<ScientificInterests> ScientificInterests { get; set; }
+        public DbSet<Appendix> Appendixs { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         /// <summary>
         /// Конструктор контекста домена
@@ -88,6 +96,14 @@ namespace Sbran.Domain.Data.Adapters
             modelBuilder.ApplyConfiguration(new ChatRoomListConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new ChatMessageConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new ChatMessageFileConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new DepartureConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new ConsularOfficeConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new InternationalAgreementConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new MembershipConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new PublicationConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new ScientificInterestsConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new AppendixConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new ReportConfiguration(SchemaName));
         }
     }
 }

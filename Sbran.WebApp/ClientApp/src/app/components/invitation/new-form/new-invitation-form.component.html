@@ -4,7 +4,7 @@
   <!-- TODO: Надо данные передавать как-то иначе - более аккуратно, без проверок -->
   <!-- Форма редактирования приглашения -->
   <div class="list-group list-group-flush border mt-3">
-    <app-visit-details-invitation  [title]="visitDetailsTitle" [scope]="scope" [visitDetails]="invitation.visitDetail">
+    <app-visit-details-invitation [title]="visitDetailsTitle" [scope]="scope" [visitDetails]="invitation.visitDetail">
       <!-- Детали визита приглашенного -->
     </app-visit-details-invitation>
 
@@ -30,14 +30,33 @@
   </div>
 
   <!-- Дополнительные кнопки для создания приглашени с нуля -->
-  <div class="row mt-5" [class.invisible]="!isNew">
+  <div class="row mt-5">
     <div class="col-md-12 text-right">
-      <button type="button" class="btn btn-outline-dark" (click)="save()">
+      <button type="button" class="btn btn-outline-dark" [class.invisible]="!isNew" (click)="save()">
         <span><b>Сохранить</b></span>
       </button>
       <button type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
         <span><b>Отменить</b></span>
       </button>
+      <div class="col-md-3">
+        <div *ngIf="invitation.id">
+          <a routerLink="/profile/{{profileId}}/employee/{{employeeId}}/report/{{invitation.id}}/create/{{invitation.reportId}}/invitation" class="btn btn-warning"> Отчет </a>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div *ngIf="invitation.invitationStatus==0;">
+          <button type="button" class="btn btn-outline-dark ml-2" (click)="agree(invitation.id)">
+            <span><b>Согласовать</b></span>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <a href="api/v1/invitation/{{invitation.id}}/report" class="btn btn-outline-dark ml-2" (click)="report(invitation.id)">
+          <span><b>Сформировать приглашение</b></span>
+        </a>
+      </div>
+
     </div>
   </div>
 </div>

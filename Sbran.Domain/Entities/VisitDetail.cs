@@ -71,6 +71,16 @@ namespace Sbran.Domain.Entities
         /// Кратность визы
         /// </summary>
         public VisaMultiplicity? VisaMultiplicity { get; private set; }
+        
+        /// <summary>
+        /// Тип приема
+        /// </summary>
+        public string? TypeReception { get; private set; }
+
+        /// <summary>
+        /// Финансовые условия
+        /// </summary>
+        public FinancialCondition? FinancialCondition { get; private set; }
 
 		#region setters
 

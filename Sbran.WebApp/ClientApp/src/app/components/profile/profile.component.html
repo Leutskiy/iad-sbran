@@ -1,61 +1,9 @@
 <!-- PROFILE -->
 <div class="container">
   <!-- PROFILE SIDEBAR -->
+
   <div class="row">
-    <div class="col-md-2 pr-md-0">
-      <div class="profile-menu border">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">
-              <i class="fa fa-home fa-fw"></i>
-              Главная
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="chat/{{profileId}}">
-              <i class="fa fa-envelope-o fa-fw"></i>
-              Сообщения
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="profile/{{profileId}}/employee/{{employeeId}}/invitation">
-              <i class="fa fa-globe fa-fw"></i>
-              Приглашения
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-plane fa-fw"></i>
-              Выезды
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-university fa-fw"></i>
-              Публикации
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-briefcase fa-fw"></i>
-              Проекты
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-cogs fa-fw"></i>
-              Настройки
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-flag-o fa-fw"></i>
-              Помощь
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+   
     <div class="col-md-3 pr-md-0">
       <div class="profile-sidebar border">
         <div class="profile-picture text-center">
@@ -66,6 +14,19 @@
         </div>
         <div class="profile-buttons text-center">
           <button type="button" class="btn" routerLink="information"><span class="glyphicon glyphicon-pencil"></span>Редактировать</button>
+          <button type="button" class="btn" routerLink="consularOffice/{{employeeId}}"><span class="glyphicon glyphicon-pencil"></span>Консульские учреждения</button>
+        </div>
+        <div class="profile-buttons text-center">
+          <button type="button" class="btn" routerLink="internationalAgreement/{{employeeId}}"><span class="glyphicon glyphicon-pencil"></span>Международные соглашения</button>
+        </div>
+        <div class="profile-buttons text-center">
+          <button type="button" class="btn" routerLink="membership/{{employeeId}}"><span class="glyphicon glyphicon-pencil"></span>Членство в международных организациях</button>
+        </div>
+        <div class="profile-buttons text-center">
+          <button type="button" class="btn" routerLink="membership/{{employeeId}}"><span class="glyphicon glyphicon-pencil"></span>Членство в редколлегиях российских и иностранных журналов</button>
+        </div>
+        <div class="profile-buttons text-center">
+          <button type="button" class="btn" routerLink="scientificInterests/{{employeeId}}"><span class="glyphicon glyphicon-pencil"></span>Научные интересы</button>
         </div>
         <div class="profile-rating card text-center">
           <div class="card-header">
@@ -155,13 +116,52 @@
               </span>
             </div>
           </div>
+          <br>
+          <div class="form-group row">
+            <label for="memberships" class="col-md-4 col-form-label">Членство:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="memberships" [class.empty-field]="!!userInfo.education">
+                {{userInfo.memberships}}
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="scientificInterests" class="col-md-4 col-form-label">Научные интересы:</label>
+            <div class="col-md-8">
+              <span class="form-control" id="scientificInterests" [class.empty-field]="!!userInfo.education">
+                {{userInfo.scientificInterests}}
+              </span>
+            </div>
+          </div>
           <div class="profile-achievements row">
             <div class="card-columns">
               <div class="card bg-dark">
                 <div class="card-body text-center">
                   <a href="#">
-                    <p class="card-text">Членство
-                      <span class="badge badge-warning">42</span>
+                    <p class="card-text">
+                      Членство
+                      <span class="badge badge-warning">{{userInfo.membershipsCount}}</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div class="card bg-dark">
+                <div class="card-body text-center">
+                  <a routerLink="publish/{{employeeId}}">
+                    <p class="card-text">
+                      Публикации
+                      <span class="badge badge-warning">{{userInfo.publishsCount}}</span>
+                    </p>
+                  </a>
+                </div>
+              </div>
+              <div class="card bg-dark">
+                <div class="card-body text-center">
+                  <a routerLink="departure/{{employeeId}}">
+                    <p class="card-text">
+                      Выезды
+                      <span class="badge badge-warning">{{userInfo.departuresCount}}</span>
                     </p>
                   </a>
                 </div>
@@ -169,25 +169,8 @@
               <div class="card bg-dark">
                 <div class="card-body text-center">
                   <a href="#">
-                    <p class="card-text">Публикации
-                      <span class="badge badge-warning">7</span>
-                    </p>
-                  </a>
-                </div>
-              </div>
-              <div class="card bg-dark">
-                <div class="card-body text-center">
-                  <a href="#">
-                    <p class="card-text">Выезды
-                      <span class="badge badge-warning">24</span>
-                    </p>
-                  </a>
-                </div>
-              </div>
-              <div class="card bg-dark">
-                <div class="card-body text-center">
-                  <a href="#">
-                    <p class="card-text">Проекты
+                    <p class="card-text">
+                      Проекты
                       <span class="badge badge-warning">1</span>
                     </p>
                   </a>
@@ -196,7 +179,8 @@
               <div class="card bg-dark">
                 <div class="card-body text-center">
                   <a href="#">
-                    <p class="card-text">Соавторы
+                    <p class="card-text">
+                      Соавторы
                       <span class="badge badge-warning">13</span>
                     </p>
                   </a>
@@ -204,9 +188,10 @@
               </div>
               <div class="card bg-dark">
                 <div class="card-body text-center">
-                  <a href="#">
-                    <p class="card-text">Приглашения
-                      <span class="badge badge-warning">3</span>
+                  <a href="profile/{{profileId}}/employee/{{employeeId}}/invitation">
+                    <p class="card-text">
+                      Приглашения
+                      <span class="badge badge-warning">{{userInfo.invitesCount}}</span>
                     </p>
                   </a>
                 </div>
