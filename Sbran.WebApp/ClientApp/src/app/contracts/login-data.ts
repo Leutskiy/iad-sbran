@@ -1,3 +1,5 @@
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+
 export interface LoginData {
   login: string,
   password: string
@@ -10,11 +12,11 @@ export interface RegistrationData {
 }
 
 export class User {
-    id: number;
-    username: string;
-    password: string;
-    profileId?: number;
-    token?: string;
+  id: number;
+  username: string;
+  password: string;
+  profileId?: number;
+  token?: string;
 }
 
 export class Contact {
@@ -41,13 +43,13 @@ export class Contact {
     homePhoneNumber: string | null,
     workPhoneNumber: string | null,
     mobilePhoneNumber: string | null): void {
-      this.id = id;
-      this.email = email;
-      this.postcode = postcode;
-      this.homePhoneNumber = homePhoneNumber;
-      this.workPhoneNumber = workPhoneNumber;
-      this.mobilePhoneNumber = mobilePhoneNumber;
-    }
+    this.id = id;
+    this.email = email;
+    this.postcode = postcode;
+    this.homePhoneNumber = homePhoneNumber;
+    this.workPhoneNumber = workPhoneNumber;
+    this.mobilePhoneNumber = mobilePhoneNumber;
+  }
 }
 
 export class Job {
@@ -62,9 +64,9 @@ export class Job {
   public init(
     workPlace: string | null,
     position: string | null): void {
-      this.workPlace = workPlace;
-      this.position = position;
-    }
+    this.workPlace = workPlace;
+    this.position = position;
+  }
 }
 
 export class ScientificInfo {
@@ -82,10 +84,10 @@ export class ScientificInfo {
     academicDegree: string | null,
     academicRank: string | null,
     education: string | null): void {
-      this.academicDegree = academicDegree;
-      this.academicRank = academicRank;
-      this.education = education;
-    }
+    this.academicDegree = academicDegree;
+    this.academicRank = academicRank;
+    this.education = education;
+  }
 }
 
 export class Profile {
@@ -106,11 +108,11 @@ export class Profile {
     userId: string,
     avatar: any[],
     webPages: string[] | null): void {
-      this.id = id;
-      this.userId = userId;
-      this.avatar = avatar;
-      this.webPages = webPages;
-    }
+    this.id = id;
+    this.userId = userId;
+    this.avatar = avatar;
+    this.webPages = webPages;
+  }
 }
 
 export class UserInfo {
@@ -118,6 +120,9 @@ export class UserInfo {
   private defaulAvatarValue: string = "assets/images/avatar.jpg";
 
   profile: Profile;
+  scientificInterests: string | null;
+  consularOffices: string | null;
+  memberships: string | null;
   fio: string | null;
   fax: string | null;
   academicDegree: string | null;
@@ -129,6 +134,11 @@ export class UserInfo {
   email: string | null;
   mobilePhoneNumber: string | null;
   avatarContent: string | null;
+
+  invitesCount: number | null;
+  departuresCount: number | null;
+  publishsCount: number | null;
+  membershipsCount: number | null;
 
   constructor() {
     this.profile = new Profile();
@@ -143,6 +153,13 @@ export class UserInfo {
     this.email = this.defaultFieldValue;
     this.mobilePhoneNumber = this.defaultFieldValue;
     this.avatarContent = null;
+    this.invitesCount = 0;
+    this.departuresCount = 0;
+    this.publishsCount = 0;
+    this.membershipsCount = 0;
+    this.scientificInterests = "";
+    this.consularOffices = "";
+    this.memberships = "";
   }
 
   public init(
@@ -156,21 +173,37 @@ export class UserInfo {
     workPlace: string | null,
     position: string | null,
     email: string | null,
-    mobilePhoneNumber: string | null): void {
-      this.mobilePhoneNumber = mobilePhoneNumber ? mobilePhoneNumber : this.mobilePhoneNumber;
-      this.academicDegree = academicDegree ? academicDegree : this.academicDegree;
-      this.academicRank = academicRank ? academicRank : this.academicRank;
-      this.education = education ? education : this.education;
-      this.shortName = shortName ? shortName : this.shortName;
-      this.workPlace = workPlace ? workPlace : this.workPlace;
-      this.position = position ? position : this.position;
-      this.avatarContent = avatarBase64String
-        ? `data:image/jpeg;base64,${avatarBase64String}`
-        : this.defaulAvatarValue;
-      this.email = email ? email : this.email;
-      this.fio = fio ? fio : this.fio;
-      this.fax = fax ? fax : this.fax;
-    }
+    mobilePhoneNumber: string | null,
+    invitesCount: number | null,
+    departuresCount: number | null,
+    publishsCount: number | null,
+    membershipsCount: number | null,
+    scientificInterests: string | null,
+    consularOffices: string | null,
+    memberships: string | null,
+  ): void {
+    this.mobilePhoneNumber = mobilePhoneNumber ? mobilePhoneNumber : this.mobilePhoneNumber;
+    this.academicDegree = academicDegree ? academicDegree : this.academicDegree;
+    this.academicRank = academicRank ? academicRank : this.academicRank;
+    this.education = education ? education : this.education;
+    this.shortName = shortName ? shortName : this.shortName;
+    this.workPlace = workPlace ? workPlace : this.workPlace;
+    this.position = position ? position : this.position;
+    this.avatarContent = avatarBase64String
+      ? `data:image/jpeg;base64,${avatarBase64String}`
+      : this.defaulAvatarValue;
+    this.email = email ? email : this.email;
+    this.fio = fio ? fio : this.fio;
+    this.fax = fax ? fax : this.fax;
+    this.invitesCount = invitesCount ? invitesCount : this.invitesCount;
+    this.departuresCount = departuresCount ? departuresCount : this.departuresCount;
+    this.publishsCount = publishsCount ? publishsCount : this.publishsCount;
+    this.membershipsCount = membershipsCount ? membershipsCount : this.membershipsCount;
+
+    this.scientificInterests = scientificInterests ? scientificInterests : this.scientificInterests;
+    this.consularOffices = consularOffices ? consularOffices : this.consularOffices;
+    this.memberships = memberships ? memberships : this.memberships;
+  }
 }
 
 export class StateRegistration {
@@ -188,10 +221,10 @@ export class StateRegistration {
     id: string,
     inn: string | null,
     ogrnip: string | null): void {
-      this.id = id;
-      this.inn = inn;
-      this.ogrnip = ogrnip;
-    }
+    this.id = id;
+    this.inn = inn;
+    this.ogrnip = ogrnip;
+  }
 }
 
 export class Organization {
@@ -219,13 +252,13 @@ export class Organization {
     stateRegistrationId: string | null,
     inn: string | null,
     ogrnip: string | null): void {
-      this.id = id;
-      this.name = name;
-      this.shortName = shortName;
-      this.legalAddress = legalAddress;
-      this.scientificActivity = scientificActivity;
-      this.stateRegistration.init(stateRegistrationId, inn, ogrnip);
-    }
+    this.id = id;
+    this.name = name;
+    this.shortName = shortName;
+    this.legalAddress = legalAddress;
+    this.scientificActivity = scientificActivity;
+    this.stateRegistration.init(stateRegistrationId, inn, ogrnip);
+  }
 }
 
 export class Employee {
@@ -254,16 +287,17 @@ export class Employee {
     education: string | null,
     workPlace: string | null,
     position: string | null): void {
-      this.id = id;
-      this.job.init(workPlace, position);
-      this.scientificInfo.init(academicDegree, academicRank, education);
-    }
+    this.id = id;
+    this.job.init(workPlace, position);
+    this.scientificInfo.init(academicDegree, academicRank, education);
+  }
 }
 
 export class MessageDto {
   public user: string = '';
   public messageText: string = '';
 }
+
 
 export enum Gender {
   male,
@@ -275,6 +309,11 @@ export enum VisaMultiplicity {
   single,
   double,
   multiple
+}
+
+export enum FinancialCondition {
+  host,
+  accepted
 }
 
 export interface Passport2 {
@@ -362,26 +401,26 @@ export class Passport {
     issuePlace: string | null,
     departmentCode: string | null,
     identityDocument: string | null): void {
-      this.id = id;
-      this.nameRus = nameRus;
-      this.nameEng = nameEng;
-      this.surnameRus = surnameRus;
-      this.surnameEng = surnameEng;
-      this.patronymicNameRus = patronymicNameRus;
-      this.patronymicNameEng = patronymicNameEng;
-      this.gender = gender;
-      this.birthDate = birthDate;
-      this.birthPlace = birthPlace;
-      this.birthCountry = birthCountry;
-      this.residence = residence;
-      this.citizenship = citizenship;
-      this.residenceRegion = residenceRegion;
-      this.residenceCountry = residenceCountry;
-      this.issueDate = issueDate;
-      this.issuePlace = issuePlace;
-      this.departmentCode = departmentCode;
-      this.identityDocument = identityDocument;
-    }
+    this.id = id;
+    this.nameRus = nameRus;
+    this.nameEng = nameEng;
+    this.surnameRus = surnameRus;
+    this.surnameEng = surnameEng;
+    this.patronymicNameRus = patronymicNameRus;
+    this.patronymicNameEng = patronymicNameEng;
+    this.gender = gender;
+    this.birthDate = birthDate;
+    this.birthPlace = birthPlace;
+    this.birthCountry = birthCountry;
+    this.residence = residence;
+    this.citizenship = citizenship;
+    this.residenceRegion = residenceRegion;
+    this.residenceCountry = residenceCountry;
+    this.issueDate = issueDate;
+    this.issuePlace = issuePlace;
+    this.departmentCode = departmentCode;
+    this.identityDocument = identityDocument;
+  }
 }
 
 /* Описание DTO для просмотра и изменения данных*/
@@ -430,6 +469,8 @@ export class VisitDetail {
   visaCity: string | null;
   visaCountry: string | null;
   visaMultiplicity: VisaMultiplicity | null;
+  financialCondition: FinancialCondition | null;
+  typeReception: string | null;
 }
 
 export class ForeignParticipant {
@@ -444,6 +485,8 @@ export class ForeignParticipant {
 
 export class Invitation {
   id: string;
+  reportId: string | null;
+  invitationStatus: InvitationStatus | null;
   alien: Alien;
   employee: Employee;
   visitDetail: VisitDetail | null;
@@ -452,6 +495,8 @@ export class Invitation {
   constructor() {
     this.id = "";
     this.alien = new Alien();
+    this.reportId = "";
+    this.invitationStatus = InvitationStatus.Creating;
     this.employee = new Employee();
     this.visitDetail = new VisitDetail();
     this.foreignParticipants = [];
@@ -469,3 +514,235 @@ export class NewInvitationDto {
     this.foreignParticipants = [];
   }
 }
+
+
+export class ChatRoomsInfo {
+
+  private defaulAvatarValue: string = "assets/images/avatar.jpg";
+  account: string | null;
+  image: string | null;
+  userId: string | null;
+  chatRoomId: string | null;
+  lastmessagedate: string | null;
+  lastmessage: string | null;
+
+  constructor() {
+    this.account = this.account;
+    this.image = this.image;
+    this.chatRoomId = this.chatRoomId;
+    this.userId = this.userId;
+    this.lastmessage = this.lastmessage;
+    this.lastmessagedate = this.lastmessagedate;
+  }
+
+  public init(
+    userid: string | null,
+    image: string | null,
+    userfullname: string | null,
+    lastmessage: string | null,
+    chatRoomId: string | null,
+    lastmessagedate: string | null): void {
+    this.account = userid ? userid : this.account;
+    this.image = image ?
+      `data:image/jpeg;base64,${image}`
+      : this.defaulAvatarValue;;
+    this.chatRoomId = chatRoomId ? chatRoomId : this.chatRoomId;
+    this.userId = userfullname ? userfullname : this.userId;
+    this.lastmessage = lastmessage ? lastmessage : this.lastmessage;
+    this.lastmessagedate = lastmessagedate ? lastmessagedate : this.lastmessagedate;
+  }
+}
+
+export class MyMessagesInRoom {
+
+  isValid: boolean | null;
+  message: string | null;
+  dateTime: string | null;
+  profileId: string | null;
+  profileTo: string | null;
+  isFile: boolean | null;
+  fileId: string | null;
+  fileName: string | null;
+
+  constructor() {
+    this.isValid = this.isValid;
+    this.message = this.message;
+    this.dateTime = this.dateTime;
+    this.profileId = this.profileId;
+    this.profileTo = this.profileTo;
+    this.isFile = this.isFile;
+    this.fileId = this.fileId;
+    this.fileName = this.fileName;
+  }
+
+  public init(
+    isValid: boolean | null,
+    message: string | null,
+    profileId: string | null,
+    profileTo: string | null,
+    isFile: boolean | null,
+    fileId: string | null,
+    fileName: string | null,
+    dateTime: string | null): void {
+    this.isValid = isValid ? isValid : this.isValid;
+    this.message = message ? message : this.message;
+    this.profileId = profileId ? profileId : this.profileId;
+    this.dateTime = dateTime ? dateTime : this.dateTime;
+    this.profileTo = profileTo ? profileTo : this.profileTo;
+    this.isFile = isFile ? isFile : this.isFile;
+    this.fileId = fileId ? fileId : this.fileId;
+    this.fileName = fileName ? fileName : this.fileName;
+  }
+}
+
+export class Message {
+  account: string;
+  chatRoomId: string;
+  message: string;
+
+  constructor() {
+    this.account = "";
+    this.chatRoomId = "";
+    this.message = "";
+  }
+
+  public init(
+    account: string,
+    chatRoomId: string,
+    message: string) {
+    this.account = account;
+    this.chatRoomId = chatRoomId;
+    this.message = message;
+  }
+}
+
+export class Departure {
+  id: string | null;
+  sendingCountry: string | null;
+  cityOfBusiness: string | null;
+  sourceOfFinancing: string | null;
+  basicOfDeparture: string | null;
+  hostOrganization: string | null;
+  placeOfResidence: string | null;
+  purposeOfTheTrip: string | null;
+  justificationOfTheBusiness: string | null;
+  dateStart: Date | string | null;
+  departureStatus: DepartureStatus | null;
+  reportId: string | null;
+  dateEnd: Date | string | null;
+  employeeId: string | null;
+}
+
+
+export class ConsularOffice {
+  id: string | null;
+  nameOfTheConsularPost: string | null;
+  countryOfLocation: string | null;
+  cityOfLocation: string | null;
+  employeeId: string | null;
+}
+
+
+export class InternationalAgreement {
+  id: string | null;
+  theNameOfTheAgreement: string | null;
+  theFirstPartyToTheAgreement: string | null;
+  theSecondPartyToTheAgreement: string | null;
+  placeOfSigning: string | null;
+  textOfTheAgreement: string | null;
+  dateOfEntry: Date | string | null;
+  employeeId: string | null;
+}
+
+
+export class Membership {
+  id: string | null;
+  nameOfCompany: string | null;
+  statusInTheOrganization: string | null;
+  siteOfTheOrganization: string | null;
+  dateOfEntry: Date | string | null;
+  employeeId: string | null;
+}
+
+
+export class Publication {
+  id: string | null;
+  scientificAdvisor: string | null;
+  titleOfTheArticle: string | null;
+  abstract: string | null;
+  keywords: string | null;
+  mainTextOfTheArticle: string | null;
+  literature: string | null;
+  employeeId: string | null;
+}
+
+
+export class ScientificInterests {
+  id: string | null;
+  NameOfScientificInterests: string | null;
+  employeeId: string | null;
+}
+
+
+export enum ReportType {
+  /// <summary>
+  /// Приглашение
+  /// </summary>
+  Invition,
+  /// <summary>
+  /// Выезд
+  /// </summary>
+  Departure
+}
+
+export enum DepartureStatus {
+  /// <summary>
+  /// Не согласовано
+  /// </summary>
+  NonAgreement,
+
+  /// <summary>
+  /// Согласовано
+  /// </summary>
+  Agreement
+}
+
+export enum InvitationStatus {
+  /// <summary>
+  /// Создание
+  /// </summary>
+  Creating,
+
+  /// <summary>
+  /// Отправка в МВД
+  /// </summary>
+  Sending,
+
+  /// <summary>
+  /// Согласовано
+  /// </summary>
+  Agreement
+}
+
+export class Report {
+  id: string | null;
+  mainPart: string | null;
+  findings: string | null;
+  suggestion: string | null;
+  foreignInterest: string | null;
+
+  description: string | null;
+  fileBinary: string | null;
+  fileName: string | null;
+  reportType: ReportType | null;
+  parentId: string | null;
+  appendixId: string | null;
+
+  constructor() {
+    this.mainPart = "";
+    this.findings = "";
+    this.suggestion = "";
+    this.foreignInterest = "";
+  }
+}
+

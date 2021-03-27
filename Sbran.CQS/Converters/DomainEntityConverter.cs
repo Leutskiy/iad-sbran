@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using Sbran.Domain.Entities;
 using Sbran.Domain.Entities.System;
+using Sbran.Domain.Entities.Chat;
+using System;
 
 namespace Sbran.CQS.Converters
 {
-	public static class DomainEntityConverter
+    public static class DomainEntityConverter
     {
         public static ProfileResult ConvertToResult(Profile profile)
         {
@@ -43,12 +45,12 @@ namespace Sbran.CQS.Converters
                 PatronymicNameEng = passport.PatronymicNameEng,
                 BirthPlace = passport.BirthPlace,
                 BirthCountry = passport.BirthCountry,
-                Citizenship =  passport.Citizenship,
-                Residence =  passport.Residence,
-                ResidenceCountry =  passport.ResidenceCountry,
-                ResidenceRegion =  passport.ResidenceRegion,
-                IdentityDocument =  passport.IdentityDocument,
-                IssuePlace =  passport.IssuePlace,
+                Citizenship = passport.Citizenship,
+                Residence = passport.Residence,
+                ResidenceCountry = passport.ResidenceCountry,
+                ResidenceRegion = passport.ResidenceRegion,
+                IdentityDocument = passport.IdentityDocument,
+                IssuePlace = passport.IssuePlace,
                 DepartmentCode = passport.DepartmentCode,
                 BirthDate = passport.BirthDate,
                 IssueDate = passport.IssueDate,
@@ -84,6 +86,8 @@ namespace Sbran.CQS.Converters
                 PeriodInDays = visitDetail.PeriodDays,
                 ArrivalDate = visitDetail.ArrivalDate,
                 DepartureDate = visitDetail.DepartureDate,
+                TypeReception = visitDetail.TypeReception,
+                FinancialCondition = visitDetail.FinancialCondition
             };
         }
 
@@ -137,7 +141,13 @@ namespace Sbran.CQS.Converters
                 AcademicRank = employee.AcademicRank,
                 Education = employee.Education,
                 Position = employee.Position,
-                WorkPlace = employee.WorkPlace
+                WorkPlace = employee.WorkPlace,
+                Invitations = employee.Invitations,
+                Departures = employee.Departures,
+                Publications = employee.Publications,
+                Memberships = employee.Memberships,
+                ScientificInterests = employee.ScientificInterests,
+                ConsularOffices = employee.ConsularOffices
             };
         }
 
@@ -178,7 +188,54 @@ namespace Sbran.CQS.Converters
                 Alien = alienResult,
                 Employee = employeeResult,
                 VisitDetail = visitDetailResult,
+                InvitationStatus = invitation.Status,
+                ReportId = invitation.ReportId,
                 ForeignParticipants = foreignParticipantResultCollection
+            };
+        }
+
+        public static ChatRoomResult ConvertToResult(
+            User user,
+            ChatRoomList chatRoomList,
+            ChatMessage chatMessage
+            )
+        {
+            return new ChatRoomResult
+            {
+                userid = user.Id,
+                account = user.Account ?? "",
+                //Пока что хардкор
+                image = user.Profile.Photo,
+                chatRoomId = chatRoomList?.ChatRoomId ?? Guid.NewGuid(),
+                lastmessage = chatMessage?.Message ?? "",
+                lastmessagedate = chatMessage?.DateTime ?? null,
+            };
+        }
+
+        public static ChatMessageResult ConvertToResult(
+            User user,
+            User userTo,
+            ChatMessage chatMessage
+            )
+        {
+            return new ChatMessageResult
+            {
+                Message = chatMessage.Message ?? "",
+                DateTime = chatMessage.DateTime,
+                profileTo = userTo.ProfileId,
+                profileId = user.ProfileId
+            };
+        }
+
+        public static ChatMessageFileResult ConvertToResult(
+            ChatMessageFile chatMessageFile
+            )
+        {
+            return new ChatMessageFileResult
+            {
+                ChatMessageId = chatMessageFile.ChatMessageId,
+                FileBinary = chatMessageFile.FileBinary,
+                Id = chatMessageFile.Id
             };
         }
     }

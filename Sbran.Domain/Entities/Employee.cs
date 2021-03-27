@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace Sbran.Domain.Entities
 {
-	/// <summary>
-	/// Сотрудник
-	/// </summary>
-	public sealed class Employee
+    /// <summary>
+    /// Сотрудник
+    /// </summary>
+    public sealed class Employee
     {
         [UsedImplicitly]
-		private Employee() => Id = Guid.NewGuid();
+        private Employee() => Id = Guid.NewGuid();
 
-		/// <summary>
-		/// Инициализировать сотрудника
-		/// </summary>
-		/// <param name="userId">Идентификатор пользователя системы</param>
-		public Employee(Guid userId) : this()
+        /// <summary>
+        /// Инициализировать сотрудника
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя системы</param>
+        public Employee(Guid userId) : this()
         {
             UserId = userId;
             Invitations = new List<Invitation>();
@@ -87,12 +87,32 @@ namespace Sbran.Domain.Entities
         /// <summary>
         /// Все приглашения сотрудника
         /// </summary>
-		public List<Invitation> Invitations { get; private set; }
+		public List<Invitation> Invitations { get; set; }
 
-		/// <summary>
-		/// Научная степень
-		/// </summary>
-		public string? AcademicDegree { get; private set; }
+        /// TODO: сделать Lazy
+        /// <summary>
+        /// Все выезды сотрудника
+        /// </summary>
+        public List<Departure> Departures { get; set; }
+
+        /// TODO: сделать Lazy
+        /// <summary>
+        /// Все выезды сотрудника
+        /// </summary>
+        public List<Membership> Memberships { get; set; }
+
+        /// TODO: сделать Lazy
+        /// <summary>
+        /// Все выезды сотрудника
+        /// </summary>
+        public List<Publication> Publications { get; set; }
+        public List<ConsularOffice> ConsularOffices { get; set; }
+        public List<ScientificInterests> ScientificInterests { get; set; }
+
+        /// <summary>
+        /// Научная степень
+        /// </summary>
+        public string? AcademicDegree { get; private set; }
 
         /// <summary>
         /// Научное звание

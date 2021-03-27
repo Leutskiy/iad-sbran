@@ -35,6 +35,8 @@ namespace Sbran.Domain.Configurations
             builder.Property(visitDetail => visitDetail.PeriodDays).IsRequired(false).HasColumnName("PeriodDays");
             builder.Property(visitDetail => visitDetail.ArrivalDate).IsRequired(false).HasColumnName("ArrivalDate");
             builder.Property(visitDetail => visitDetail.DepartureDate).IsRequired(false).HasColumnName("DepartureDate");
+            builder.Property(visitDetail => visitDetail.FinancialCondition).IsRequired(false).HasColumnName("FinancialCondition");
+            builder.Property(visitDetail => visitDetail.TypeReception).IsRequired(false).HasColumnName("TypeReception");
         }
     }
 }

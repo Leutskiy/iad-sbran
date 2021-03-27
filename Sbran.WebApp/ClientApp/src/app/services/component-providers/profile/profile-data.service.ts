@@ -35,7 +35,7 @@ export class ProfileDataService extends ComponentDataService<Profile> {
       avatar: base64String,
       webPages: componentData.webPages
     }
-
+    console.log(base64String);
     return this.client.post<any>(`${this.uriPath}/${id}`, profile, options);
   }
 }

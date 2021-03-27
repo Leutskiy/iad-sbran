@@ -21,8 +21,8 @@ export class VisitDetailsInvitationComponent implements OnInit {
   isNewForm: boolean = false;
 
   constructor(
-      private activatedRoute: ActivatedRoute,
-      private invitationDataService: InvitationDataService) {
+    private activatedRoute: ActivatedRoute,
+    private invitationDataService: InvitationDataService) {
     this.visitDetails = new VisitDetail();
   }
 
@@ -34,7 +34,6 @@ export class VisitDetailsInvitationComponent implements OnInit {
 
   public viewForm() {
     this.viewMode = !this.viewMode;
-
     if (!this.viewMode) {
       this.reset();
     }

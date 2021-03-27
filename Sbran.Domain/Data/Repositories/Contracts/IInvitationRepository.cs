@@ -17,5 +17,8 @@ namespace Sbran.Domain.Data.Repositories.Contracts
         Task<List<Invitation>> GetAllAsync();
 
         Task<Invitation> GetAsync(Guid id);
+
+        Task SetReport(Guid id, Guid parentId);
+        Task Agree(Guid id);
     }
 }

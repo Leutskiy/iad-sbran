@@ -1,4 +1,7 @@
-﻿namespace Sbran.CQS.Read.Results
+﻿using Sbran.Domain.Entities;
+using System.Collections.Generic;
+
+namespace Sbran.CQS.Read.Results
 {
     /// <summary>
     /// Информация о пользователе
@@ -59,5 +62,28 @@
         /// Должность сотрдуника
         /// </summary>
         public string Position { get; set; }
+
+        /// <summary>
+        /// Кол-во приглашеинй
+        /// </summary>
+        public int? InvitesCount { get; set; }
+
+        /// <summary>
+        /// Кол-во выездов
+        /// </summary>
+        public int? DeparturesCount { get; set; }
+
+        /// <summary>
+        /// Кол-во публикаций
+        /// </summary>
+        public int? PublishsCount { get; set; }
+
+        /// <summary>
+        /// Кол-во членств
+        /// </summary>
+        public int? MembershipsCount { get; set; }
+        public string ScientificInterests { get; set; }
+        public List<ConsularOffice> ConsularOffices { get; set; }
+        public string Memberships { get; set; }
     }
 }

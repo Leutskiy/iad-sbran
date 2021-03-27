@@ -10,8 +10,8 @@ namespace Sbran.Domain.Entities
     /// </summary>
     public sealed class Invitation
     {
-		private Invitation()
-		{
+        private Invitation()
+        {
             Id = Guid.NewGuid();
         }
 
@@ -24,6 +24,11 @@ namespace Sbran.Domain.Entities
         /// Идентификатор иностранца
         /// </summary>
         public Guid AlienId { get; private set; }
+
+        /// <summary>
+        /// Идентификатор отчета
+        /// </summary>
+        public Guid? ReportId { get; set; }
 
         /// <summary>
         /// Идентификатор иностранца
@@ -49,6 +54,11 @@ namespace Sbran.Domain.Entities
         /// Детали поездки
         /// </summary>
         public VisitDetail? VisitDetail { get; private set; }
+
+        /// <summary>
+        /// Отчет
+        /// </summary>
+        public Report? Report { get; private set; }
 
         /// <summary>
         /// Сопровождение

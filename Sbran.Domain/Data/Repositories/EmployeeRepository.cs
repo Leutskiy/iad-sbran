@@ -8,13 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sbran.Domain.Entities.System;
+using System.Linq;
 
 namespace Sbran.Domain.Data.Repositories
 {
-	/// <summary>
-	/// Репозиторий сотрудников
-	/// </summary>
-	public sealed class EmployeeRepository : IEmployeeRepository
+    /// <summary>
+    /// Репозиторий сотрудников
+    /// </summary>
+    public sealed class EmployeeRepository : IEmployeeRepository
     {
         private readonly DomainContext _domainContext;
 
@@ -52,6 +53,7 @@ namespace Sbran.Domain.Data.Repositories
         {
             var employee = await _domainContext.Employees
                 .Include<Employee, List<Invitation>>(test => test.Invitations)
+                .Include<Employee, List<Departure>>(test => test.Departures)
                 .FirstOrDefaultAsync(empl => empl.Id == id);
 
             if (employee == null)
@@ -59,6 +61,12 @@ namespace Sbran.Domain.Data.Repositories
                 throw new Exception($"Сотрудник для {id} не найден");
             }
 
+            employee.Departures = await _domainContext.Departures.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.Invitations = await _domainContext.Invitations.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.Publications = await _domainContext.Publications.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.Memberships = await _domainContext.Memberships.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.ScientificInterests = await _domainContext.ScientificInterests.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.ConsularOffices = await _domainContext.ConsularOffices.Where(e => e.EmployeeId == employee.Id).ToListAsync();
             return employee;
         }
 
@@ -92,7 +100,7 @@ namespace Sbran.Domain.Data.Repositories
         public Employee Create(Guid userId)
         {
             var createdEmployee = new Employee(userId);
-            
+
             _domainContext.Set<Employee>().Add(createdEmployee);
 
             return createdEmployee;

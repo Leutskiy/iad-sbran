@@ -13,6 +13,11 @@
         /// <summary>
         /// Отправка в МВД
         /// </summary>
-        Sending
+        Sending,
+
+        /// <summary>
+        /// Согласовано
+        /// </summary>
+        Agreement
     }
 }

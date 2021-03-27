@@ -1,0 +1,82 @@
+<div *ngIf="tableMode; else CreateOrUpdate">
+  <div class="container">
+    <div class="table-wrapper">
+      <!-- Заголовок таблицы -->
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-12 d-inline-flex">
+            <div class="mr-auto"><h2><b>Консульские учреждения</b></h2></div>
+            <div class="input-group w-auto">
+              <div class="input-group-append">
+
+                <!-- Тут короче фикс под себя надо-->
+                <button type="button" class="btn btn-warning ml-2" (click)="add()">
+                  <span><b>Новое</b></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Таблица приглашений -->
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Наименование консульского учреждения</th>
+            <th scope="col">Страна местонахождения</th>
+            <th scope="col">Город местонахождения</th>
+            <th scope="col">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let consularOffice of consularOffices; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{consularOffice.nameOfTheConsularPost}}</td>
+            <td>{{consularOffice.countryOfLocation}}</td>
+            <td>{{consularOffice.cityOfLocation}}</td>
+            <td class="text-center">
+              <a class="view" (click)="edit(consularOffice)">
+                <i class="fa fa-share-square-o"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #CreateOrUpdate>
+  <div class="input-group mt-3 mb-3">
+
+    <!-- Страна командирования-->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Наименование консульского учреждения</label>
+        <input type="text" [(ngModel)]="consularOffice.nameOfTheConsularPost" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Страна местонахождения</label>
+        <input type="text" [(ngModel)]="consularOffice.countryOfLocation" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Город местонахождения</label>
+        <input type="text" [(ngModel)]="consularOffice.cityOfLocation" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+      <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+    </div>
+
+  </div>
+</ng-template>

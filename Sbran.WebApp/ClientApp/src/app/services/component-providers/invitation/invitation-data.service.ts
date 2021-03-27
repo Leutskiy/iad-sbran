@@ -27,6 +27,20 @@ export class InvitationDataService  {
     return this.http.put<any>(url, visitDetails, this.options);
   }
 
+  // согласовать приглашение
+  public agree(id: string): Observable<[]> {
+    let url = `${this.baseAddress}${this.uriInvitationPath}${id}/agree`;
+    console.log(`agree departure for ${id} by url: ` + url);
+    return this.http.get<[]>(url, this.options);
+  }
+
+  // сформировать приглашение
+  public report(id: string): Observable<[]> {
+    let url = `${this.baseAddress}${this.uriInvitationPath}${id}/report`;
+    console.log(`agree departure for ${id} by url: ` + url);
+    return this.http.get<[]>(url, this.options);
+  }
+
   // получить все приглашения конкретного сотрудника
   public getInvitationsByEmployeeId(employeeId: string): Observable<[]> {
     let url = `${this.baseAddress}${this.uriEmployeePath}${employeeId}/invitations`;

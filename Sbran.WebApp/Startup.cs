@@ -174,7 +174,10 @@ namespace Sbran.WebApp
 
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("https://localhost:5001").AllowCredentials();
+                    builder.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins("https://localhost:5001")
+                    .AllowCredentials();
                 });
             });
         }
@@ -228,8 +231,9 @@ namespace Sbran.WebApp
 
 				if (env.IsDevelopment())
 				{
-					spa.UseAngularCliServer(npmScript: "start");
-				}
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
 			});
 		}
 
@@ -249,9 +253,6 @@ namespace Sbran.WebApp
 			container.RegisterFrom<ServiceCompositionRoot>();
 			container.RegisterFrom<CommandCompositionRoot>();
 		}
-		
-
-
 	}
 }
 	

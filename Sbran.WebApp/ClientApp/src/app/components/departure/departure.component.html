@@ -1,0 +1,165 @@
+<div *ngIf="tableMode; else CreateOrUpdate">
+  <div class="container">
+    <div class="table-wrapper">
+      <!-- Заголовок таблицы -->
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-12 d-inline-flex">
+            <div class="mr-auto"><h2><b>Выезды</b></h2></div>
+            <div class="input-group w-auto">
+              <div class="input-group-append">
+
+                <!-- Тут короче фикс под себя надо-->
+                <button type="button" class="btn btn-warning ml-2" (click)="add()">
+                  <span><b>Новое</b></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Таблица приглашений -->
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Страна командирования</th>
+            <th scope="col">Город командирования</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Дата начала</th>
+            <th scope="col">Дата окончания</th>
+            <th scope="col">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let departure of departures; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{departure.sendingCountry}}</td>
+            <td>{{departure.cityOfBusiness}}</td>
+            <td>
+              <div *ngIf="departure.departureStatus==0;else another">Не согласован</div>
+              <ng-template #another>
+                Согласован
+              </ng-template>
+            </td>
+            <td>{{departure.dateStart}}</td>
+            <td>{{departure.dateEnd}}</td>
+            <td class="text-center">
+              <a class="view" (click)="edit(departure)">
+                <i class="fa fa-share-square-o"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #CreateOrUpdate>
+  <div class="input-group mt-3 mb-3">
+
+    <!-- Страна командирования-->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Страна командирования</label>
+        <input type="text" [(ngModel)]="departure.sendingCountry" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Город командирования</label>
+        <input type="text" [(ngModel)]="departure.cityOfBusiness" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Источник финансирования</label>
+        <input type="text" [(ngModel)]="departure.sourceOfFinancing" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Основание выезда</label>
+        <input type="text" [(ngModel)]="departure.basicOfDeparture" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Принимающая организация</label>
+        <input type="text" [(ngModel)]="departure.hostOrganization" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Место проживания</label>
+        <input type="text" [(ngModel)]="departure.placeOfResidence" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Цель командирования</label>
+        <input type="text" [(ngModel)]="departure.purposeOfTheTrip" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Обоснование командировки</label>
+        <input type="text" [(ngModel)]="departure.justificationOfTheBusiness" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Дата начала</label>
+        <input type="date" [(ngModel)]="departure.dateStart" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Дата окончания</label>
+        <input type="date" [(ngModel)]="departure.dateEnd" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <br />
+    </div>
+
+    <div class="col-md-3">
+      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+      <!--<input type="button" value="Согласовать" (click)="agree()" class="btn btn-warning" />-->
+
+    </div>
+
+    <div class="col-md-3">
+      <input type="button" value="Отменить" (click)="cancel()" class="btn btn-warning" />
+    </div>
+
+    <div class="col-md-3">
+      <div *ngIf="departure.id">
+        <a routerLink="report/{{departure.id}}/create/{{departure.reportId}}/departure" class="btn btn-warning"> Отчет </a>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div *ngIf="departure.departureStatus==0;">
+        <a (click)="agree(departure.id)" class="btn btn-warning"> Согласовать </a>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+</ng-template>

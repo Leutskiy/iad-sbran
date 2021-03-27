@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Invitation, Job, NewInvitationDto, Passport, ScientificInfo, VisitDetail } from '../../../contracts/login-data';
+import { Invitation, InvitationStatus, Job, NewInvitationDto, Passport, ScientificInfo, VisitDetail } from '../../../contracts/login-data';
 import { InvitationDataService } from '../../../services/component-providers/invitation/invitation-data.service';
 import { AlienContactsInvitationComponent } from '../../contacts/alien-contacts-invitation.component';
 import { AlienJobInvitationComponent } from '../../job/alien-job-invitation.component';
@@ -16,7 +16,7 @@ import { VisitDetailsInvitationComponent } from '../../visit-details/visit-detai
   styleUrls: ['./new-invitation-form.component.scss'],
   providers: [InvitationDataService]
 })
-export class NewInvitationFormComponent implements OnInit  {
+export class NewInvitationFormComponent implements OnInit {
 
   //@ViewChild(VisitDetailsInvitationComponent)
   private visitDetailsComponent: VisitDetailsInvitationComponent;
@@ -55,9 +55,9 @@ export class NewInvitationFormComponent implements OnInit  {
   alienStateRegistrationTitle: string = "Госудраственная регистрация приглашенного";
 
   constructor(
-      private router: Router,
-      private activatedRoute: ActivatedRoute,
-      private invitationService: InvitationDataService) {
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private invitationService: InvitationDataService) {
     this.job = new Job();
     this.invitation = new Invitation();
   }
@@ -113,16 +113,31 @@ export class NewInvitationFormComponent implements OnInit  {
     this.router.navigate([url]);
   }
 
+  public agree(id: string) {
+    this.invitationService.agree(id).subscribe(e => {
+      console.log("agree");
+      this.invitation.invitationStatus = InvitationStatus.Agreement;
+      //this.departures = JSON.parse(JSON.stringify(e));
+    })
+  }
+  
+  public report(id: string) {
+    this.invitationService.report(id).subscribe(e => {
+      console.log("report");
+      //this.invitation.invitationStatus = InvitationStatus.Agreement;
+      //this.departures = JSON.parse(JSON.stringify(e));
+    })
+  }
+
   private fill(): void {
     this.invitationService.getInvitationById(this.invitationId).subscribe(
       queryInvitationResult => {
         console.log(`queryInvitationResult: ` + queryInvitationResult);
-
         this.invitation = queryInvitationResult;
 
         queryInvitationResult.alien.passport = queryInvitationResult.alien.passport ?? new Passport();
         queryInvitationResult.visitDetail = queryInvitationResult.visitDetail ?? new VisitDetail();
-        
+
         // если задана дата рождения, то форматируем
         if (!!queryInvitationResult.alien.passport.birthDate) {
           let birthDate = new Date(queryInvitationResult.alien.passport.birthDate);
@@ -146,7 +161,7 @@ export class NewInvitationFormComponent implements OnInit  {
           let departureDate = new Date(queryInvitationResult.visitDetail.departureDate);
           queryInvitationResult.visitDetail.departureDate = this.formatDateToDatePickerString(departureDate);
         }
-        
+
         this.job.position = queryInvitationResult.alien.position;
         this.job.workPlace = queryInvitationResult.alien.workPlace;
       },
