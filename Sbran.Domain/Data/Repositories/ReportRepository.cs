@@ -27,7 +27,8 @@ namespace Sbran.Domain.Data.Repositories
                 MainPart = addedReport.MainPart,
                 Findings = addedReport.Findings,
                 ForeignInterest = addedReport.ForeignInterest,
-                Suggestion = addedReport.Suggestion
+                Suggestion = addedReport.Suggestion,
+                Status = addedReport.Status ?? false
 
             };
             _domainContext.Reports.Add(report);
@@ -45,7 +46,27 @@ namespace Sbran.Domain.Data.Repositories
 
         public async Task<List<Report>> GetAllAsync() => await _domainContext.Reports.ToListAsync();
 
-        public async Task<Report> GetAsync(Guid id) => await _domainContext.Reports.FirstOrDefaultAsync(e => e.Id == id);
+        public async Task<Report> GetAsync(Guid id)
+        {
+            var report = await _domainContext.Reports
+             .Include(e => e.ListOfScientists)
+             .Include(e => e.Appendices)
+             .FirstOrDefaultAsync(e => e.Id == id);
+
+            report.ListOfScientists = await _domainContext.ListOfScientists.Where(e => e.ReportId == id).ToListAsync();
+            report.Appendices = await _domainContext.Appendixs.Where(e => e.ReportId == id).ToListAsync();
+            return report;
+        }
+
+        public async Task SetStatus(Guid Id)
+        {
+            var report = await _domainContext.Reports.FirstOrDefaultAsync(e => e.Id == Id);
+            if (report != null)
+            {
+                report.Status = true;
+                _domainContext.Update(report);
+            }
+        }
 
         public async Task UpdateAsync(Guid currentReportId, ReportDto newReport)
         {
@@ -56,7 +77,9 @@ namespace Sbran.Domain.Data.Repositories
                 report.Findings = newReport.Findings;
                 report.ForeignInterest = newReport.ForeignInterest;
                 report.Suggestion = newReport.Suggestion;
+                report.Status = newReport.Status ?? true;
             }
+            _domainContext.Update(report);
         }
     }
 }

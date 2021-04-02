@@ -49,7 +49,7 @@ namespace Sbran.CQS.Read
         public async Task<InvitationResult> ExecuteAsync(Guid invitationId)
         {
             Contract.Argument.IsNotEmptyGuid(invitationId, nameof(invitationId));
-
+            
             var invitation = await _invitationRepository.GetAsync(invitationId);
 
             var alienResult = await _alienReadCommand.ExecuteAsync(invitation.AlienId);

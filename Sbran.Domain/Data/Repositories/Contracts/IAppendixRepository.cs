@@ -9,6 +9,7 @@ namespace Sbran.Domain.Data.Repositories.Contracts
     public interface IAppendixRepository
     {
         Task DeleteAsync(Guid id);
+        Task DeleteAllAsync(Guid id);
 
         Task<List<Appendix>> GetAllAsync();
 

@@ -1,86 +1,253 @@
-<div class="input-group mt-3 mb-3">
+<div *ngIf="isNew">
+  <div class="input-group mt-3 mb-3">
 
-  <div class="col-md-12">
-    <div class="form-group">
-      <label data-toggle="tooltip" data-placement="top" title="Приводятся сравнительные данные по развитию изучаемой темы в нашей стране и за рубежом. Отбираются и анализируются факты, которые вызывают особый интерес с точки зрения полезности зарубежной информации для своевременного восприятия новинок науки и техники, а также новых научных программ и международных проектов.
+    <div class="col-md-12">
+      <div class="form-group">
+        <label data-toggle="tooltip" data-placement="top" title="Приводятся сравнительные данные по развитию изучаемой темы в нашей стране и за рубежом. Отбираются и анализируются факты, которые вызывают особый интерес с точки зрения полезности зарубежной информации для своевременного восприятия новинок науки и техники, а также новых научных программ и международных проектов.
 Сообщаются сведения о проделанной работе и достигнутых результатах. Описываются наиболее перспективные методики и удачные технические решения">
-        Основная часть
-      </label>
-      <textarea type="text" id="mainPart" [(ngModel)]="report.mainPart" class="form-control"></textarea>
-    </div>
-  </div>
-
-  <div class="col-md-12">
-    <div class="form-group">
-      <label data-toggle="tooltip" data-placement="top" title="Оценка новых зарубежных и совместных достижений, их сравнение и обобщение. Анализ существующего положения по той или иной проблеме (теме), а также вероятного развития событий в будущем">
-        Выводы
-      </label>
-      <textarea type="text" id="findings" [(ngModel)]="report.findings" class="form-control"></textarea>
-    </div>
-  </div>
-
-  <div class="col-md-12">
-    <div class="form-group">
-      <label data-toggle="tooltip" data-placement="top" title="Предложения по использованию полученных результатов в интересах российской науки. Специальный акцент делается на ожидаемой экономической эффективности выполнения конкретных заданий и отдельных разделов академических и государственных научно-технических программ">
-        Предложения
-      </label>
-      <textarea type="text" id="suggestion" [(ngModel)]="report.suggestion" class="form-control"></textarea>
-    </div>
-  </div>
-
-  <div class="col-md-12">
-    <div class="form-group" *ngIf="!invitationId">
-      <label data-toggle="tooltip" data-placement="top" title="Случаи необычного интереса к вопросам, выходящим за определенный круг задач командировки со стороны иностранцев (Фамилия, имя, отчество, ученая степень, пост в международной организации, контактные данные) и к каким вопросам проявлял необычный интерес">
-        Заинтересованность иностранной стороны
-      </label>
-      <textarea type="text" id="foreignInterest" [(ngModel)]="report.foreignInterest" class="form-control"></textarea>
-    </div>
-  </div>
-
-  <div class="col-md-12">
-    <div class="form-group">
-      <label data-toggle="tooltip" data-placement="top" title="Список ведущих зарубежных ученых-партнёров по данной научной проблематике (1*ФИО, 2*место работы (город, университет, институт, фирма, компания, международная организация, номер телефона, email), 3*должность, 4*ученая степень, 5*пост в организации).">Описание примечания</label>
-      <textarea type="text" id="description" [(ngModel)]="report.description" class="form-control"></textarea>
-    </div>
-  </div>
-
-  <div *ngIf="report.fileName;else nonfile">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label data-toggle="tooltip" data-placement="top" title="Перечень научно-технических материалов и образцов, привезенных в Россию или полученных в результате совместных исследований (приложение файлов).">
-          Приложения к отчету: <a href="api/v1/report/getfile/{{report.appendixId}}">{{report.fileName}}</a>
-          <br />
-          Изменить файл:
+          Основная часть
         </label>
-        <input type="file" (change)="fileChange($event)" />
+        <textarea type="text" id="mainPart" [(ngModel)]="report.mainPart" class="form-control"></textarea>
       </div>
     </div>
-  </div>
 
-  <ng-template #nonfile>
     <div class="col-md-12">
       <div class="form-group">
-        <label data-toggle="tooltip" data-placement="top" title="Перечень научно-технических материалов и образцов, привезенных в Россию или полученных в результате совместных исследований (приложение файлов).">
-          Файл для примечания:
+        <label data-toggle="tooltip" data-placement="top" title="Оценка новых зарубежных и совместных достижений, их сравнение и обобщение. Анализ существующего положения по той или иной проблеме (теме), а также вероятного развития событий в будущем">
+          Выводы
         </label>
-        <input type="file" (change)="fileChange($event)" />
+        <textarea type="text" id="findings" [(ngModel)]="report.findings" class="form-control"></textarea>
       </div>
     </div>
-  </ng-template>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label data-toggle="tooltip" data-placement="top" title="Предложения по использованию полученных результатов в интересах российской науки. Специальный акцент делается на ожидаемой экономической эффективности выполнения конкретных заданий и отдельных разделов академических и государственных научно-технических программ">
+          Предложения
+        </label>
+        <textarea type="text" id="suggestion" [(ngModel)]="report.suggestion" class="form-control"></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group" *ngIf="!invitationId">
+        <label data-toggle="tooltip" data-placement="top" title="Случаи необычного интереса к вопросам, выходящим за определенный круг задач командировки со стороны иностранцев (Фамилия, имя, отчество, ученая степень, пост в международной организации, контактные данные) и к каким вопросам проявлял необычный интерес">
+          Заинтересованность иностранной стороны
+        </label>
+        <textarea type="text" id="foreignInterest" [(ngModel)]="report.foreignInterest" class="form-control"></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <b>Список ведущих зарубежных ученых-партнёров по данной научной проблематике</b>
+      <br />
+    </div>
+
+    <div class="col-md-12">
+      <!-- Таблица приглашений -->
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Место работы (город, университет, институт, фирма, компания, международная организация)</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Ученая степень</th>
+            <th scope="col">Номер телефона, email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let listOfScientist of report.listOfScientists; let i = index">
+            <th *ngIf="listOfScientist.type" scope="row">{{i+1}}</th>
+            <td *ngIf="listOfScientist.type">{{listOfScientist.fullName}}</td>
+            <td *ngIf="listOfScientist.type">{{listOfScientist.workPlace}}</td>
+            <td *ngIf="listOfScientist.type">{{listOfScientist.position}}</td>
+            <td *ngIf="listOfScientist.type">{{listOfScientist.academicDegree}}</td>
+            <td *ngIf="listOfScientist.type">{{listOfScientist.phoneNumber}},{{listOfScientist.email}}</td>
+            <td *ngIf="listOfScientist.type" class="text-center">
+              <a class="view" (click)="deleteScientist(i)">
+                <i class="fa fa-share-square-o"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-12" *ngIf="!invitationId">
+      <b>Список ведущих зарубежных ученых-партнёров по исследованиям, с которыми состоялись встречи в период командировки</b>
+      <br />
+    </div>
+
+    <div class="col-md-12" *ngIf="!invitationId">
+      <!-- Таблица приглашений -->
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Место работы (город, университет, институт, фирма, компания, международная организация)</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Ученая степень</th>
+            <th scope="col">Номер телефона, email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let listOfScientist of report.listOfScientists; let i = index">
+            <th *ngIf="!listOfScientist.type" scope="row">{{i+1}}</th>
+            <td *ngIf="!listOfScientist.type">{{listOfScientist.fullName}}</td>
+            <td *ngIf="!listOfScientist.type">{{listOfScientist.workPlace}}</td>
+            <td *ngIf="!listOfScientist.type">{{listOfScientist.position}}</td>
+            <td *ngIf="!listOfScientist.type">{{listOfScientist.academicDegree}}</td>
+            <td *ngIf="!listOfScientist.type">{{listOfScientist.phoneNumber}},{{listOfScientist.email}}</td>
+            <td *ngIf="!listOfScientist.type" class="text-center">
+              <a class="view" (click)="deleteScientist(i)">
+                <i class="fa fa-share-square-o"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-12">
+      <b>Перечень научно-технических материалов и образцов, привезенных в Россию или полученных в результате совместных исследований (приложение файлов)</b>
+      <br />
+    </div>
+
+
+    <div class="col-md-12">
+      <!-- Таблица приглашений -->
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Файл</th>
+            <th scope="col">Дейстия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of report.appendix; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td><a href="api/v1/report/getfile/{{file.id}}">{{file.fileName}}</a></td>
+            <td class="text-center">
+              <a class="view" (click)="deleteFile(i)">
+                <i class="fa fa-share-square-o"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-12">
+      <br />
+    </div>
+
+    <div class="col-md-2">
+      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+    </div>
+    <div class="col-md-2" *ngIf="!report.status">
+      <a class="btn btn-warning" (click)="agree()">Удтвердить отчет</a>
+    </div>
+    <div class="col-md-2">
+      <a class="btn btn-warning" (click)="createFile()">Добавить файл</a>
+    </div>
+    <div class="col-md-2">
+      <a class="btn btn-warning" (click)="createScientistTrue()">Добавить зарубежного ученого-партнёра по данной научной проблематике</a>
+    </div>
+    <div class="col-md-2" *ngIf="!invitationId">
+      <a class="btn btn-warning" (click)="createScientistFalse()">Добавить зарубежного ученого-партнёра по исследованиям, с которым состоялась встречи в период командировки</a>
+    </div>
+    <div class="col-md-3" *ngIf="departureId">
+      <a class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure/{{employeeId}}">Вернуться к выездам</a>
+    </div>
+    <div class="col-md-3" *ngIf="invitationId">
+      <a class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation">Вернуться к приглашениям</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="createScientistflag">
 
   <div class="col-md-12">
-    <br />
+    <div class="form-group">
+      <label data-toggle="tooltip" data-placement="top">
+        ФИО
+      </label>
+      <textarea type="text" id="fullName" [(ngModel)]="scientist.fullName" class="form-control"></textarea>
+    </div>
   </div>
 
-  <div class="col-md-6">
-    <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
-  </div>
-  <div class="col-md-6" *ngIf="departureId">
-    <a class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure/{{employeeId}}">Вернуться к выездам</a>
-  </div>
-  <div class="col-md-6" *ngIf="invitationId">
-    <a class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation">Вернуться к приглашениям</a>
+  <div class="col-md-12">
+    <div class="form-group">
+      <label data-toggle="tooltip" data-placement="top" title="город, университет, институт, фирма, компания, международная организация">
+        место работы
+      </label>
+      <textarea type="text" id="workPlace" [(ngModel)]="scientist.workPlace" class="form-control"></textarea>
+    </div>
   </div>
 
+  <div class="col-md-12">
+    <div class="form-group">
+      <label data-toggle="tooltip" data-placement="top">
+        Номер телефона
+      </label>
+      <textarea type="text" id="phoneNumber" [(ngModel)]="scientist.phoneNumber" class="form-control"></textarea>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group">
+      <label data-toggle="tooltip" data-placement="top">
+        Email
+      </label>
+      <textarea type="text" id="email" [(ngModel)]="scientist.email" class="form-control"></textarea>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group">
+      <label data-toggle="tooltip" data-placement="top">
+        Должность
+      </label>
+      <textarea type="text" id="position" [(ngModel)]="scientist.position" class="form-control"></textarea>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="form-group">
+      <label data-toggle="tooltip" data-placement="top">
+        Ученая степень
+      </label>
+      <textarea type="text" id="academicDegree" [(ngModel)]="scientist.academicDegree" class="form-control"></textarea>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <a class="btn btn-warning" (click)="saveScientist()">Сохранить</a>
+  </div>
+
+  <div class="col-md-2">
+    <a class="btn btn-warning" (click)="cancel()">Отменить</a>
+  </div>
+
+</div>
+
+<div *ngIf="createFileflag">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label data-toggle="tooltip" data-placement="top" title="Перечень научно-технических материалов и образцов, привезенных в Россию или полученных в результате совместных исследований (приложение файлов).">
+        Файл
+      </label>
+      <input type="file" (change)="fileChange($event)" />
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <a class="btn btn-warning" (click)="saveFile()">Сохранить</a>
+  </div>
+  <div class="col-md-2">
+    <a class="btn btn-warning" (click)="cancel()">Отменить</a>
+  </div>
 
 </div>

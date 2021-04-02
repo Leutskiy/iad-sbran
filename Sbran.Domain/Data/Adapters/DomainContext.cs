@@ -41,6 +41,7 @@ namespace Sbran.Domain.Data.Adapters
         public DbSet<ScientificInterests> ScientificInterests { get; set; }
         public DbSet<Appendix> Appendixs { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<ListOfScientist> ListOfScientists { get; set; }
 
         /// <summary>
         /// Конструктор контекста домена
@@ -104,6 +105,7 @@ namespace Sbran.Domain.Data.Adapters
             modelBuilder.ApplyConfiguration(new ScientificInterestsConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new AppendixConfiguration(SchemaName));
             modelBuilder.ApplyConfiguration(new ReportConfiguration(SchemaName));
+            modelBuilder.ApplyConfiguration(new ListOfScientistConfiguration(SchemaName));
         }
     }
 }

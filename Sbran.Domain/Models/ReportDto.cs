@@ -1,4 +1,5 @@
-﻿using Sbran.Domain.Enums;
+﻿using Sbran.Domain.Entities;
+using Sbran.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,7 @@ namespace Sbran.Domain.Models
         /// <summary>
         /// Основная часть
         /// </summary>
-        public Guid? AppendixId { get; set; }
-
-        /// <summary>
-        /// Основная часть
-        /// </summary>
         public string? MainPart { get; set; }
-
 
         /// <summary>
         /// Выводы
@@ -39,21 +34,7 @@ namespace Sbran.Domain.Models
         /// Заинтересованность иностранной стороны
         /// </summary>
         public string? ForeignInterest { get; set; }
-
-        /// <summary>
-        /// Описание
-        /// </summary>
-        public string? Description { get; set; }
-
-        /// <summary>
-        /// Файл
-        /// </summary>
-        public byte[]? FileBinary { get; set; }
-
-        /// <summary>
-        /// Файл
-        /// </summary>
-        public string FileName { get; set; }
+        public bool? Status { get; set; }
 
         /// <summary>
         /// ТипОтчета
@@ -64,5 +45,9 @@ namespace Sbran.Domain.Models
         /// ТипОтчета
         /// </summary>
         public Guid? ParentId { get; set; }
+
+        public List<AppendixDto>? Appendix { get; set; }
+
+        public List<ListOfScientistDto>? ListOfScientists { get; set; }
     }
 }

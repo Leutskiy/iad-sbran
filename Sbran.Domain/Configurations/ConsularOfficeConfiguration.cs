@@ -34,6 +34,7 @@ namespace Sbran.Domain.Configurations
             builder.Property(consularOffice => consularOffice.NameOfTheConsularPost).IsRequired(false).HasColumnName("NameOfTheConsularPost");
             builder.Property(consularOffice => consularOffice.CountryOfLocation).IsRequired(false).HasColumnName("CountryOfLocation");
             builder.Property(consularOffice => consularOffice.CityOfLocation).IsRequired(false).HasColumnName("CityOfLocation");
+            builder.Property(consularOffice => consularOffice.TextOfAgreement).IsRequired(false).HasColumnName("TextOfAgreement");
 
             builder
                 .HasOne(consularOffice => consularOffice.Employee)

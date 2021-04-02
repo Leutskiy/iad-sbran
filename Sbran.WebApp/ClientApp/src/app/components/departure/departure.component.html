@@ -29,6 +29,7 @@
             <th scope="col">Статус</th>
             <th scope="col">Дата начала</th>
             <th scope="col">Дата окончания</th>
+            <th scope="col">Статус отчета</th>
             <th scope="col">Действия</th>
           </tr>
         </thead>
@@ -45,6 +46,7 @@
             </td>
             <td>{{departure.dateStart}}</td>
             <td>{{departure.dateEnd}}</td>
+            <td><b *ngIf="departure.report.status;else status">Подтвержден</b><ng-template #status> Не подтвержден</ng-template> </td>
             <td class="text-center">
               <a class="view" (click)="edit(departure)">
                 <i class="fa fa-share-square-o"></i>

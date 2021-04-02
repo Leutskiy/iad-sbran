@@ -80,10 +80,6 @@ namespace Sbran.Domain.Migrations.Domain
                         .HasColumnType("uuid")
                         .HasColumnName("Uid");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("Description");
-
                     b.Property<byte[]>("FileBinary")
                         .HasColumnType("bytea")
                         .HasColumnName("FileBinary");
@@ -96,9 +92,14 @@ namespace Sbran.Domain.Migrations.Domain
                         .HasColumnType("uuid")
                         .HasColumnName("DepartureReportUid");
 
+                    b.Property<Guid?>("ReportId1")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ReportId");
+
+                    b.HasIndex("ReportId1");
 
                     b.ToTable("Appendixs", "domain");
                 });
@@ -215,6 +216,10 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Property<string>("NameOfTheConsularPost")
                         .HasColumnType("text")
                         .HasColumnName("NameOfTheConsularPost");
+
+                    b.Property<string>("TextOfAgreement")
+                        .HasColumnType("text")
+                        .HasColumnName("TextOfAgreement");
 
                     b.HasKey("Id");
 
@@ -547,6 +552,55 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("Invitations", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.ListOfScientist", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<string>("AcademicDegree")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text")
+                        .HasColumnName("Email");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("text")
+                        .HasColumnName("FullName");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("PhoneNumber");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("text")
+                        .HasColumnName("FileBinary");
+
+                    b.Property<Guid>("ReportId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ReportUid");
+
+                    b.Property<Guid?>("ReportId1")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Type")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("WorkPlace")
+                        .HasColumnType("text")
+                        .HasColumnName("WorkPlace");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
+
+                    b.HasIndex("ReportId1");
+
+                    b.ToTable("ListOfScientists", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Membership", b =>
                 {
                     b.Property<Guid>("Id")
@@ -563,6 +617,9 @@ namespace Sbran.Domain.Migrations.Domain
 
                     b.Property<Guid?>("EmployeeId1")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("MembershipType")
+                        .HasColumnType("integer");
 
                     b.Property<string>("NameOfCompany")
                         .HasColumnType("text")
@@ -769,6 +826,12 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Property<int>("ReportType")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("Status");
+
                     b.Property<string>("Suggestion")
                         .HasColumnType("text")
                         .HasColumnName("Suggestion");
@@ -916,6 +979,10 @@ namespace Sbran.Domain.Migrations.Domain
                         .HasForeignKey("ReportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Sbran.Domain.Entities.Report", null)
+                        .WithMany("Appendices")
+                        .HasForeignKey("ReportId1");
 
                     b.Navigation("Report");
                 });
@@ -1090,6 +1157,21 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("VisitDetail");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.ListOfScientist", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Report", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sbran.Domain.Entities.Report", null)
+                        .WithMany("ListOfScientists")
+                        .HasForeignKey("ReportId1");
+
+                    b.Navigation("Report");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Membership", b =>
                 {
                     b.HasOne("Sbran.Domain.Entities.Employee", "Employee")
@@ -1162,6 +1244,13 @@ namespace Sbran.Domain.Migrations.Domain
             modelBuilder.Entity("Sbran.Domain.Entities.Invitation", b =>
                 {
                     b.Navigation("ForeignParticipants");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Report", b =>
+                {
+                    b.Navigation("Appendices");
+
+                    b.Navigation("ListOfScientists");
                 });
 #pragma warning restore 612, 618
         }

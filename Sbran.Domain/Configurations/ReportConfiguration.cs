@@ -34,6 +34,15 @@ namespace Sbran.Domain.Configurations
             builder.Property(report => report.Findings).IsRequired(false).HasColumnName("Findings");
             builder.Property(report => report.Suggestion).IsRequired(false).HasColumnName("Suggestion");
             builder.Property(report => report.ForeignInterest).IsRequired(false).HasColumnName("ForeignInterest");
+            builder.Property(report => report.Status).IsRequired(true).HasColumnName("Status").HasDefaultValue(false);
+
+            builder
+                .HasMany(report => report.ListOfScientists)
+                .WithOne();
+
+            builder
+                .HasMany(report => report.Appendices)
+                .WithOne();
         }
     }
 }

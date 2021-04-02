@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sbran.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,10 @@ namespace Sbran.Domain.Models
         /// сайт организации
         /// </summary>
         public string? SiteOfTheOrganization { get; set; }
+        /// <summary>
+        /// сайт организации
+        /// </summary>
+        public MembershipType MembershipType { get; set; }
 
         public Guid EmployeeId { get; set; }
     }

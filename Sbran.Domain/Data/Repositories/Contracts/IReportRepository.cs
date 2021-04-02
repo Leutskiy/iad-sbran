@@ -17,5 +17,6 @@ namespace Sbran.Domain.Data.Repositories.Contracts
         Report Add(ReportDto addedReport);
 
         Task UpdateAsync(Guid currentReportId, ReportDto newReport);
+        Task SetStatus(Guid Id);
     }
 }

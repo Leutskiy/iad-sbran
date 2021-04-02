@@ -487,6 +487,7 @@ export class Invitation {
   id: string;
   reportId: string | null;
   invitationStatus: InvitationStatus | null;
+  status: string | null;
   alien: Alien;
   employee: Employee;
   visitDetail: VisitDetail | null;
@@ -625,12 +626,14 @@ export class Departure {
   hostOrganization: string | null;
   placeOfResidence: string | null;
   purposeOfTheTrip: string | null;
+  status: string | null;
   justificationOfTheBusiness: string | null;
   dateStart: Date | string | null;
   departureStatus: DepartureStatus | null;
   reportId: string | null;
   dateEnd: Date | string | null;
   employeeId: string | null;
+  report: Report | null;
 }
 
 
@@ -661,9 +664,14 @@ export class Membership {
   statusInTheOrganization: string | null;
   siteOfTheOrganization: string | null;
   dateOfEntry: Date | string | null;
+  membershipType: MembershipType | null;
   employeeId: string | null;
 }
 
+export enum MembershipType {
+  russian,
+  other
+}
 
 export class Publication {
   id: string | null;
@@ -730,13 +738,12 @@ export class Report {
   findings: string | null;
   suggestion: string | null;
   foreignInterest: string | null;
+  status: boolean | null;
+  appendix: Appendix[] | null;
+  listOfScientists: ListOfScientist[] | null;
 
-  description: string | null;
-  fileBinary: string | null;
-  fileName: string | null;
   reportType: ReportType | null;
   parentId: string | null;
-  appendixId: string | null;
 
   constructor() {
     this.mainPart = "";
@@ -744,5 +751,24 @@ export class Report {
     this.suggestion = "";
     this.foreignInterest = "";
   }
+}
+
+export class Appendix {
+  id: string | null;
+  fileBinary: string | null;
+  fileName: string | null;
+  reportId: string | null;
+}
+
+export class ListOfScientist {
+  id: string | null;
+  fullName: string | null;
+  workPlace: string | null;
+  position: string | null;
+  email: string | null;
+  academicDegree: string | null;
+  type: boolean | null;
+  phoneNumber: string | null;
+  reportId: string | null;
 }
 

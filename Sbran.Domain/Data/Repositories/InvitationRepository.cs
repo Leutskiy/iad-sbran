@@ -50,7 +50,7 @@ namespace Sbran.Domain.Data.Repositories
         /// <returns>Приглашение</returns>
         public async Task<Invitation> GetAsync(Guid id)
         {
-            var invitation = await _domainContext.Invitations/*.Include(inv => inv.Alien)*/.FirstOrDefaultAsync(inv => inv.Id == id);
+            var invitation = await _domainContext.Invitations.Include(inv => inv.Report).FirstOrDefaultAsync(inv => inv.Id == id);
             if (invitation == null)
             {
                 throw new Exception($"Сущность не найдена для id: {id}");

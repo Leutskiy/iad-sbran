@@ -61,9 +61,14 @@ namespace Sbran.Domain.Data.Repositories
             }
         }
 
-        public async Task<List<Departure>> GetAllAsync() => await _domainContext.Departures.ToListAsync();
+        public async Task<List<Departure>> GetAllAsync() => await _domainContext
+            .Departures
+            .Include(e => e.Report)
+            .ToListAsync();
 
-        public async Task<Departure> GetAsync(Guid id) => await _domainContext.Departures.FirstOrDefaultAsync(e => e.Id == id);
+        public async Task<Departure> GetAsync(Guid id) => await _domainContext.Departures
+            .Include(e => e.Report)
+            .FirstOrDefaultAsync(e => e.Id == id);
 
         public async Task SetReport(Guid id, Guid parentId)
         {

@@ -17,5 +17,6 @@ namespace Sbran.Domain.Data.Repositories.Contracts
         ConsularOffice Add(ConsularOfficeDto addedConsularOffice);
 
         Task UpdateAsync(Guid currentConsularOfficeId, ConsularOfficeDto newConsularOffice);
+        Task<ConsularOffice> GetAgreementWithSecondName(string Name);
     }
 }

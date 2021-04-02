@@ -20,6 +20,7 @@ namespace Sbran.WebApp.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IReportRepository _reportRepository;
+        private readonly IListOfScientistRepository _listOfScientistRepository;
         private readonly IInvitationRepository _invitationRepository;
         private readonly IDepartureRepository _departureRepository;
         private readonly IAppendixRepository _appendixRepository;
@@ -30,6 +31,7 @@ namespace Sbran.WebApp.Controllers
             IInvitationRepository invitationRepository,
             IDepartureRepository departureRepository,
             IAppendixRepository appendixRepository,
+            IListOfScientistRepository listOfScientistRepository,
             DomainContext domainContext)
         {
             _reportRepository = reportRepository;
@@ -37,6 +39,7 @@ namespace Sbran.WebApp.Controllers
             _departureRepository = departureRepository;
             _appendixRepository = appendixRepository;
             _domainContext = domainContext;
+            _listOfScientistRepository = listOfScientistRepository;
         }
 
         [HttpPost]
@@ -46,7 +49,6 @@ namespace Sbran.WebApp.Controllers
             if (reportId == null)
             {
                 var report = _reportRepository.Add(createdReportData);
-
 
                 switch (createdReportData.ReportType)
                 {
@@ -60,18 +62,28 @@ namespace Sbran.WebApp.Controllers
                         report.ReportType = Domain.Enums.ReportType.Invition;
                         break;
                 }
-                if ((createdReportData.FileName != null & createdReportData.FileBinary != null) || createdReportData.Description != null)
+                if (createdReportData.ListOfScientists.Count > 0)
                 {
-                    var appendixDto = new AppendixDto
+                    foreach (var temp in createdReportData.ListOfScientists)
                     {
-                        Description = createdReportData.Description,
-                        FileBinary = createdReportData.FileBinary,
-                        FileName = createdReportData.FileName,
-                        ReportId = report.Id
-                    };
-                    _appendixRepository.Add(appendixDto);
+                        if (temp != null)
+                        {
+                            temp.ReportId = report.Id;
+                            _listOfScientistRepository.Add(temp);
+                        }
+                    }
                 }
-
+                if (createdReportData.Appendix.Count > 0)
+                {
+                    foreach (var temp in createdReportData.Appendix)
+                    {
+                        if (temp != null)
+                        {
+                            temp.ReportId = report.Id;
+                            _appendixRepository.Add(temp);
+                        }
+                    }
+                }
 
                 await _domainContext.SaveChangesAsync();
 
@@ -79,17 +91,33 @@ namespace Sbran.WebApp.Controllers
             }
 
             await _reportRepository.UpdateAsync(reportId.Value, createdReportData);
-            if ((createdReportData.FileName != null & createdReportData.FileBinary != null) || createdReportData.Description != null)
+
+            if (createdReportData.ListOfScientists.Count > 0)
             {
-                var appendixDto = new AppendixDto
+                await _listOfScientistRepository.DeleteAllAsync(reportId.Value);
+                foreach (var temp in createdReportData.ListOfScientists)
                 {
-                    Description = createdReportData.Description,
-                    FileBinary = createdReportData.FileBinary,
-                    FileName = createdReportData.FileName,
-                    ReportId = reportId.Value
-                };
-                _appendixRepository.UpdateAsync(createdReportData.AppendixId.Value,appendixDto);
+                    if (temp != null)
+                    {
+                            temp.ReportId = reportId.Value;
+                            _listOfScientistRepository.Add(temp);
+                    }
+                }
             }
+
+            if (createdReportData.Appendix.Count > 0)
+            {
+                await _appendixRepository.DeleteAllAsync(reportId.Value);
+                foreach (var temp in createdReportData.Appendix)
+                {
+                    if (temp != null)
+                    {
+                            temp.ReportId = reportId.Value;
+                            _appendixRepository.Add(temp);
+                    }
+                }
+            }
+
             await _domainContext.SaveChangesAsync();
             return await GetById(reportId.Value);
         }
@@ -100,7 +128,6 @@ namespace Sbran.WebApp.Controllers
         public async Task<ReportDto> GetById(Guid reportId)
         {
             var report = await _reportRepository.GetAsync(reportId);
-            var appendix = await _appendixRepository.GetByReportIdAsync(reportId);
             var reportDto = new ReportDto
             {
                 Findings = report?.Findings ?? "",
@@ -108,12 +135,39 @@ namespace Sbran.WebApp.Controllers
                 ForeignInterest = report?.ForeignInterest ?? "",
                 Suggestion = report?.Suggestion ?? "",
                 MainPart = report?.MainPart ?? "",
-                Description = appendix?.Description ?? "",
-                FileBinary = appendix?.FileBinary ?? null,
-                FileName = appendix?.FileName ?? "",
-                AppendixId = appendix?.Id,
+                Status = report?.Status,
+                Appendix = report?.Appendices
+                .Select(e => new AppendixDto()
+                {
+                    FileBinary = e.FileBinary,
+                    FileName = e.FileName,
+                    Id = e.Id,
+                    ReportId = e.ReportId
+                }).ToList(),
+                ListOfScientists = report?.ListOfScientists
+                .Select(e => new ListOfScientistDto()
+                {
+                    AcademicDegree = e.AcademicDegree,
+                    Email = e.Email,
+                    FullName = e.FullName,
+                    PhoneNumber = e.PhoneNumber,
+                    Position = e.Position,
+                    ReportId = e.ReportId,
+                    Id = e.Id,
+                    Type = e.Type,
+                    WorkPlace = e.WorkPlace
+                }).ToList(),
             };
             return reportDto;
+        }
+
+        [HttpGet]
+        [Route("{reportId:guid}/agree")]
+        public async Task<IActionResult> Agree(Guid reportId)
+        {
+            await _reportRepository.SetStatus(reportId);
+            await _domainContext.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpGet]
@@ -124,5 +178,6 @@ namespace Sbran.WebApp.Controllers
             var file = await _appendixRepository.GetAsync(appendixId);
             return File(file.FileBinary, "application/octet-stream", file.FileName);
         }
+
     }
 }

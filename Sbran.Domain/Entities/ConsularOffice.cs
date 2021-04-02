@@ -32,6 +32,11 @@ namespace Sbran.Domain.Entities
         /// </summary>
         public string? CityOfLocation { get; set; }
 
+        /// <summary>
+        /// Текст соглашения
+        /// </summary>
+        public string? TextOfAgreement { get; set; }
+
         public Guid EmployeeId { get; set; }
 
         public Employee Employee { get; set; }

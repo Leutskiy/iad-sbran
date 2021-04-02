@@ -35,7 +35,7 @@
     <!-- Цель -->
     <div class="col-md-12">
       <label for="goal" data-toggle="tooltip" data-placement="top" title="краткое обоснование целей и задач приема иностранных ученых и специалистов">Цель:</label>
-      <input type="text" class="form-control" id="goal" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.goal">
+      <textarea rows="2" type="text" class="form-control" id="goal" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.goal"></textarea>
     </div>
 
     <!-- Страна -->

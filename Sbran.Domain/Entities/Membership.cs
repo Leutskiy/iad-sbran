@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sbran.Domain.Enums;
+using System;
 
 namespace Sbran.Domain.Entities
 {
@@ -36,6 +37,11 @@ namespace Sbran.Domain.Entities
         /// сайт организации
         /// </summary>
         public string? SiteOfTheOrganization { get; set; }
+        
+        /// <summary>
+        /// сайт организации
+        /// </summary>
+        public MembershipType MembershipType { get; set; }
 
         public Guid EmployeeId { get; set; }
 
