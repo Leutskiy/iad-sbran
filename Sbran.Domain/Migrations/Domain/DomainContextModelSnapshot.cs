@@ -642,6 +642,26 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("Memberships", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.News", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<DateTimeOffset>("DateTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DateTime");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Organization", b =>
                 {
                     b.Property<Guid>("Id")
@@ -945,6 +965,52 @@ namespace Sbran.Domain.Migrations.Domain
                     b.ToTable("VisitDetails", "domain");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.Vote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Votes", "domain");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.VoteList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("Uid");
+
+                    b.Property<double>("Count")
+                        .HasColumnType("double precision")
+                        .HasColumnName("Count");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Name");
+
+                    b.Property<Guid>("VoteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("VoteId1")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VoteId");
+
+                    b.HasIndex("VoteId1");
+
+                    b.ToTable("VoteLists", "domain");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Alien", b =>
                 {
                     b.HasOne("Sbran.Domain.Entities.Contact", "Contact")
@@ -1226,6 +1292,21 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("Employee");
                 });
 
+            modelBuilder.Entity("Sbran.Domain.Entities.VoteList", b =>
+                {
+                    b.HasOne("Sbran.Domain.Entities.Vote", "Vote")
+                        .WithMany()
+                        .HasForeignKey("VoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sbran.Domain.Entities.Vote", null)
+                        .WithMany("voteLists")
+                        .HasForeignKey("VoteId1");
+
+                    b.Navigation("Vote");
+                });
+
             modelBuilder.Entity("Sbran.Domain.Entities.Employee", b =>
                 {
                     b.Navigation("ConsularOffices");
@@ -1251,6 +1332,11 @@ namespace Sbran.Domain.Migrations.Domain
                     b.Navigation("Appendices");
 
                     b.Navigation("ListOfScientists");
+                });
+
+            modelBuilder.Entity("Sbran.Domain.Entities.Vote", b =>
+                {
+                    b.Navigation("voteLists");
                 });
 #pragma warning restore 612, 618
         }

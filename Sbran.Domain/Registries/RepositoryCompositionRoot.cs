@@ -36,6 +36,9 @@ namespace Sbran.Domain.Registries
             serviceRegistry.Register<IReportRepository, ReportRepository>();
             serviceRegistry.Register<IAppendixRepository, AppendixRepository>();
             serviceRegistry.Register<IListOfScientistRepository, ListOfScientistRepository>();
+            serviceRegistry.Register<IVoteListRepository, VoteListRepository>();
+            serviceRegistry.Register<IVoteRepository, VoteRepository>();
+            serviceRegistry.Register<INewsRepository, NewsRepository>();
         }
     }
 }

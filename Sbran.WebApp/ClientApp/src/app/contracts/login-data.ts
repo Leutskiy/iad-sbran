@@ -772,3 +772,31 @@ export class ListOfScientist {
   reportId: string | null;
 }
 
+export class HomePage {
+  id: string | null;
+  news: any[] | null;
+  employees: any[] | null;
+  voteLists: any[] | null;
+  countEmployees: number | null;
+  countOnlineEmployee: number | null;
+}
+
+export class News {
+  id: string | null;
+  name: string | null;
+  dateTime: Date | null;
+}
+
+export class Vote {
+  id: string | null;
+  name: string | null;
+  voteLists: VoteList[] | null;
+}
+
+export class VoteList {
+  id: string | null;
+  name: string | null;
+  count: number | null;
+  voteId: number | null;
+}
+

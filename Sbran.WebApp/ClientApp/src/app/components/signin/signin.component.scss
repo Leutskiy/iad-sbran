@@ -72,8 +72,7 @@ body {
 .form-control:focus {
   border-color: #66afe9;
   outline: 0;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-    0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
 .subform {
@@ -132,4 +131,57 @@ a:hover {
 
 .text-center {
   text-align: center;
+}
+
+.form_btn {
+  background-color: #008cba;
+  border: 1px solid #000000;
+  color: white;
+  height: 100%;
+  padding: 3px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.t_center {
+  border: 1px solid #000000;
+  height: 100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.bg-blue {
+  background-color: #008cba;
+  color: #FFF;
+}
+
+.users_list_container {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.voting_list_container {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.news_list_container {
+  height: 570px;
+  overflow-y: scroll;
+}
+
+.profile-photo {
+  height: 70px;
+  width: 70px;
+  border: 1px solid black;
+}
+
+.cell {
+  border: 1px solid black;
 }

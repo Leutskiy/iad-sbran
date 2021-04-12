@@ -41,6 +41,7 @@ namespace Sbran.Domain.Data.Repositories
         {
             return _domainContext.Employees
                 .Include<Employee, Passport?>(test => test.Passport)
+                .Include(e=>e.Contact)
                 .ToListAsync();
         }
 
