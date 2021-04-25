@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+.btn-warning:focus {
+  box-shadow: none !important;
+  background-color: #FFC107 !important;
+  border-color: #FFC107 !important;
+}
+
+.btn-warning:hover {
+  box-shadow: none !important;
+  background-color: #e0a800 !important;
+  border-color: #d39e00 !important;
+}

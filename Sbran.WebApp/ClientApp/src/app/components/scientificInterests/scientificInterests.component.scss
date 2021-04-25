@@ -1,0 +1,38 @@
+.table-title {
+  padding-bottom: 10px;
+  margin: 0 0 10px;
+}
+
+.table-title h2 {
+  margin: 6px 0 0;
+  font-size: 22px;
+}
+
+.table-wrapper {
+  width: auto;
+  margin: 30px auto;
+  background: #E8E8E8;
+  padding: 20px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  border-radius: 10px;
+}
+
+table.table td, th {
+  vertical-align: middle;
+}
+
+table.table td a {
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 5px;
+  min-width: 24px;
+}
+
+table.table td a.view {
+  color: #FFC107;
+  font-size: 24px;
+}
+
+table.table td a.view:hover {
+  color: #e0a800;
+}

@@ -1,0 +1,129 @@
+<div class="list-group-item d-flex" [class.viewed-details]="viewMode" >
+
+  <a href="#passport-details" class="mr-auto" [class.viewed-details]="viewMode" data-toggle="collapse" (click)="openForm()">
+    <p class="align-middle m-0">{{title}}</p>
+  </a>
+
+  <div [class.invisible]="isNew">
+    <div class="btn-group mr-2" [class.invisible]="!viewMode || !editable" role="group" aria-label="Second persist group">
+      <button class="btn btn-warning" type="button" (click)="saveForm()">
+        <i class="fa fa-floppy-o"></i>
+      </button>
+    </div>
+    <div class="btn-group" [class.invisible]="!viewMode" role="group" aria-label="First persist group">
+      <button class="btn btn-warning" type="button" (click)="editForm()">
+        <i class="fa fa-pencil"></i>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="collapse" id="passport-details">
+  <div class="input-group mt-3 mb-3">
+
+    <div class="col-md-4">
+      <label for="surnameRus">Фамилия (рус.):</label>
+      <input type="text" class="form-control" id="surnameRus" [disabled]="!editable && !isNew" [(ngModel)]="passport.surnameRus" >
+    </div>
+    <div class="col-md-4">
+      <label for="firstNameRus">Имя (рус.):</label>
+      <input type="text" class="form-control" id="firstNameRus" [(ngModel)]="passport.nameRus" [disabled]="!editable && !isNew" >
+    </div>
+    <div class="col-md-4">
+      <label for="patronymicNameRus">Отчество (рус.):</label>
+      <input type="text" class="form-control" id="patronymicNameRus" [(ngModel)]="passport.patronymicNameRus" [disabled]="!editable && !isNew" >
+    </div>
+    <div class="w-100"></div>
+
+    <div class="col-md-4">
+      <label for="surnameEng">Фамилия (англ.):</label>
+      <input type="text" class="form-control" id="surnameEng" [(ngModel)]="passport.surnameEng" [disabled]="!editable && !isNew" >
+    </div>
+    <div class="col-md-4">
+      <label for="firstNameEng">Имя (англ.):</label>
+      <input type="text" class="form-control" id="firstNameEng" [(ngModel)]="passport.nameEng" [disabled]="!editable && !isNew" >
+    </div>
+    <div class="col-md-4">
+      <label for="patronymicNameEng">Отчество (англ.):</label>
+      <input type="text" class="form-control" id="patronymicNameEng" [(ngModel)]="passport.patronymicNameEng" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="col-md-4">
+      <label for="birthCountry">Страна рождения:</label>
+      <input type="text" class="form-control" id="birthCountry" [(ngModel)]="passport.birthCountry" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="col-md-8">
+      <label for="birthPlace">Место рождения:</label>
+      <input type="text" class="form-control" id="birthPlace" [(ngModel)]="passport.birthPlace" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="col-md-2">
+      <ngbd-datepicker-adapter [(date)]="passport.birthDate" title="Дата рождения" [disabled]="!editable && !isNew" binding-label-input="birthDate"></ngbd-datepicker-adapter>
+    </div>
+
+    <div class="col-md-1">
+      <label for="gender" class="mb-1">Пол:</label>
+      <div class="form-check">
+        <label class="form-check-label" for="male">
+          <input id="male" type="radio" class="form-check-input" [value]="0" name="optradio" [(ngModel)]="passport.gender"  [disabled]="!editable && !isNew">Муж
+        </label>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="female">
+          <input id="female" type="radio" class="form-check-input" [value]="1" name="optradio" [(ngModel)]="passport.gender" [disabled]="!editable && !isNew">Жен
+        </label>
+      </div>
+    </div>
+
+    <div class="col-md-1 pl-0">
+      <button type="button" name="button" class="p-0 btn btn-warning" style="font-size: 20px; margin-top: 35px" (click)="clearGender()" [disabled]="!editable && !isNew"><i class="fa fa-times pl-1 pr-1" aria-hidden="true"></i></button>
+    </div>
+
+    <div class="col-md-2">
+      <label for="citizenship">Гражданство:</label>
+      <input type="text" class="form-control" id="citizenship" [(ngModel)]="passport.citizenship" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="w-100"></div>
+
+    <div class="col-md-4">
+      <label for="residenceCountry">Страна проживания:</label>
+      <input type="text" class="form-control" id="residenceCountry" [(ngModel)]="passport.residenceCountry" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="col-md-4">
+      <label for="residenceRegion">Регион проживания:</label>
+      <input type="text" class="form-control" id="residenceRegion" [(ngModel)]="passport.residenceRegion" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="col-md-4">
+      <label for="residence">Местожительство:</label>
+      <input type="text" class="form-control" id="residence" [(ngModel)]="passport.residence" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="col-md-4">
+      <label for="identityDocument">Документ удостоверяющий личность:</label>
+      <input type="text" class="form-control" id="identityDocument" [(ngModel)]="passport.identityDocument" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="col-md-8">
+      <label for="issuePlace">Место выдачи:</label>
+      <input type="text" class="form-control" id="issuePlace" [(ngModel)]="passport.issuePlace" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="col-md-2">
+      <ngbd-datepicker-adapter [(date)]="passport.issueDate" title="Дата выдачи" [disabled]="!editable && !isNew" binding-label-input="issueDate && !isNew"></ngbd-datepicker-adapter>
+    </div>
+
+    <div class="col-md-2">
+      <label for="departmentCode">Код подразделения:</label>
+      <input type="text" class="form-control" id="departmentCode" [(ngModel)]="passport.departmentCode" [disabled]="!editable && !isNew" >
+    </div>
+
+    <div class="w-100"></div>
+
+  </div>
+</div>

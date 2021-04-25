@@ -1,0 +1,182 @@
+<!-- PROFILE -->
+<div class="container">
+  <!-- PROFILE SIDEBAR -->
+  <div></div>
+  <div class="row">
+
+    <div class="col-md-2 pr-md-0">
+      <div class="profile-menu border">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-home fa-fw"></i>
+              Главная
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/chat/{{profileId}}">
+              <i class="fa fa-envelope-o fa-fw"></i>
+              Сообщения
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profile/{{profileId}}/employee/{{employeeId}}/invitation">
+              <i class="fa fa-globe fa-fw"></i>
+              Приглашения
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-plane fa-fw"></i>
+              Выезды
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-university fa-fw"></i>
+              Публикации
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-briefcase fa-fw"></i>
+              Проекты
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-cogs fa-fw"></i>
+              Настройки
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-flag-o fa-fw"></i>
+              Помощь
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="col-md m-1 ml-4 pt-1 row rounded-lg overflow-hidden shadow">
+      <!-- Users box-->
+      <div class="col-5 px-0">
+        <div class="bg-white">
+
+          <div class="bg-gray px-4 py-2 bg-light">
+            <input class="form-control form-control-sm" [ngModel]="search" type="text" placeholder="Поиск пользователя" aria-label="default input example" (ngModelChange)="getDataByMyChatsForName(profileId,$event)">
+          </div>
+
+          <div class="messages-box">
+            <div class="list-group rounded-0" *ngFor="let item of chatDataJson;">
+
+              <a (click)="chatUserSelected(''+item.account,item.chatRoomId)" [class.bg-warning]="item.account == selectedUserid" class="list-group-item list-group-item-action rounded-0">
+                <div class="media">
+                  <div *ngIf="item.image;else other_default_avatar">
+                    <img src="data:image/jpeg;base64,{{item.image}}" alt="user" width="60" height="60" class="rounded-circle">
+                  </div>
+                  <ng-template #other_default_avatar>
+                    <img src="assets/images/avatar.jpg" alt="user" width="60" height="60" class="rounded-circle">
+                  </ng-template>
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">{{item.account}}</h6><small class="small font-weight-bold">{{item.lastmessagedate}}</small>
+                    </div>
+                    <p class="text-dark mb-0 text-small">
+                      {{item.lastmessage}}
+                    <p class="text-dark mb-0 text-small">{{item.fileName}}</p>
+
+                  </div>
+                </div>
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Chat Box-->
+      <div class="col-7 mb-3 px-0" id="chatroom-out">
+        <div class="px-4 py-5 chat-box bg-white" id="chatroom" style="overflow:auto">
+          <ng-container *ngFor="let item of messages">
+
+            <div *ngIf="item.isValid;else other_content">
+              <!--Sender Message-->
+              <div class="media w-50 mb-3">
+                <div class="media-body ml-3">
+                  <div class="bg-light rounded py-2 px-3 mb-2">
+                    <p class="text-small mb-0 text-muted">{{item.message}}</p>
+                    <div *ngIf="item.isFile">
+                      <p class="text-small mb-0 text-muted"><a href="api/v1/chat/getfile/{{item.fileId}}">{{item.fileName}}</a></p>
+                    </div>
+                  </div>
+                  <p class="small text-muted">{{item.dateTime}}</p>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #other_content>
+              <!-- Reciever Message-->
+              <div class="media w-50 ml-auto mb-3">
+                <div class="media-body">
+                  <div class="bg-warning rounded py-2 px-3 mb-2">
+                    <p class="text-small mb-0 text-dark">{{item.message}}</p>
+                    <div *ngIf="item.isFile">
+                      <p class="text-small mb-0 text-muted"><a href="api/v1/chat/getfile/{{item.fileId}}">{{item.fileName}}</a></p>
+                    </div>
+                  </div>
+                  <p class="small text-muted">{{item.dateTime}}</p>
+                </div>
+              </div>
+            </ng-template>
+
+          </ng-container>
+
+        </div>
+        <div class="row">
+          <div class="col-12">
+
+            <!-- Typing area -->
+            <form action="#" class="bg-light" (submit)="sendMessage(message.value)">
+              <div class="input-group">
+                <label class="custom-file-upload">
+                  <input type="file" (change)="fileChange($event)" />
+                  <i class="fa fa-cloud-upload"></i>
+                </label>
+                <!--<input type="file" (change)="fileChange($event)" placeholder="Upload file">-->
+                <!--<input type="text" id="receiver" value="{{receiver}}" placeholder="Введите получателя" />-->
+                <input #message type="text" #searchInput id="message" autocomplete="off" placeholder="Введите сообщение" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                <div class="input-group-append">
+                  <button id="button-addon2" type="submit" class="btn btn-warning"> <i class="fa fa-check"></i></button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+        <!--<div id="loginBlock">
+          Токен:<br />
+          <input id="token" type="text" value="{{accessToken}}" />
+        </div>-->
+        <!--<form id="inputForm" (submit)="sendMessage(message.value, receiver.value)">
+          <input #message type="text" id="message" placeholder="Введите сообщение" />
+          <input #receiver type="text" id="receiver" placeholder="Введите получателя" />
+          <input type="submit" value="Отправить" />
+        </form>-->
+
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+</div>
+
+
+
+

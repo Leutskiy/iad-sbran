@@ -1,0 +1,140 @@
+<div class="list-group-item d-flex" [class.viewed-details]="viewMode">
+
+  <a href="#visit-details" class="mr-auto" [class.viewed-details]="viewMode" data-toggle="collapse" (click)="viewForm()">
+    <p class="m-0 align-middle">{{title}}</p>
+  </a>
+
+  <div [class.invisible]="isNewForm">
+    <div class="btn-group mr-2" [class.invisible]="!viewMode || !editable" role="group" aria-label="Second persist group">
+      <button class="btn btn-warning" type="button" (click)="saveForm()">
+        <i class="fa fa-floppy-o"></i>
+      </button>
+    </div>
+    <div class="btn-group" [class.invisible]="!viewMode" role="group" aria-label="First persist group">
+      <button class="btn btn-warning" type="button" (click)="editForm()">
+        <i class="fa fa-pencil"></i>
+      </button>
+    </div>
+  </div>
+  <!--<div class="btn-group mr-2" [class.invisible]="!viewMode || !editable" role="group" aria-label="Second persist group">
+    <button class="btn btn-warning" type="button" (click)="saveForm()">
+      <i class="fa fa-floppy-o"></i>
+    </button>
+  </div>
+  <div class="btn-group" [class.invisible]="!viewMode" role="group" aria-label="First persist group">
+    <button class="btn btn-warning" type="button" (click)="editForm()">
+      <i class="fa fa-pencil"></i>
+    </button>
+  </div>-->
+
+</div>
+
+<div class="collapse" id="visit-details">
+  <div class="input-group mt-3 mb-3">
+
+    <!-- Цель -->
+    <div class="col-md-12">
+      <label for="goal" data-toggle="tooltip" data-placement="top" title="краткое обоснование целей и задач приема иностранных ученых и специалистов">Цель:</label>
+      <input type="text" class="form-control" id="goal" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.goal">
+    </div>
+
+    <!-- Страна -->
+    <div class="col-md-12">
+      <label for="country">Страна:</label>
+      <input type="text" class="form-control" id="country" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.country">
+    </div>
+
+    <!-- Пункты посещения -->
+    <div class="col-md-12">
+      <label for="visitingPoints">Пункты посещения:</label>
+      <input type="text" class="form-control" id="visitingPoints" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.visitingPoints">
+    </div>
+
+
+
+    <!-- Период в днях -->
+    <div class="col-md-2">
+      <label for="periodInDays">Период (дней):</label>
+      <input class="form-control" min="0" id="periodInDays" value="1" type="number" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.periodInDays">
+    </div>
+
+    <!-- Дата пребытия -->
+    <div class="col-md-2">
+      <ngbd-datepicker-adapter [(date)]="visitDetails.arrivalDate" title="Дата пребытия" [disabled]="!editable && !isNewForm" binding-label-input="arrivalDate"></ngbd-datepicker-adapter>
+    </div>
+
+    <!-- Дата депортации -->
+    <div class="col-md-2">
+      <ngbd-datepicker-adapter [(date)]="visitDetails.departureDate" title="Дата депортации" [disabled]="!editable && !isNewForm" binding-label-input="departureDate"></ngbd-datepicker-adapter>
+    </div>
+
+    <div class="w-100"></div>
+
+    <!-- Город получения визы -->
+    <div class="col-md-6">
+      <label for="visaCity">Город получения визы:</label>
+      <input type="text" class="form-control" id="visaCity" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.visaCity">
+    </div>
+
+    <!-- Страна получения визы -->
+    <div class="col-md-6">
+      <label for="visaCountry">Страна получения визы:</label>
+      <input type="text" class="form-control" id="visaCountry" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.visaCountry">
+    </div>
+
+    <!-- Вид визы -->
+    <div class="col-md-6">
+      <label for="visaType">Вид визы:</label>
+      <input type="text" class="form-control" id="visaType" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.visaType">
+    </div>
+
+    <!-- Кратность визы -->
+    <div class="col-md-6 mt-2">
+      <label for="visaMultiplicity" class="mb-1">Кратность визы:</label>
+      <div class="form-check">
+        <label class="form-check-label" for="single">
+          <input id="single" type="radio" class="form-check-input" [value]="0" name="optradio" [(ngModel)]="visitDetails.visaMultiplicity" [disabled]="!editable && !isNewForm">Однократная
+        </label>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="double">
+          <input id="double" type="radio" class="form-check-input" [value]="1" name="optradio" [(ngModel)]="visitDetails.visaMultiplicity" [disabled]="!editable && !isNewForm">Двукратная
+        </label>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="multiple">
+          <input id="multiple" type="radio" class="form-check-input" [value]="2" name="optradio" [(ngModel)]="visitDetails.visaMultiplicity" [disabled]="!editable && !isNewForm">Многократная
+        </label>
+      </div>
+    </div>
+
+    <!-- Тип приема -->
+    <div class="col-md-12">
+      <label for="typeReception">Тип приема:</label>
+      <input type="text" class="form-control" id="typeReception" [disabled]="!editable && !isNewForm" [(ngModel)]="visitDetails.typeReception">
+    </div>
+
+    <!-- Финансовые условия -->
+    <div class="col-md-6 mt-2">
+      <label for="financialCondition" class="mb-1">Финансовые условия, за счет:</label>
+      <div class="form-check">
+        <label class="form-check-label" for="host">
+          <input id="host" type="radio" class="form-check-input" [value]="0" name="optradioTwo" [(ngModel)]="visitDetails.financialCondition" [disabled]="!editable && !isNewForm">Принимаемой стороны
+        </label>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="accepted">
+          <input id="accepted" type="radio" class="form-check-input" [value]="1" name="optradioTwo" [(ngModel)]="visitDetails.financialCondition" [disabled]="!editable && !isNewForm"> Принимающей стороны
+        </label>
+      </div>
+
+    </div>
+
+    <div class="w-100"></div>
+
+  </div>
+</div>
+

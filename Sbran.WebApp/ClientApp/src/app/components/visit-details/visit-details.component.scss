@@ -1,0 +1,35 @@
+
+a > p {
+  margin-bottom: 0px;
+}
+
+a {
+  color: #6C757D;
+  font-size: 22px;
+  text-decoration: none;
+}
+
+%selected-details {
+  font-size: 23px;
+  font-weight: 500;
+  color: white !important;
+  background-color: #343A40 !important;
+}
+
+.viewed-details {
+  @extend %selected-details;
+}
+
+div.list-group-item:hover {
+  @extend %selected-details;
+}
+
+div.list-group-item:hover > a {
+  @extend %selected-details;
+}
+
+div.list-group-item > a:hover {
+  border: 1px solid white;
+  padding: 0px 8px 0px 8px;
+  border-radius: 10px;
+}

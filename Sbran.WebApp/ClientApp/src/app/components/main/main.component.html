@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="list-group list-group-flush border mt-3">
+    <app-person-details [profile]="profile" [employee]="employee" [title]="employeePersonDetailsTitle" [scope]="scope"></app-person-details>
+    <app-employee-passport [passport]="employee.passport" [title]="employeePasportDetailsTitle" [scope]="scope"></app-employee-passport>
+    <app-employee-contacts [contact]="employee.contact" [title]="employeeContactDetailsTitle" [scope]="scope"></app-employee-contacts>
+    <app-employee-organization [organization]="employee.organization"  [title]="employeeOrganizationTitle" [scope]="scope"></app-employee-organization>
+    <app-employee-job [job]="employee.job" [title]="employeeWorkPlaceTitle" [scope]="scope"></app-employee-job>
+    <app-employee-state-registration [stateRegistration]="employee.stateRegistration" [title]="employeeStateRegistrationTitle" [scope]="scope"></app-employee-state-registration>
+  </div>
+</div>

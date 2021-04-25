@@ -1,0 +1,109 @@
+<div *ngIf="tableMode; else CreateOrUpdate">
+  <div class="container">
+    <div class="table-wrapper">
+      <!-- Заголовок таблицы -->
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-12 d-inline-flex">
+            <div class="mr-auto"><h2><b>Международные соглашения</b></h2></div>
+            <div class="input-group w-auto">
+              <div class="input-group-append">
+
+                <!-- Тут короче фикс под себя надо-->
+                <button type="button" class="btn btn-warning ml-2" (click)="add()">
+                  <span><b>Новое</b></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Таблица приглашений -->
+      <table class="table table-hover table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Наименование соглашения</th>
+            <th scope="col">Первая сторона соглашения</th>
+            <th scope="col">Вторая сторона соглашения</th>
+            <th scope="col">Место подписания</th>
+            <th scope="col">Дата подписания</th>
+            <th scope="col">Текст соглашения</th>
+            <th scope="col">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let internationalAgreement of internationalAgreements; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{internationalAgreement.theNameOfTheAgreement}}</td>
+            <td>{{internationalAgreement.theFirstPartyToTheAgreement}}</td>
+            <td>{{internationalAgreement.theSecondPartyToTheAgreement}}</td>
+            <td>{{internationalAgreement.placeOfSigning}}</td>
+            <td>{{internationalAgreement.textOfTheAgreement}}</td>
+            <td>{{internationalAgreement.dateOfEntry}}</td>
+            <td class="text-center">
+              <a class="view" (click)="edit(internationalAgreement)">
+                <i class="fa fa-share-square-o"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #CreateOrUpdate>
+  <div class="input-group mt-3 mb-3">
+
+    <!-- Страна командирования-->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Наименование соглашения</label>
+        <input type="text" [(ngModel)]="internationalAgreement.theNameOfTheAgreement" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>первая сторона соглашения</label>
+        <input type="text" [(ngModel)]="internationalAgreement.theFirstPartyToTheAgreement" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>вторая сторона соглашения</label>
+        <input type="text" [(ngModel)]="internationalAgreement.theSecondPartyToTheAgreement" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>место подписания</label>
+        <input type="text" [(ngModel)]="internationalAgreement.placeOfSigning" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>дата подписания</label>
+        <input type="date" [(ngModel)]="internationalAgreement.dateOfEntry" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>текст соглашения</label>
+        <input type="text" [(ngModel)]="internationalAgreement.textOfTheAgreement" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+      <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+    </div>
+
+  </div>
+</ng-template>

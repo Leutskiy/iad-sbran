@@ -1,0 +1,154 @@
+﻿using Sbran.Domain.Data.Adapters;
+using Sbran.Domain.Data.Repositories.Contracts;
+using Sbran.Domain.Entities;
+using Sbran.Domain.Models;
+using Sbran.Shared.Contracts;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Sbran.Domain.Entities.System;
+using System.Linq;
+
+namespace Sbran.Domain.Data.Repositories
+{
+    /// <summary>
+    /// Репозиторий сотрудников
+    /// </summary>
+    public sealed class EmployeeRepository : IEmployeeRepository
+    {
+        private readonly DomainContext _domainContext;
+
+        public EmployeeRepository(DomainContext databaseContext)
+        {
+            _domainContext = databaseContext ?? throw new ArgumentNullException(nameof(databaseContext));
+        }
+
+        /// <summary>
+        /// Получить всех сотрудников
+        /// </summary>
+        /// <returns><Сотрудники</returns>
+        public Task<List<Employee>> GetAllAsync()
+        {
+            return _domainContext.Set<Employee>().ToListAsync();
+        }
+
+        /// <summary>
+        /// Получить всех сотрудников
+        /// </summary>
+        /// <returns><Сотрудники</returns>
+        public Task<List<Employee>> GetAllWithPassportAsync()
+        {
+            return _domainContext.Employees
+                .Include<Employee, Passport?>(test => test.Passport)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Получить сотрудника по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор иностранца</param>
+        /// <returns>Сотрудник</returns>
+        public async Task<Employee> GetAsync(Guid id)
+        {
+            var employee = await _domainContext.Employees
+                .Include<Employee, List<Invitation>>(test => test.Invitations)
+                .Include<Employee, List<Departure>>(test => test.Departures)
+                .FirstOrDefaultAsync(empl => empl.Id == id);
+
+            if (employee == null)
+            {
+                throw new Exception($"Сотрудник для {id} не найден");
+            }
+
+            employee.Departures = await _domainContext.Departures.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.Invitations = await _domainContext.Invitations.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.Publications = await _domainContext.Publications.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.Memberships = await _domainContext.Memberships.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.ScientificInterests = await _domainContext.ScientificInterests.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.ConsularOffices = await _domainContext.ConsularOffices.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            return employee;
+        }
+
+        /// <summary>
+        /// Получить сотрудника по идентификатору
+        /// </summary>
+        /// <param name="userId">Идентификатор иностранца</param>
+        /// <returns>Сотрудник</returns>
+        public async Task<Employee> GetByUserIdAsync(Guid userId)
+        {
+            if (userId == Guid.Empty)
+            {
+                throw new ArgumentException(nameof(userId));
+            }
+
+            var employee = await _domainContext.Set<Employee>().FirstOrDefaultAsync(empl => empl.UserId == userId);
+
+            if (employee == null)
+            {
+                throw new Exception($"Сущность не найдена для user id: {userId}");
+            }
+
+            return employee;
+        }
+
+        /// <summary>
+        /// Создать сотрудника
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <returns>Идентификатор иностранца</returns>
+        public Employee Create(Guid userId)
+        {
+            var createdEmployee = new Employee(userId);
+
+            _domainContext.Set<Employee>().Add(createdEmployee);
+
+            return createdEmployee;
+        }
+
+        /// <summary>
+        /// Обновить данные по сотруднику
+        /// </summary>
+        /// <param name="employeeId">Идентификатор иностранца</param>
+        /// <param name="scientificInfoDto">Данные по сотруднику</param>
+        public async Task UpdateScientificInfoAsync(Guid employeeId, ScientificInfoDto scientificInfoDto)
+        {
+            Contract.Argument.IsNotNull(scientificInfoDto, nameof(scientificInfoDto));
+
+            var updatedEmployee = await GetAsync(employeeId);
+
+            updatedEmployee.SetAcademicDegree(scientificInfoDto.AcademicDegree);
+            updatedEmployee.SetAcademicRank(scientificInfoDto.AcademicRank);
+            updatedEmployee.SetEducation(scientificInfoDto.Education);
+        }
+
+        /// <summary>
+        /// Обновить данные по сотруднику
+        /// </summary>
+        /// <param name="employeeId">Идентификатор иностранца</param>
+        /// <param name="jobDto">Данные по сотруднику</param>
+        public async Task UpdateJobAsync(Guid employeeId, JobDto jobDto)
+        {
+            Contract.Argument.IsNotNull(jobDto, nameof(jobDto));
+
+            var updatedEmployee = await GetAsync(employeeId);
+
+            updatedEmployee.SetWorkPlace(jobDto.WorkPlace);
+            updatedEmployee.SetPosition(jobDto.Position);
+        }
+
+        /// <summary>
+        /// Удалить сотрудника по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор иностранца</param>
+        /// <returns></returns>
+        public async Task DeleteAsync(Guid id)
+        {
+            Contract.Argument.IsNotEmptyGuid(id, nameof(id));
+
+            var deletedEmployee = await GetAsync(id);
+
+            _domainContext.Set<Employee>().Remove(deletedEmployee);
+        }
+    }
+}
