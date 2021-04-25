@@ -22,6 +22,10 @@ namespace Sbran.Domain.Models
         /// город местонахождения
         /// </summary>
         public string? CityOfLocation { get; set; }
+        /// <summary>
+        /// город местонахождения
+        /// </summary>
+        public string? TextOfAgreement { get; set; }
 
         public Guid EmployeeId { get; set; }
     }

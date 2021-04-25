@@ -41,6 +41,7 @@ namespace Sbran.Domain.Data.Repositories
         {
             return _domainContext.Employees
                 .Include<Employee, Passport?>(test => test.Passport)
+                .Include(e=>e.Contact)
                 .ToListAsync();
         }
 
@@ -54,12 +55,14 @@ namespace Sbran.Domain.Data.Repositories
             var employee = await _domainContext.Employees
                 .Include<Employee, List<Invitation>>(test => test.Invitations)
                 .Include<Employee, List<Departure>>(test => test.Departures)
+                .Include(e=>e.Organization)
                 .FirstOrDefaultAsync(empl => empl.Id == id);
 
             if (employee == null)
             {
                 throw new Exception($"Сотрудник для {id} не найден");
             }
+
 
             employee.Departures = await _domainContext.Departures.Where(e => e.EmployeeId == employee.Id).ToListAsync();
             employee.Invitations = await _domainContext.Invitations.Where(e => e.EmployeeId == employee.Id).ToListAsync();

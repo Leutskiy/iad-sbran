@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as signalR from '@microsoft/signalr';
 import { UserInfo } from '../../contracts/login-data';
+import { AuthService } from '../../services/auth.service';
 import { ProfileDataService } from '../../services/component-providers/profile/profile-data.service';
 
 @Component({
@@ -14,13 +16,16 @@ export class ProfileComponent implements OnInit {
   blobImagePrefix: string = "data:image/jpeg;base64,";
   defaultAvatarRelPath: string = "assets/images/avatar.jpg";
 
+  private hubConnection: signalR.HubConnection;
   profileId: string;
   employeeId: string;
+  accessToken: string;
   userInfo: UserInfo;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private profileDataService: ProfileDataService) {
+    private profileDataService: ProfileDataService,
+    private authService: AuthService) {
     this.userInfo = new UserInfo();
   }
 
@@ -28,7 +33,20 @@ export class ProfileComponent implements OnInit {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
 
+    this.accessToken = this.authService.getToken();
     this.getProfileData(this.profileId, this.employeeId);
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      //конфигурации на сервере 
+      //.withUrl("https://localhost:5001/chatsocket", {  })
+      .configureLogging(signalR.LogLevel.Error)
+      .withUrl("https://localhost:44343/chatsocket", {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets,
+        accessTokenFactory: () => this.accessToken
+      })
+      .build();
+    // начинаем соединение с хабом
+    this.hubConnection.start();
   }
 
   private getProfileData(profileId: string, employeeId: string): void {

@@ -1,5 +1,6 @@
 ﻿using Sbran.Domain.Enums;
 using System;
+using System.Linq;
 
 namespace Sbran.Domain.Entities
 {
@@ -360,6 +361,21 @@ namespace Sbran.Domain.Entities
             }
 
             Gender = gender;
+        }
+
+        public string ToFio()
+        {
+            var fio = string
+                .Join(
+                    separator: " ",
+                    values: new[] {
+                        SurnameRus,
+                        NameRus,
+                        PatronymicNameRus
+                    }.Where(name => name != null))
+                .Trim();
+
+            return fio;
         }
     }
 }

@@ -278,5 +278,6 @@ namespace Sbran.Domain.Entities
 
             Position = position;
         }
+
     }
 }

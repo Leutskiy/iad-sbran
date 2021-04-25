@@ -31,7 +31,6 @@ namespace Sbran.Domain.Configurations
                 .ValueGeneratedNever();
 
             builder.Property(appendix => appendix.ReportId).HasColumnName("DepartureReportUid");
-            builder.Property(appendix => appendix.Description).IsRequired(false).HasColumnName("Description");
             builder.Property(appendix => appendix.FileBinary).IsRequired(false).HasColumnName("FileBinary");
             builder.Property(appendix => appendix.FileName).IsRequired(false).HasColumnName("FileName");
 

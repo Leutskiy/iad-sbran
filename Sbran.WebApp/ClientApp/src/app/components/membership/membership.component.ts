@@ -1,6 +1,6 @@
 import { OnInit, Input, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Membership } from '../../contracts/login-data';
+import { Membership, MembershipType } from '../../contracts/login-data';
 import { AuthService } from '../../services/auth.service';
 import { MembershipDataService } from '../../services/component-providers/membership/membership-data.service';
 
@@ -15,6 +15,7 @@ export class MembershipComponent implements OnInit {
   profileId: string;
   employeeId: string;
   tableMode: boolean = true;
+  type: number;
 
   @Input() title: string;
   memberships = [];
@@ -31,12 +32,13 @@ export class MembershipComponent implements OnInit {
   ngOnInit(): void {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
-
+    this.type = + this.activatedRoute.snapshot.paramMap.get('type');
+    console.log(this.type);
     this.getAll();
   }
 
   getAll(): void {
-    this.membershipDataService.get(this.employeeId).subscribe(e => {
+    this.membershipDataService.get(this.employeeId, this.type).subscribe(e => {
       this.memberships = JSON.parse(JSON.stringify(e));
     })
   }
@@ -61,6 +63,12 @@ export class MembershipComponent implements OnInit {
 
   cancel() {
     this.membership = new Membership();
+    if (this.type == 1) {
+      this.membership.membershipType = MembershipType.russian;
+    }
+    else {
+      this.membership.membershipType = MembershipType.other;
+    }
     this.membership.employeeId = this.employeeId;
     this.tableMode = true;
   }

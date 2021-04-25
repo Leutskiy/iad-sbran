@@ -28,6 +28,7 @@ namespace Sbran.Domain.Data.Repositories
                 CountryOfLocation = addedConsularOffice.CountryOfLocation,
                 CityOfLocation = addedConsularOffice.CityOfLocation,
                 EmployeeId = addedConsularOffice.EmployeeId,
+                TextOfAgreement = addedConsularOffice.TextOfAgreement,
             };
             _domainContext.ConsularOffices.Add(consularOffice);
             return consularOffice;
@@ -41,6 +42,9 @@ namespace Sbran.Domain.Data.Repositories
                 _domainContext.Remove(consularOffice);
             }
         }
+
+        public async Task<ConsularOffice> GetAgreementWithSecondName(string Name)
+          => await _domainContext.ConsularOffices.FirstOrDefaultAsync(e => e.CountryOfLocation.ToUpper().Contains(Name.ToUpper()));
 
         public async Task<List<ConsularOffice>> GetAllAsync() => await _domainContext.ConsularOffices.ToListAsync();
 
@@ -56,6 +60,7 @@ namespace Sbran.Domain.Data.Repositories
                 consularOffice.CountryOfLocation = newConsularOffice.CountryOfLocation;
                 consularOffice.CityOfLocation = newConsularOffice.CityOfLocation;
                 consularOffice.EmployeeId = newConsularOffice.EmployeeId;
+                consularOffice.TextOfAgreement = newConsularOffice.TextOfAgreement;
             }
         }
     }

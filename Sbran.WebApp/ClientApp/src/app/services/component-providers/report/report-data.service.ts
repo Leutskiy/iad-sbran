@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Report } from '../../../contracts/login-data';
+import { Appendix, ListOfScientist, Report } from '../../../contracts/login-data';
 import { APP_CONFIG, IAppConfig } from '../../../settings/app-config';
 
 @Injectable()
@@ -18,9 +18,15 @@ export class ReportDataService {
   }
 
   // получить отчет
-  public get(employeeId: string): Observable<any> {
-    let url = `${this.baseAddress}${this.uriReportPath}/${employeeId}`;
-    console.log(`get all reports for ${employeeId} by url: ` + url);
+  public get(reportId: string): Observable<any> {
+    let url = `${this.baseAddress}${this.uriReportPath}/${reportId}`;
+    console.log(`get all reports for ${reportId} by url: ` + url);
+    return this.http.get<any>(url, this.options);
+  }
+  // получить отчет
+  public agree(reportId: string): Observable<any> {
+    let url = `${this.baseAddress}${this.uriReportPath}/${reportId}/agree`;
+    console.log(`agree ${reportId} by url: ` + url);
     return this.http.get<any>(url, this.options);
   }
 
@@ -29,6 +35,32 @@ export class ReportDataService {
     let url = `${this.baseAddress}${this.uriReportPath}`;
     console.log("report data for new instance: " + report);
     return this.http.post<any>(url, report, this.options);
+  }
+
+  // создать новый файл
+  public addFile(appendix: Appendix): Observable<any> {
+    let url = `${this.baseAddress}${this.uriReportPath}/file`;
+    console.log("appendix data for new instance: " + appendix);
+    return this.http.post<any>(url, appendix, this.options);
+  }
+
+  // создать нового ученого
+  public addScientist(scientist: ListOfScientist): Observable<any> {
+    let url = `${this.baseAddress}${this.uriReportPath}/scientist`;
+    console.log("scientist data for new instance: " + scientist);
+    return this.http.post<any>(url, scientist, this.options);
+  }
+
+  // создать нового ученого
+  public deleteFile(appendix: Appendix): Observable<any> {
+    let url = `${this.baseAddress}${this.uriReportPath}/file/${appendix.id}`;
+    return this.http.delete<any>(url, this.options);
+  }
+
+  // создать нового ученого
+  public deleteScientist(scientist: ListOfScientist): Observable<any> {
+    let url = `${this.baseAddress}${this.uriReportPath}/scientist/${scientist.id}`;
+    return this.http.delete<any>(url, this.options);
   }
 
   // обновить отчет

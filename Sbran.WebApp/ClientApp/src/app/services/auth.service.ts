@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators';
 import { APP_CONFIG, IAppConfig } from '../settings/app-config';
+import { News, Vote, VoteList } from '../contracts/login-data';
 
 @Injectable()
 export class AuthService {
@@ -18,14 +19,16 @@ export class AuthService {
   expiresAt: number;
   authenticated: boolean;
 
+  private readonly options = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
+
   constructor(
     @Inject(APP_CONFIG) private config: IAppConfig,
     private http: HttpClient) {
-      this.authorizationService = `${this.config.icsApiEndpoint}token`;
-      this.accountDetailService = `${this.config.icsApiEndpoint}api/account/details`;
+    this.authorizationService = `${this.config.icsApiEndpoint}token`;
+    this.accountDetailService = `${this.config.icsApiEndpoint}api/account/details`;
 
-      this._initAuthData();
-      this._initUserData();
+    this._initAuthData();
+    this._initUserData();
   }
 
   public login(login: string, password: string): Observable<any> {
@@ -124,6 +127,24 @@ export class AuthService {
 
   public get profileId(): Observable<string> {
     return this.profileId$.asObservable();
+  }
+
+  get() {
+    return this.http.get<any>(`api/v2/account/login`);
+  }
+
+  sendNews(news: News) {
+    console.log("add new: " + news);
+    return this.http.post<any>(`api/v2/account/addnews`, news, this.options);
+  }
+
+  sendVote(vote: Vote) {
+    console.log("add vote: " + vote);
+    return this.http.post<any>(`api/v2/account/addvote`, vote, this.options);
+  }
+
+  sendVoteList(id: string) {
+    return this.http.post<any>(`api/v2/account/sendVoteList/${id}`, this.options);
   }
 
   public get employeeId(): Observable<string> {

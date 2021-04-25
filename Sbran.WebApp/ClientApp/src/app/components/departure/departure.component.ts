@@ -37,7 +37,9 @@ export class DepartureComponent implements OnInit {
 
   getAll(): void {
     this.departureDataService.get(this.employeeId).subscribe(e => {
+      console.log(e);
       this.departures = JSON.parse(JSON.stringify(e));
+      console.log(this.departures);
     })
   }
 

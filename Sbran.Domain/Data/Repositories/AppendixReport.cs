@@ -24,14 +24,21 @@ namespace Sbran.Domain.Data.Repositories
         {
             var appendix = new Appendix()
             {
-                Description = addedAppendix.Description,
                 FileBinary = addedAppendix.FileBinary,
                 FileName = addedAppendix.FileName,
-                ReportId = addedAppendix.ReportId
-
+                ReportId = addedAppendix.ReportId.Value
             };
             _domainContext.Appendixs.Add(appendix);
             return appendix;
+        }
+
+        public async Task DeleteAllAsync(Guid id)
+        {
+            var appendix = _domainContext.Appendixs.Where(e => e.ReportId == id);
+            if (appendix != null)
+            {
+                _domainContext.RemoveRange(appendix);
+            }
         }
 
         public async Task DeleteAsync(Guid id)
@@ -54,10 +61,9 @@ namespace Sbran.Domain.Data.Repositories
             var appendix = await _domainContext.Appendixs.FirstOrDefaultAsync(e => e.Id == currentAppendixId);
             if (appendix != null)
             {
-                appendix.Description = newAppendix.Description;
                 appendix.FileBinary = newAppendix.FileBinary;
                 appendix.FileName = newAppendix.FileName;
-                appendix.ReportId = newAppendix.ReportId;
+                appendix.ReportId = newAppendix.ReportId.Value;
             }
         }
     }

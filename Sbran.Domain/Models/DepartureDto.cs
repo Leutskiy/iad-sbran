@@ -15,6 +15,7 @@ namespace Sbran.Domain.Models
         public string? HostOrganization { get; set; }
         public string? PlaceOfResidence { get; set; }
         public string? PurposeOfTheTrip { get; set; }
+        public string? Status { get; set; }
         public string? JustificationOfTheBusiness { get; set; }
         public DateTime? DateStart { get; set; }
         public DateTime? DateEnd { get; set; }

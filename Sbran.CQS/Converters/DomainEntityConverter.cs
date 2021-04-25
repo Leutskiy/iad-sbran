@@ -190,53 +190,54 @@ namespace Sbran.CQS.Converters
                 VisitDetail = visitDetailResult,
                 InvitationStatus = invitation.Status,
                 ReportId = invitation.ReportId,
-                ForeignParticipants = foreignParticipantResultCollection
-            };
-        }
-
-        public static ChatRoomResult ConvertToResult(
-            User user,
-            ChatRoomList chatRoomList,
-            ChatMessage chatMessage
-            )
-        {
-            return new ChatRoomResult
-            {
-                userid = user.Id,
-                account = user.Account ?? "",
-                //Пока что хардкор
-                image = user.Profile.Photo,
-                chatRoomId = chatRoomList?.ChatRoomId ?? Guid.NewGuid(),
-                lastmessage = chatMessage?.Message ?? "",
-                lastmessagedate = chatMessage?.DateTime ?? null,
-            };
-        }
-
-        public static ChatMessageResult ConvertToResult(
-            User user,
-            User userTo,
-            ChatMessage chatMessage
-            )
-        {
-            return new ChatMessageResult
-            {
-                Message = chatMessage.Message ?? "",
-                DateTime = chatMessage.DateTime,
-                profileTo = userTo.ProfileId,
-                profileId = user.ProfileId
-            };
-        }
-
-        public static ChatMessageFileResult ConvertToResult(
-            ChatMessageFile chatMessageFile
-            )
-        {
-            return new ChatMessageFileResult
-            {
-                ChatMessageId = chatMessageFile.ChatMessageId,
-                FileBinary = chatMessageFile.FileBinary,
-                Id = chatMessageFile.Id
-            };
-        }
+                ForeignParticipants = foreignParticipantResultCollection,
+                Status = invitation.Report.Status ? "Принят" : "Не принят"??null,
+        };
     }
+
+    public static ChatRoomResult ConvertToResult(
+        User user,
+        ChatRoomList chatRoomList,
+        ChatMessage chatMessage
+        )
+    {
+        return new ChatRoomResult
+        {
+            userid = user.Id,
+            account = user.Account ?? "",
+            //Пока что хардкор
+            image = user.Profile.Photo,
+            chatRoomId = chatRoomList?.ChatRoomId ?? Guid.NewGuid(),
+            lastmessage = chatMessage?.Message ?? "",
+            lastmessagedate = chatMessage?.DateTime ?? null,
+        };
+    }
+
+    public static ChatMessageResult ConvertToResult(
+        User user,
+        User userTo,
+        ChatMessage chatMessage
+        )
+    {
+        return new ChatMessageResult
+        {
+            Message = chatMessage.Message ?? "",
+            DateTime = chatMessage.DateTime,
+            profileTo = userTo.ProfileId,
+            profileId = user.ProfileId
+        };
+    }
+
+    public static ChatMessageFileResult ConvertToResult(
+        ChatMessageFile chatMessageFile
+        )
+    {
+        return new ChatMessageFileResult
+        {
+            ChatMessageId = chatMessageFile.ChatMessageId,
+            FileBinary = chatMessageFile.FileBinary,
+            Id = chatMessageFile.Id
+        };
+    }
+}
 }

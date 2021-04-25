@@ -27,6 +27,7 @@ namespace Sbran.Domain.Data.Repositories
                 NameOfCompany = addedMembership.NameOfCompany,
                 StatusInTheOrganization = addedMembership.StatusInTheOrganization,
                 DateOfEntry = addedMembership.DateOfEntry,
+                MembershipType = addedMembership.MembershipType,
                 EmployeeId = addedMembership.EmployeeId,
                 SiteOfTheOrganization = addedMembership.SiteOfTheOrganization
             };

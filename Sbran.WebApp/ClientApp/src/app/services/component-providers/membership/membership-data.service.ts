@@ -18,8 +18,8 @@ export class MembershipDataService {
   }
 
   // получить все выезды сотрудника
-  public get(employeeId: string): Observable<[]> {
-    let url = `${this.baseAddress}${this.uriMembershipPath}/${employeeId}`;
+  public get(employeeId: string, type: number): Observable<[]> {
+    let url = `${this.baseAddress}${this.uriMembershipPath}/${employeeId}/${type}`;
     console.log(`get all memberships for ${employeeId} by url: ` + url);
     return this.http.get<[]>(url, this.options);
   }

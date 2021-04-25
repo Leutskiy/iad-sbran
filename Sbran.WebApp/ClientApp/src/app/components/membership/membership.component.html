@@ -5,7 +5,12 @@
       <div class="table-title">
         <div class="row">
           <div class="col-sm-12 d-inline-flex">
-            <div class="mr-auto"><h2><b>Членство</b></h2></div>
+            <div class="mr-auto">
+              <h2 *ngIf="type==1;else statuss"><b>Членство в международных организациях</b></h2>
+              <ng-template #statuss>
+                <h2><b>Членство в редколлегиях российских и иностранных журналов</b></h2>
+              </ng-template>
+            </div>
             <div class="input-group w-auto">
               <div class="input-group-append">
 
@@ -22,7 +27,7 @@
       <!-- Таблица приглашений -->
       <table class="table table-hover table-dark">
         <thead>
-          <tr>
+          <tr *ngIf="type==1;else tbtb">
             <th scope="col">#</th>
             <th scope="col">Наименование организации</th>
             <th scope="col">Cтатус в организации</th>
@@ -30,6 +35,16 @@
             <th scope="col">Дата вступления</th>
             <th scope="col">Действия</th>
           </tr>
+          <ng-template #tbtb>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Наименование журнала</th>
+              <th scope="col">Статус в редколлегии журнала</th>
+              <th scope="col">Сайт журнала</th>
+              <th scope="col">Дата вступления</th>
+              <th scope="col">Действия</th>
+            </tr>
+          </ng-template>
         </thead>
         <tbody>
           <tr *ngFor="let membership of memberships; let i = index">
@@ -56,33 +71,37 @@
     <!-- наименование организации-->
     <div class="col-md-6">
       <div class="form-group">
-        <label>Наименование организации</label>
+        <label *ngIf="type==1;else name">Наименование организации</label>
+        <ng-template #name><label>Наименование журнала</label></ng-template>
         <input type="text" [(ngModel)]="membership.nameOfCompany" class="form-control" />
       </div>
     </div>
 
     <div class="col-md-6">
       <div class="form-group">
-        <label>Cтатус в организации</label>
+        <label *ngIf="type==1;else status">Cтатус в организации</label>
+        <ng-template #status><label>Статус в редколлегии журнала</label></ng-template>
         <input type="text" [(ngModel)]="membership.statusInTheOrganization" class="form-control" />
       </div>
     </div>
 
     <div class="col-md-12">
       <div class="form-group">
-        <label>Сайт организации</label>
+        <label *ngIf="type==1;else site">Сайт организации</label>
+        <ng-template #site><label>Дата вступления</label></ng-template>
         <input type="text" [(ngModel)]="membership.siteOfTheOrganization" class="form-control" />
       </div>
     </div>
 
     <div class="col-md-12">
       <div class="form-group">
-        <label>Дата вступления</label>
+        <label *ngIf="type==1;else date">Дата вступления</label>
+        <ng-template #date><label>Сайт журнала</label></ng-template>
         <input type="date" [(ngModel)]="membership.dateOfEntry" class="form-control" />
       </div>
     </div>
 
-     <div class="col-md-12">
+    <div class="col-md-12">
       <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
       <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
     </div>

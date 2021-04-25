@@ -1,5 +1,6 @@
 ﻿using Sbran.Domain.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace Sbran.Domain.Entities
 {
@@ -42,5 +43,8 @@ namespace Sbran.Domain.Entities
         /// ТипОтчета
         /// </summary>
         public ReportType ReportType { get; set; }
+        public bool Status { get; set; }
+        public List<Appendix> Appendices { get; set; }
+        public List<ListOfScientist> ListOfScientists { get; set; }
     }
 }

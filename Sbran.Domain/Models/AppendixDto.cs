@@ -11,7 +11,7 @@ namespace Sbran.Domain.Models
         /// <summary>
         /// Описание
         /// </summary>
-        public string? Description { get; set; }
+        public Guid? Id { get; set; }
 
         /// <summary>
         /// Файл
@@ -23,6 +23,6 @@ namespace Sbran.Domain.Models
         /// </summary>
         public string FileName { get; set; }
 
-        public Guid ReportId { get; set; }
+        public Guid? ReportId { get; set; }
     }
 }

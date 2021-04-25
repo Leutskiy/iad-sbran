@@ -1,16 +1,33 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Sbran.CQS.Read.Results;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sbran.WebApp.Hubs
 {
+    public static class UserHandler
+    {
+        public static HashSet<string> ConnectedIds = new HashSet<string>();
+    }
     /// <summary>
     /// Чат-хаб
     /// </summary>
     [Authorize]
     public sealed class ChatHub : Hub
     {
+        public override async Task OnConnectedAsync()
+        {
+            UserHandler.ConnectedIds.Add(Context.ConnectionId);
+            await base.OnConnectedAsync();
+        }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            UserHandler.ConnectedIds.Remove(Context.ConnectionId);
+            await base.OnDisconnectedAsync(exception);
+        }
         /* OLD
 		public Task SendMessage(string user, string message)
 		{
@@ -33,10 +50,5 @@ namespace Sbran.WebApp.Hubs
             await Clients.User(to).SendAsync("Receive", toUser, userName);
         }
 
-        public override async Task OnConnectedAsync()
-        {
-            await Clients.All.SendAsync("Notify", $"Приветствуем {Context.UserIdentifier}", Context.UserIdentifier);
-            await base.OnConnectedAsync();
-        }
     }
 }

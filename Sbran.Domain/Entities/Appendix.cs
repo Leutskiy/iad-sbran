@@ -18,11 +18,6 @@ namespace Sbran.Domain.Entities
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Описание
-        /// </summary>
-        public string? Description { get; set; }
-
-        /// <summary>
         /// Файл
         /// </summary>
         public byte[]? FileBinary { get; set; }

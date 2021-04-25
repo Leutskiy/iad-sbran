@@ -27,6 +27,7 @@
           <th scope="col">Страна</th>
           <th scope="col">Организация</th>
           <th scope="col">Статус</th>
+          <th scope="col">Статус отчета</th>
           <th scope="col">Год</th>
         </tr>
       </thead>
@@ -42,6 +43,7 @@
               Согласован
             </ng-template>
           </td>
+          <td>{{invitation.status}}</td>
           <td>{{invitation.visitDetail?.arrivalDate?.getFullYear()}}</td>
           <td class="text-center">
             <a class="view" (click)="edit($event, invitation, i)">

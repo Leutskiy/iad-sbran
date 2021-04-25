@@ -18,6 +18,11 @@ namespace Sbran.CQS.Read.Results
         /// Данные по иностранцу
         /// </summary>
         public AlienResult? Alien { get; set; }
+        
+        /// <summary>
+        /// Данные по иностранцу
+        /// </summary>
+        public string? Status { get; set; }
 
         /// <summary>
         /// Статус
