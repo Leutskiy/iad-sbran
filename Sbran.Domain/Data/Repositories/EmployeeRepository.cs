@@ -7,15 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sbran.Domain.Entities.System;
 using System.Linq;
 
 namespace Sbran.Domain.Data.Repositories
 {
-    /// <summary>
-    /// Репозиторий сотрудников
-    /// </summary>
-    public sealed class EmployeeRepository : IEmployeeRepository
+	/// <summary>
+	/// Репозиторий сотрудников
+	/// </summary>
+	public sealed class EmployeeRepository : IEmployeeRepository
     {
         private readonly DomainContext _domainContext;
 
@@ -63,13 +62,14 @@ namespace Sbran.Domain.Data.Repositories
                 throw new Exception($"Сотрудник для {id} не найден");
             }
 
-
+            // TODO: переделать через Task.WhenAllAsync()
             employee.Departures = await _domainContext.Departures.Where(e => e.EmployeeId == employee.Id).ToListAsync();
             employee.Invitations = await _domainContext.Invitations.Where(e => e.EmployeeId == employee.Id).ToListAsync();
-            employee.Publications = await _domainContext.Publications.Where(e => e.EmployeeId == employee.Id).ToListAsync();
             employee.Memberships = await _domainContext.Memberships.Where(e => e.EmployeeId == employee.Id).ToListAsync();
-            employee.ScientificInterests = await _domainContext.ScientificInterests.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.Publications = await _domainContext.Publications.Where(e => e.EmployeeId == employee.Id).ToListAsync();
             employee.ConsularOffices = await _domainContext.ConsularOffices.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+            employee.ScientificInterests = await _domainContext.ScientificInterests.Where(e => e.EmployeeId == employee.Id).ToListAsync();
+
             return employee;
         }
 
@@ -82,11 +82,10 @@ namespace Sbran.Domain.Data.Repositories
         {
             if (userId == Guid.Empty)
             {
-                throw new ArgumentException(nameof(userId));
+                throw new ArgumentException($"{userId}", nameof(userId));
             }
 
             var employee = await _domainContext.Set<Employee>().FirstOrDefaultAsync(empl => empl.UserId == userId);
-
             if (employee == null)
             {
                 throw new Exception($"Сущность не найдена для user id: {userId}");
@@ -116,8 +115,6 @@ namespace Sbran.Domain.Data.Repositories
         /// <param name="scientificInfoDto">Данные по сотруднику</param>
         public async Task UpdateScientificInfoAsync(Guid employeeId, ScientificInfoDto scientificInfoDto)
         {
-            Contract.Argument.IsNotNull(scientificInfoDto, nameof(scientificInfoDto));
-
             var updatedEmployee = await GetAsync(employeeId);
 
             updatedEmployee.SetAcademicDegree(scientificInfoDto.AcademicDegree);
@@ -132,8 +129,6 @@ namespace Sbran.Domain.Data.Repositories
         /// <param name="jobDto">Данные по сотруднику</param>
         public async Task UpdateJobAsync(Guid employeeId, JobDto jobDto)
         {
-            Contract.Argument.IsNotNull(jobDto, nameof(jobDto));
-
             var updatedEmployee = await GetAsync(employeeId);
 
             updatedEmployee.SetWorkPlace(jobDto.WorkPlace);

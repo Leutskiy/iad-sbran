@@ -1,33 +1,38 @@
 ﻿using Sbran.Domain.Enums;
 using System;
 
-
-//-Страна командирования
-//- город командирования
-//- источник финансирования
-//- основание выезда(плановый, внеплановый, работа по гранту, и др.)
-//- принимающая организация
-//- место проживания(выбор осуществлялся самостоятельно или принимающей стороной)
-//- цель командирования(название мероприятия, тема научной работы)
-//- обоснование командирования(краткое обоснование целей и задач выезда)
-//- Срок командировки(с __ по __)
+/***
+- страна командирования
+- город командирования
+- источник финансирования
+- основание выезда(плановый, внеплановый, работа по гранту, и др.)
+- принимающая организация
+- место проживания(выбор осуществлялся самостоятельно или принимающей стороной)
+- цель командирования(название мероприятия, тема научной работы)
+- обоснование командирования(краткое обоснование целей и задач выезда)
+- срок командировки (с __ по __)
+***/
 
 namespace Sbran.Domain.Entities
 {
+    // TODO: Не забыть про init only
     /// <summary>
     /// Выезд
     /// </summary>
     public sealed class Departure
     {
-        public Departure()
-        {
-            Id = Guid.NewGuid();
-        }
-
         /// <summary>
-        /// Идентификатор
+        /// Используем только инициализацию свойств
         /// </summary>
-        public Guid Id { get; set; }
+		public Departure()
+		{
+			Id = Guid.NewGuid();
+		}
+
+		/// <summary>
+		/// Идентификатор
+		/// </summary>
+		public Guid Id { get; set; }
 
         /// <summary>
         /// Страна командирования
@@ -69,6 +74,7 @@ namespace Sbran.Domain.Entities
         /// </summary>
         public string? JustificationOfTheBusiness { get; set; }
 
+        // TODO: почему с ?
         /// <summary>
         /// Статус
         /// </summary>
@@ -87,16 +93,21 @@ namespace Sbran.Domain.Entities
         /// <summary>
         /// Идентификатор сотрудника
         /// </summary>
-        public Guid EmployeeId { get; set; }
-
-        public Employee Employee { get; set; }
+        public Guid EmployeeId { get; set; } = default!;
 
         /// <summary>
-        /// Идентификатор сотрудника
+        /// Сотрудник, совершивший выезд
+        /// </summary>
+        public Employee Employee { get; set; } = default!;
+
+        /// <summary>
+        /// Идентификатор отчета о выезде
         /// </summary>
         public Guid? ReportId { get; set; }
 
-        public Report Report { get; set; }
-
+        /// <summary>
+        /// Отчет о выезде
+        /// </summary>
+        public Report? Report { get; set; }
     }
 }

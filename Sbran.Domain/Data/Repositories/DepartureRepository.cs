@@ -5,13 +5,11 @@ using Sbran.Domain.Entities;
 using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
 {
-    public sealed class DepartureRepository : IDepartureRepository
+	public sealed class DepartureRepository : IDepartureRepository
     {
         private readonly DomainContext _domainContext;
 
@@ -22,7 +20,7 @@ namespace Sbran.Domain.Data.Repositories
 
         public Departure Add(DepartureDto addedDeparture)
         {
-            var departure = new Departure()
+            var departure = new Departure
             {
                 BasicOfDeparture = addedDeparture.BasicOfDeparture,
                 CityOfBusiness = addedDeparture.CityOfBusiness,
@@ -37,7 +35,9 @@ namespace Sbran.Domain.Data.Repositories
                 SourceOfFinancing = addedDeparture.SourceOfFinancing,
                 DepartureStatus = Enums.DepartureStatus.NonAgreement,
             };
+
             _domainContext.Departures.Add(departure);
+
             return departure;
         }
 
@@ -61,14 +61,15 @@ namespace Sbran.Domain.Data.Repositories
             }
         }
 
-        public async Task<List<Departure>> GetAllAsync() => await _domainContext
-            .Departures
-            .Include(e => e.Report)
-            .ToListAsync();
+        // TODO: подумать насчет SplitQuery
+        public Task<List<Departure>> GetByEmplIdAsync(Guid employeeId)
+        {
+            return _domainContext.Departures.Include(d => d.Report).ToListAsync();
+        }
+        
+		public Task<List<Departure>> GetAllAsync() => _domainContext.Departures.ToListAsync();
 
-        public async Task<Departure> GetAsync(Guid id) => await _domainContext.Departures
-            .Include(e => e.Report)
-            .FirstOrDefaultAsync(e => e.Id == id);
+		public async Task<Departure> GetAsync(Guid id) => await _domainContext.Departures.Include(e => e.Report).FirstOrDefaultAsync(e => e.Id == id);
 
         public async Task SetReport(Guid id, Guid parentId)
         {
@@ -84,21 +85,25 @@ namespace Sbran.Domain.Data.Repositories
         public async Task UpdateAsync(Guid currentDepartureId, DepartureDto newDeparture)
         {
             var departure = await _domainContext.Departures.FirstOrDefaultAsync(e => e.Id == currentDepartureId);
-            if (departure != null)
+            if (departure is null)
             {
-                departure.HostOrganization = newDeparture.HostOrganization;
-                departure.JustificationOfTheBusiness = newDeparture.JustificationOfTheBusiness;
-                departure.BasicOfDeparture = newDeparture.BasicOfDeparture;
-                departure.CityOfBusiness = newDeparture.CityOfBusiness;
-                departure.DateEnd = newDeparture.DateEnd;
-                departure.DateStart = newDeparture.DateStart;
-                departure.EmployeeId = newDeparture.EmployeeId;
-                departure.PlaceOfResidence = newDeparture.PlaceOfResidence;
-                departure.PurposeOfTheTrip = newDeparture.PurposeOfTheTrip;
-                departure.SendingCountry = newDeparture.SendingCountry;
-                departure.SourceOfFinancing = newDeparture.SourceOfFinancing;
-                _domainContext.Departures.Update(departure);
+                // TODO: Добавить доменное исключение
+                throw new Exception($"The departure with id {currentDepartureId} is not found");
             }
+
+            departure.HostOrganization = newDeparture.HostOrganization;
+            departure.JustificationOfTheBusiness = newDeparture.JustificationOfTheBusiness;
+            departure.BasicOfDeparture = newDeparture.BasicOfDeparture;
+            departure.CityOfBusiness = newDeparture.CityOfBusiness;
+            departure.DateEnd = newDeparture.DateEnd;
+            departure.DateStart = newDeparture.DateStart;
+            departure.EmployeeId = newDeparture.EmployeeId;
+            departure.PlaceOfResidence = newDeparture.PlaceOfResidence;
+            departure.PurposeOfTheTrip = newDeparture.PurposeOfTheTrip;
+            departure.SendingCountry = newDeparture.SendingCountry;
+            departure.SourceOfFinancing = newDeparture.SourceOfFinancing;
+
+            _domainContext.Departures.Update(departure);
         }
     }
 }

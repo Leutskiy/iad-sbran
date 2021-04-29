@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Invitation, InvitationStatus, Job, NewInvitationDto, Passport, ScientificInfo, VisitDetail } from '../../../contracts/login-data';
+import { AuthService } from '../../../services/auth.service';
 import { InvitationDataService } from '../../../services/component-providers/invitation/invitation-data.service';
 import { AlienContactsInvitationComponent } from '../../contacts/alien-contacts-invitation.component';
 import { AlienJobInvitationComponent } from '../../job/alien-job-invitation.component';
@@ -18,26 +19,27 @@ import { VisitDetailsInvitationComponent } from '../../visit-details/visit-detai
 })
 export class NewInvitationFormComponent implements OnInit {
 
-  //@ViewChild(VisitDetailsInvitationComponent)
+  @ViewChild(VisitDetailsInvitationComponent)
   private visitDetailsComponent: VisitDetailsInvitationComponent;
 
-  //@ViewChild(AlienJobInvitationComponent)
+  @ViewChild(AlienJobInvitationComponent)
   private jobComponent: AlienJobInvitationComponent;
 
-  //@ViewChild(AlienPassportInvitationComponent)
+  @ViewChild(AlienPassportInvitationComponent)
   private passportComponent: AlienPassportInvitationComponent;
 
-  //@ViewChild(AlienContactsInvitationComponent)
+  @ViewChild(AlienContactsInvitationComponent)
   private contactDetailsComponent: AlienContactsInvitationComponent;
 
-  //@ViewChild(AlienOrganizationInvitationComponent)
+  @ViewChild(AlienOrganizationInvitationComponent)
   private organizationComponent: AlienOrganizationInvitationComponent;
 
-  //@ViewChild(AlienStateRegistrationInvitationComponent)
+  @ViewChild(AlienStateRegistrationInvitationComponent)
   private stateRegistrationComponent: AlienStateRegistrationInvitationComponent;
 
   scope: string = "invitation";
   isNew: boolean = false;
+  forManager: boolean = false;
 
   profileId: string;
   employeeId: string;
@@ -56,10 +58,12 @@ export class NewInvitationFormComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private invitationService: InvitationDataService) {
     this.job = new Job();
     this.invitation = new Invitation();
+    this.forManager = authService.isManager;
   }
 
   ngOnInit(): void {
@@ -82,8 +86,12 @@ export class NewInvitationFormComponent implements OnInit {
 
     var newInvitation = new NewInvitationDto();
     newInvitation.visitDetail = this.visitDetailsComponent.visitDetails;
+    newInvitation.visitDetail.arrivalDate = this.formatDate(this.visitDetailsComponent.visitDetails.arrivalDate);
+    newInvitation.visitDetail.departureDate = this.formatDate(this.visitDetailsComponent.visitDetails.departureDate);
     newInvitation.alien.alienJob = this.jobComponent.job;
     newInvitation.alien.alienPassport = this.passportComponent.passport;
+    newInvitation.alien.alienPassport.birthDate = this.formatDate(this.passportComponent.passport.birthDate);
+    newInvitation.alien.alienPassport.issueDate = this.formatDate(this.passportComponent.passport.issueDate);
     // TODO: доделать заполнение о научных достижениях приглашенного
     newInvitation.alien.alienScientificInfo = new ScientificInfo();
     newInvitation.alien.alienContact = this.contactDetailsComponent.contact;
@@ -208,5 +216,27 @@ export class NewInvitationFormComponent implements OnInit {
     console.log(this.organizationComponent.organization);
     console.log(this.stateRegistrationComponent.stateRegistration);
     console.log("saved new invitation form");
+  }
+
+  // TODO: Сделать стандартизацию формата даты (подходящий ISO)
+  // отформатировать дату (привести к правильному формату)
+  private formatDate(model: Date | string | null): Date | null {
+    if (model instanceof Date) {
+      return model;
+    }
+    else if (model) {
+      return new Date(this.parse(model));
+    } else {
+      return null;
+    }
+  }
+
+  private parse(value: string): string {
+    if (value) {
+      let date = value.split(".");
+      return date[2] + "-" + date[1] + "-" + date[0];
+    }
+
+    return null;
   }
 }

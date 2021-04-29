@@ -191,7 +191,9 @@ namespace Sbran.CQS.Converters
                 InvitationStatus = invitation.Status,
                 ReportId = invitation.ReportId,
                 ForeignParticipants = foreignParticipantResultCollection,
-                Status = invitation.Report.Status ? "Принят" : "Не принят"??null,
+                Status = (invitation?.Report?.Status != null)
+                            ? invitation.Report.Status ? "Принят" : "Не принят"
+                            : null,
         };
     }
 

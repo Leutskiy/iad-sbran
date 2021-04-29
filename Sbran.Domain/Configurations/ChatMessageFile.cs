@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sbran.Domain.Entities.Chat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sbran.Domain.Configurations
 {
-    public sealed class ChatMessageFileConfiguration : IEntityTypeConfiguration<ChatMessageFile>
+	public sealed class ChatMessageFileConfiguration : IEntityTypeConfiguration<ChatMessageFile>
     {
         public ChatMessageFileConfiguration(string schemaName)
         {

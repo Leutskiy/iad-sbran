@@ -1,21 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Sbran.CQS.Converters;
 using Sbran.CQS.Read.Results;
 using Sbran.Domain.Data.Adapters;
 using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Entities.Chat;
-using Sbran.Domain.Entities.System;
 using Sbran.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sbran.CQS.Read
 {
-    public sealed class ChatMessageFileWriteCommand
+	public sealed class ChatMessageFileWriteCommand
     {
         private readonly IChatMessageRepository _chatMessageRepository;
         private readonly IChatMessageFileRepository _chatMessageFileRepository;

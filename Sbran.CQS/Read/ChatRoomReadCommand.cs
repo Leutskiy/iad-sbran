@@ -2,16 +2,14 @@
 using Sbran.CQS.Read.Contracts;
 using Sbran.CQS.Read.Results;
 using Sbran.Domain.Data.Repositories.Contracts;
-using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sbran.CQS.Read
 {
-    public sealed class ChatRoomReadCommand : IChatRoomReadCommand
+	public sealed class ChatRoomReadCommand : IChatRoomReadCommand
     {
         private readonly IChatMessageRepository _chatMessageRepository;
         private readonly IChatRoomListRepository _chatRoomListRepository;

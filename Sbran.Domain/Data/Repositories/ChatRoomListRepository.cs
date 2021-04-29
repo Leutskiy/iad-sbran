@@ -4,16 +4,14 @@ using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Entities.Chat;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
 {
-    /// <summary>
-    /// Репозиторий списка участников в комнате
-    /// </summary>
-    public sealed class ChatRoomListRepository : IChatRoomListRepository
+	/// <summary>
+	/// Репозиторий списка участников в комнате
+	/// </summary>
+	public sealed class ChatRoomListRepository : IChatRoomListRepository
     {
         private readonly DomainContext _domainContext;
         /// <summary>

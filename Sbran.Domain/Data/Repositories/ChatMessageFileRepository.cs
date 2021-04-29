@@ -5,12 +5,11 @@ using Sbran.Domain.Entities.Chat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
 {
-    public sealed class ChatMessageFileRepository : IChatMessageFileRepository
+	public sealed class ChatMessageFileRepository : IChatMessageFileRepository
     {
         private readonly DomainContext _domainContext;
 

@@ -4,12 +4,11 @@ using Sbran.Domain.Data.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sbran.CQS.Read
 {
-    public sealed class ChatMessageReadCommand : IChatMessageReadCommand
+	public sealed class ChatMessageReadCommand : IChatMessageReadCommand
     {
         private readonly IChatMessageRepository _chatMessageRepository;
         private readonly IChatMessageFileRepository _chatMessageFileRepository;

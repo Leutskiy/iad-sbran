@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Net.Http.Headers;
@@ -9,17 +8,16 @@ using Sbran.CQS.Read;
 using Sbran.CQS.Read.Contracts;
 using Sbran.CQS.Read.Results;
 using Sbran.Domain.Models;
-using Sbran.Shared.Contracts;
 using Sbran.Domain.Entities;
 using System.Collections.Generic;
 
 namespace Sbran.WebApp.Controllers
 {
-    ///TODO: лучше назвать как ProfileEmployee
-    /// <summary>
-    /// Контроллер профиля
-    /// </summary>
-    [ApiController]
+	///TODO: лучше назвать как ProfileEmployee
+	/// <summary>
+	/// Контроллер профиля
+	/// </summary>
+	[ApiController]
     [Authorize]
     [Route("api/v1/[controller]")]
     public class ProfileController : ControllerBase

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sbran.Domain.Models
 {
-    public sealed class PublicationDto
+	public sealed class PublicationDto
     {/// <summary>
      /// научный руководитель, соавторы
      /// </summary>

@@ -2,19 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Sbran.Domain.Data.Adapters;
 using Sbran.Domain.Data.Repositories.Contracts;
-using Sbran.Domain.Entities;
 using Sbran.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sbran.WebApp.Controllers
 {
-    /// <summary>
-    /// Контроллер контактных данных по сотруднику
-    /// </summary>
-    [ApiController]
+	/// <summary>
+	/// Контроллер контактных данных по сотруднику
+	/// </summary>
+	[ApiController]
     [Authorize]
     [Route("api/v1/[controller]")]
     public class ReportController : ControllerBase
@@ -53,16 +51,16 @@ namespace Sbran.WebApp.Controllers
                 switch (createdReportData.ReportType)
                 {
                     case Domain.Enums.ReportType.Departure:
-                        await _departureRepository.SetReport(report.Id, createdReportData.ParentId.Value);
+                        await _departureRepository.SetReport(report.Id, createdReportData.ParentId!.Value);
                         report.ReportType = Domain.Enums.ReportType.Departure;
                         break;
 
                     case Domain.Enums.ReportType.Invition:
-                        await _invitationRepository.SetReport(report.Id, createdReportData.ParentId.Value);
+                        await _invitationRepository.SetReport(report.Id, createdReportData.ParentId!.Value);
                         report.ReportType = Domain.Enums.ReportType.Invition;
                         break;
                 }
-                if (createdReportData.ListOfScientists.Count > 0)
+                if (createdReportData.ListOfScientists?.Count > 0)
                 {
                     foreach (var temp in createdReportData.ListOfScientists)
                     {
@@ -73,7 +71,7 @@ namespace Sbran.WebApp.Controllers
                         }
                     }
                 }
-                if (createdReportData.Appendix.Count > 0)
+                if (createdReportData.Appendix?.Count > 0)
                 {
                     foreach (var temp in createdReportData.Appendix)
                     {
@@ -92,7 +90,7 @@ namespace Sbran.WebApp.Controllers
 
             await _reportRepository.UpdateAsync(reportId.Value, createdReportData);
 
-            if (createdReportData.ListOfScientists.Count > 0)
+            if (createdReportData.ListOfScientists?.Count > 0)
             {
                 await _listOfScientistRepository.DeleteAllAsync(reportId.Value);
                 foreach (var temp in createdReportData.ListOfScientists)
@@ -105,7 +103,7 @@ namespace Sbran.WebApp.Controllers
                 }
             }
 
-            if (createdReportData.Appendix.Count > 0)
+            if (createdReportData.Appendix?.Count > 0)
             {
                 await _appendixRepository.DeleteAllAsync(reportId.Value);
                 foreach (var temp in createdReportData.Appendix)

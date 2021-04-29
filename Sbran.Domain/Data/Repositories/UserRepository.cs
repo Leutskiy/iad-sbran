@@ -35,13 +35,15 @@ namespace Sbran.Domain.Data.Repositories
             return createdUser;
         }
 
-        public async Task<User> Get(string userName, string password)
+        /// <summary>
+        /// Получить пользователя системы для переданных кред
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public Task<User> GetAsync(string login, string password)
         {
-            var user = await _systemContext.Users.FirstOrDefaultAsync(ctx => ctx.Account == userName && ctx.Password == password);
-
-            /*проверка на NULL*/
-
-            return user;
+            return _systemContext.Users.FirstOrDefaultAsync(ctx => ctx.Account == login && ctx.Password == password);
         }
 
         // TODO: этот метод убрать отсюда

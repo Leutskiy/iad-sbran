@@ -2,6 +2,7 @@
 using Sbran.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Sbran.Domain.Entities.Chat;
+using System;
 
 namespace Sbran.Domain.Data.Adapters
 {
@@ -57,6 +58,8 @@ namespace Sbran.Domain.Data.Adapters
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.LogTo(Console.WriteLine);
+
             base.OnConfiguring(optionsBuilder);
         }
 

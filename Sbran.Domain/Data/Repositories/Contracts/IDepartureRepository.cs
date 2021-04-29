@@ -10,6 +10,8 @@ namespace Sbran.Domain.Data.Repositories.Contracts
     {
         Task DeleteAsync(Guid id);
 
+        Task<List<Departure>> GetByEmplIdAsync(Guid employeeId);
+
         Task<List<Departure>> GetAllAsync();
 
         Task<Departure> GetAsync(Guid id);

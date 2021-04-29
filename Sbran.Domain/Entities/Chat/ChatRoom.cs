@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sbran.Domain.Entities.Chat
 {
-    /// <summary>
-    /// Комнаты для разговоров
-    /// </summary>
-    public sealed class ChatRoom
+	/// <summary>
+	/// Комнаты для разговоров
+	/// </summary>
+	public sealed class ChatRoom
     {
         public ChatRoom()
         {

@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
       //конфигурации на сервере 
       //.withUrl("https://localhost:5001/chatsocket", {  })
       .configureLogging(signalR.LogLevel.Error)
-      .withUrl("https://localhost:44343/chatsocket", {
+      .withUrl("https://localhost:5001/chatsocket", {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
         accessTokenFactory: () => this.accessToken
@@ -56,11 +56,11 @@ export class HeaderComponent implements OnInit {
 
   openNav(): any {
     document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+    // document.getElementById("main").style.marginLeft = "250px";
   }
   closeNav(): any {
     document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
+    // document.getElementById("main").style.marginLeft = "0";
   }
 
 }

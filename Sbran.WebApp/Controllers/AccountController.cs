@@ -6,11 +6,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Sbran.CQS.Read.Contracts;
 using Sbran.CQS.Read.Results;
-using Sbran.Domain;
 using Sbran.Domain.Data.Adapters;
 using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Entities;
-using Sbran.Domain.Entities.System;
 using Sbran.Domain.Models;
 using Sbran.WebApp.Hubs;
 using System;
@@ -21,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Sbran.WebApp.Controllers
 {
-    [ApiController]
+	[ApiController]
     [Authorize]
     [Route("api/v2/[controller]")]
     public class AccountController : ControllerBase
@@ -52,6 +50,7 @@ namespace Sbran.WebApp.Controllers
             _voteRepository = voteRepository;
         }
 
+        [Obsolete("Сейчас не используем. Вместо этого работает в режиме Identity Server и выдаем токены через отдельную службу.")]
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginRequest request)
@@ -61,21 +60,21 @@ namespace Sbran.WebApp.Controllers
                 return BadRequest();
             }
 
-            if (!await _userService.IsValidUserCredentialsAsync(request.UserName, request.Password).ConfigureAwait(false))
+            if (!await _userService.IsValidUserCredentialsAsync(request.UserName, request.Password))
             {
                 return Unauthorized();
             }
 
-            var role = _userService.GetUserRole(request.UserName);
+            var role = _userService.DetectUserRole(request.UserName);
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name,request.UserName),
                 new Claim(ClaimTypes.Role, role)
             };
 
-
             var jwtResult = _jwtAuthManager.GenerateTokens(request.UserName, claims, DateTime.Now);
             _logger.LogInformation($"User [{request.UserName}] logged in the system.");
+
             return Ok(new LoginResult
             {
                 UserName = request.UserName,
@@ -85,6 +84,7 @@ namespace Sbran.WebApp.Controllers
             });
         }
 
+        // Вывод информации для главное страницы
         [AllowAnonymous]
         [HttpGet("login")]
         public async Task<MainDto> LoginGet()
@@ -248,7 +248,7 @@ namespace Sbran.WebApp.Controllers
             var userName = User.Identity.Name;
             _logger.LogInformation($"User [{userName}] is trying to impersonate [{request.UserName}].");
 
-            var impersonatedRole = _userService.GetUserRole(request.UserName);
+            var impersonatedRole = _userService.DetectUserRole(request.UserName);
             if (string.IsNullOrWhiteSpace(impersonatedRole))
             {
                 _logger.LogInformation($"User [{userName}] failed to impersonate [{request.UserName}] due to the target user not found.");
@@ -290,7 +290,7 @@ namespace Sbran.WebApp.Controllers
             }
             _logger.LogInformation($"User [{originalUserName}] is trying to stop impersonate [{userName}].");
 
-            var role = _userService.GetUserRole(originalUserName);
+            var role = _userService.DetectUserRole(originalUserName);
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name,originalUserName),

@@ -10,6 +10,7 @@ export class AuthService {
 
   authSessionKey: string = "auth";
   userSessionKey: string = "user";
+  isManager: boolean = false;
 
   accountDetailService: string;
   authorizationService: string;
@@ -64,10 +65,13 @@ export class AuthService {
 
   private _initAuthData(authData: any = null): void {
     if (authData) {
+      // даем права на UI-контролы только админам и руководителям
+      this.isManager = authData.role === "InstituteDirector" || authData.role === "Admin";
       this.expiresAt = new Date(authData.expires_in).getTime() * 1000 + Date.now();
       this.authenticated = !!authData;
 
       localStorage.setItem(this.authSessionKey, JSON.stringify({
+        role: authData.role,
         accessToken: authData.access_token,
         expiresAt: this.expiresAt
       }));
@@ -77,6 +81,7 @@ export class AuthService {
       let authDataFromStorage = JSON.parse(authDataAsString);
 
       if (authDataFromStorage) {
+        this.isManager = authDataFromStorage.role === "InstituteDirector" || authDataFromStorage.role === "Admin";
         this.expiresAt = authDataFromStorage.expiresAt;
         this.authenticated = !!authDataFromStorage;
       }

@@ -52,16 +52,17 @@ export class InvitationComponent implements OnInit {
     this.invitationService.getInvitationsByEmployeeId(this.employeeId).subscribe(
       queryInvitationListResult => {
         console.log(`queryInvitationListResult: ` + queryInvitationListResult);
-        this.invitations = JSON.parse(JSON.stringify(queryInvitationListResult));
-        //queryInvitationListResult.filter((val: any, index, array) => val.visitDetail !== null).forEach((val: any, index, array) =>
-        //{
+        //this.invitations = JSON.parse(JSON.stringify(queryInvitationListResult));
 
-        //  console.log(val);
-        //  val.visitDetail.arrivalDate = new Date(val.visitDetail.arrivalDate);
-        //  val.visitDetail.departureDate = new Date(val.visitDetail.departureDate);;
+        queryInvitationListResult.filter((val: any, index, array) => val.visitDetail !== null).forEach((val: any, index, array) =>
+        {
 
-        //  this.invitations.push(val);
-        //});
+          console.log(val);
+          val.visitDetail.arrivalDate = new Date(val.visitDetail.arrivalDate);
+          val.visitDetail.departureDate = new Date(val.visitDetail.departureDate);;
+
+          this.invitations.push(val);
+        });
 
         ////queryInvitationListResult.visitDetail.arrivalDate = new Date(queryInvitationListResult.visitDetail.arrivalDate);
         ////queryInvitationListResult.visitDetail.departureDate = new Date(queryInvitationListResult.visitDetail.departureDate);;

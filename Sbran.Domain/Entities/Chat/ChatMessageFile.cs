@@ -1,16 +1,11 @@
-﻿using Sbran.Domain.Entities.System;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Sbran.Domain.Entities.Chat
 {
-    /// <summary>
-    /// Сущность сообщение
-    /// </summary>
-    public sealed class ChatMessageFile
+	/// <summary>
+	/// Сущность сообщение
+	/// </summary>
+	public sealed class ChatMessageFile
     {
         public ChatMessageFile()
         {

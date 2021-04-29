@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
-using Npgsql;
 using Sbran.CQS.Registries;
 using Sbran.Domain.Data.Adapters;
 using Sbran.Domain.Registries;
@@ -82,37 +81,12 @@ namespace Sbran.WebApp
                 option.FormatterMappings.SetMediaTypeMappingForFormat("octet-stream", MediaTypeHeaderValue.Parse("application/octet-stream"));
             }).AddControllersAsServices();
 
-            var builder = new NpgsqlConnectionStringBuilder
-            {
-                Username = "postgres",
-                Password = "47H8Ms5a",
-                Host = "localhost",
-                Port = 5432,
-                Database = "postgres",
-                IntegratedSecurity = true,
-                Pooling = true
-            };
-
             var connectionString = Configuration.GetConnectionString("PostgreSQLConnection");
 
             services
                 // .AddEntityFrameworkNpgsql() Depricated
                 .AddDbContext<DomainContext>(options => options.UseNpgsql(connectionString)/*, contextLifetime: ServiceLifetime.Transient, optionsLifetime: ServiceLifetime.Transient*/)
                 .AddDbContext<SystemContext>(options => options.UseNpgsql(connectionString/*, builder => builder.MigrationsAssembly("ICS.Domain")*/));
-
-            /*//services.AddEntityFrameworkProxies();
-             * services.AddEntityFrameworkNpgsql()
-                .AddDbContext<DomainContext>(opt =>
-                {
-                    opt.UseNpgsql(connectionString);
-                    //opt.UseLazyLoadingProxies(true);
-                })
-                .AddDbContext<SystemContext>(opt =>
-                {
-                    opt.UseNpgsql(connectionString);
-                    //opt.UseLazyLoadingProxies(true);
-                });*/
-
 
             // Web API middleware which will register all the controllers (classes derived from ControllerBase)
             /// <see cref="https://medium.com/imaginelearning/asp-net-core-3-1-microservice-quick-start-c0c2f4d6c7fa"/>
@@ -176,7 +150,7 @@ namespace Sbran.WebApp
                 {
                     builder.AllowAnyMethod()
                     .AllowAnyHeader()
-                    .WithOrigins("https://localhost:5001")
+                    .WithOrigins("http://localhost:4200")
                     .AllowCredentials();
                 });
             });
@@ -218,6 +192,8 @@ namespace Sbran.WebApp
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller}/{action=Index}/{id?}");
+
+                endpoints.MapControllers();
 
                 endpoints.MapHub<ChatHub>("/chatsocket");
 			});

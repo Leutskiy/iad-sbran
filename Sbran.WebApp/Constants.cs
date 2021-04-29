@@ -25,5 +25,14 @@
             /// </summary>
             public static string Log => "log";
         }
+
+		public static class SecurityRoles
+		{
+            public static string Admin => "Admin";
+
+            public static string Director => "Director";
+
+            public static string Employee => "Employee";
+		}
     }
 }

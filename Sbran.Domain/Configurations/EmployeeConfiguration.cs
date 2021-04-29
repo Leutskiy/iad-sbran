@@ -1,11 +1,10 @@
 ﻿using Sbran.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sbran.Domain.Entities.System;
 
 namespace Sbran.Domain.Configurations
 {
-    public sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
+	public sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {
         public EmployeeConfiguration(string schemaName)
         {

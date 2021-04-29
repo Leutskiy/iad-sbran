@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sbran.Domain.Entities.Chat;
-using Sbran.Domain.Entities.System;
 
 namespace Sbran.Domain.Configurations
 {
-    public sealed class ChatRoomListConfiguration : IEntityTypeConfiguration<ChatRoomList>
+	public sealed class ChatRoomListConfiguration : IEntityTypeConfiguration<ChatRoomList>
     {
         public ChatRoomListConfiguration(string schemaName)
         {

@@ -66,7 +66,7 @@
             <td *ngIf="listOfScientist.type">{{listOfScientist.phoneNumber}},{{listOfScientist.email}}</td>
             <td *ngIf="listOfScientist.type" class="text-center">
               <a class="view" (click)="deleteScientist(i)">
-                <i class="fa fa-share-square-o"></i>
+                <i class="fa fa-trash"></i>
               </a>
             </td>
           </tr>
@@ -102,7 +102,7 @@
             <td *ngIf="!listOfScientist.type">{{listOfScientist.phoneNumber}},{{listOfScientist.email}}</td>
             <td *ngIf="!listOfScientist.type" class="text-center">
               <a class="view" (click)="deleteScientist(i)">
-                <i class="fa fa-share-square-o"></i>
+                <i class="fa fa-trash"></i>
               </a>
             </td>
           </tr>
@@ -131,7 +131,7 @@
             <td><a href="api/v1/report/getfile/{{file.id}}">{{file.fileName}}</a></td>
             <td class="text-center">
               <a class="view" (click)="deleteFile(i)">
-                <i class="fa fa-share-square-o"></i>
+                <i class="fa fa-trash"></i>
               </a>
             </td>
           </tr>
@@ -146,7 +146,7 @@
     <div class="col-md-2">
       <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
     </div>
-    <div class="col-md-2" *ngIf="!report.status">
+    <div class="col-md-2" *ngIf="!report.status && forManager">
       <a class="btn btn-warning" (click)="agree()">Удтвердить отчет</a>
     </div>
     <div class="col-md-2">

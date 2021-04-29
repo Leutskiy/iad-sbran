@@ -2,19 +2,17 @@
 using Sbran.Domain.Data.Adapters;
 using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Entities.Chat;
-using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
 {
-    /// <summary>
-    /// Репозиторий сообщения
-    /// </summary>
-    public sealed class СhatMessageRepository : IChatMessageRepository
+	/// <summary>
+	/// Репозиторий сообщения
+	/// </summary>
+	public sealed class СhatMessageRepository : IChatMessageRepository
     {
         private readonly DomainContext _domainContext;
         /// <summary>

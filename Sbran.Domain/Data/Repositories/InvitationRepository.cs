@@ -2,7 +2,6 @@
 using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Entities;
 using Sbran.Domain.Models;
-using Sbran.Domain.Services.Contracts;
 using Sbran.Shared.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
 {
-    /// <summary>
-    /// Репозиторий приглашений
-    /// </summary>
-    public sealed class InvitationRepository : IInvitationRepository
+	/// <summary>
+	/// Репозиторий приглашений
+	/// </summary>
+	public sealed class InvitationRepository : IInvitationRepository
     {
         private readonly IAlienRepository _alienRepository;
         private readonly IVisitDetailRepository _visitDetailRepository;

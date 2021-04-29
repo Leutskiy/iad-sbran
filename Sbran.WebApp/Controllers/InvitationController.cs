@@ -10,21 +10,18 @@ using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Models;
 using Sbran.Shared.Contracts;
 using System.IO;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
 using Microsoft.AspNetCore.Hosting;
-using System.Text;
 using TemplateEngine.Docx;
 using Sbran.Domain.Entities;
 
 namespace Sbran.WebApp.Controllers
 {
-    // TODO: inviter --- invitee
-    // TODO: перенести invitationId  в конец пути
-    /// <summary>
-    /// Контроллер приглашений
-    /// </summary>
-    [ApiController]
+	// TODO: inviter --- invitee
+	// TODO: перенести invitationId  в конец пути
+	/// <summary>
+	/// Контроллер приглашений
+	/// </summary>
+	[ApiController]
     [Authorize]
     [Route("api/v1")]
     public class InvitationController : ControllerBase
@@ -39,13 +36,13 @@ namespace Sbran.WebApp.Controllers
         private IWebHostEnvironment _environment;
 
         public InvitationController(
-            IEmployeeRepository employeeRepository,
-            InvitationWriteCommand invitationWriteCommand,
-            IReadCommand<InvitationResult> invitationReadCommand,
-            IInvitationRepository invitationRepository,
-           IInternationalAgreementRepository iInternationalAgreementRepository,
-           IConsularOfficeRepository consularOfficeRepository,
-            IWebHostEnvironment environment)
+			IEmployeeRepository employeeRepository,
+			InvitationWriteCommand invitationWriteCommand,
+			IReadCommand<InvitationResult> invitationReadCommand,
+			IInvitationRepository invitationRepository,
+			IInternationalAgreementRepository iInternationalAgreementRepository,
+			IConsularOfficeRepository consularOfficeRepository,
+			IWebHostEnvironment environment)
         {
             _employeeRepository = employeeRepository;
             _invitationReadCommand = invitationReadCommand;

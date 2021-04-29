@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Sbran.CQS.Read;
 using Sbran.Domain.Data.Adapters;
 using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Entities;
@@ -12,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Sbran.WebApp.Controllers
 {
-    /// <summary>
-    /// Контроллер контактных данных по сотруднику
-    /// </summary>
-    [ApiController]
+	/// <summary>
+	/// Контроллер контактных данных по сотруднику
+	/// </summary>
+	[ApiController]
     [Authorize]
     [Route("api/v1/[controller]")]
     public class InternationalAgreementController : ControllerBase

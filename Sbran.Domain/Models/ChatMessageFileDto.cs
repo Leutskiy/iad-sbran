@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Sbran.Domain.Models
 {
-    /// <summary>
-    /// Сущность сообщение
-    /// </summary>
-    public sealed class ChatMessageFileDto
+	/// <summary>
+	/// Сущность сообщение
+	/// </summary>
+	public sealed class ChatMessageFileDto
     {
         /// <summary>
         /// Файл

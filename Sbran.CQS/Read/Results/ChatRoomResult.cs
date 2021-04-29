@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sbran.CQS.Read.Results
 {
-    /// <summary>
-    /// Данные об комнате
-    /// </summary>
-    public sealed class ChatRoomResult
+	/// <summary>
+	/// Данные об комнате
+	/// </summary>
+	public sealed class ChatRoomResult
     {
         /// <summary>
         /// идентификатор пользователя

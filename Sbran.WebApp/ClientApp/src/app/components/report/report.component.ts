@@ -20,6 +20,7 @@ export class ReportComponent implements OnInit {
   isNew: boolean = true;
   createScientistflag: boolean = false;
   createFileflag: boolean = false;
+  forManager: boolean = false;
   @Input() title: string;
   @Input() report: Report;
   scientist: ListOfScientist;
@@ -33,6 +34,7 @@ export class ReportComponent implements OnInit {
     this.report = new Report();
     this.appendix = new Appendix();
     this.scientist = new ListOfScientist();
+    this.forManager = authService.isManager;
   }
 
   ngOnInit(): void {
@@ -120,7 +122,7 @@ export class ReportComponent implements OnInit {
   saveFile() {
     console.log(this.report.appendix);
     console.log(this.appendix);
-    if (this.report.appendix === null) {
+    if (!!!this.report.appendix) {
       this.report.appendix = [];
     }
     this.report.appendix.push(this.appendix);
@@ -131,7 +133,7 @@ export class ReportComponent implements OnInit {
   saveScientist() {
     console.log(this.report.listOfScientists);
     console.log(this.scientist);
-    if (this.report.listOfScientists === null) {
+    if (!!!this.report.listOfScientists) {
       this.report.listOfScientists = [];
     }
     this.report.listOfScientists.push(this.scientist);

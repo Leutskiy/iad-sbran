@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
       //конфигурации на сервере 
       //.withUrl("https://localhost:5001/chatsocket", {  })
       .configureLogging(signalR.LogLevel.Error)
-      .withUrl("https://localhost:44343/chatsocket", {
+      .withUrl("https://localhost:5001/chatsocket", {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
         accessTokenFactory: () => this.accessToken

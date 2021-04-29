@@ -5,13 +5,11 @@ using Sbran.Domain.Entities;
 using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
 {
-    public sealed class PublicationRepository : IPublicationRepository
+	public sealed class PublicationRepository : IPublicationRepository
     {
         private readonly DomainContext _domainContext;
 

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sbran.Domain.Models
+﻿namespace Sbran.Domain.Models
 {
-    public sealed class ChatRoomDto
+	public sealed class ChatRoomDto
     {
         public string? userid { get; set; }
         public string? image { get; set; }

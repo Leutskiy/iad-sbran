@@ -1,14 +1,10 @@
-﻿using Sbran.Domain.Entities;
-using Sbran.Domain.Enums;
+﻿using Sbran.Domain.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sbran.Domain.Models
 {
-    public sealed class ReportDto
+	public sealed class ReportDto
     {
         /// <summary>
         /// Основная часть

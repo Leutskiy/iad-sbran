@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sbran.Domain.Entities
 {
-    /// <summary>
-    /// Список ученых
-    /// </summary>
-    public sealed class ListOfScientist
+	/// <summary>
+	/// Список ученых
+	/// </summary>
+	public sealed class ListOfScientist
     {
         public ListOfScientist()
         {

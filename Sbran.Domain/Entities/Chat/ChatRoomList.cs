@@ -1,16 +1,12 @@
 ﻿using Sbran.Domain.Entities.System;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sbran.Domain.Entities.Chat
 {
-    /// <summary>
-    /// Список пользователей в комнате
-    /// </summary>
-    public sealed class ChatRoomList
+	/// <summary>
+	/// Список пользователей в комнате
+	/// </summary>
+	public sealed class ChatRoomList
     {
         public ChatRoomList()
         {

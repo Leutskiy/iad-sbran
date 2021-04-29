@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sbran.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sbran.Domain.Configurations
 {
-    public sealed class PublicationConfiguration : IEntityTypeConfiguration<Publication>
+	public sealed class PublicationConfiguration : IEntityTypeConfiguration<Publication>
     {
         public PublicationConfiguration(string schemaName)
         {

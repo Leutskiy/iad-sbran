@@ -8,16 +8,14 @@ using Sbran.Domain.Models;
 using Sbran.Shared.Contracts;
 using System.Collections.Generic;
 using Sbran.Domain.Data.Repositories.Contracts;
-using Sbran.Domain.Entities.Chat;
 using Sbran.CQS.Read.Contracts;
-using Microsoft.AspNetCore.Http;
 
 namespace Sbran.WebApp.Controllers
 {
-    /// <summary>
-    /// Контроллер информации по сотруднику
-    /// </summary>
-    [ApiController]
+	/// <summary>
+	/// Контроллер информации по сотруднику
+	/// </summary>
+	[ApiController]
     [Authorize]
     [Route("api/v1/chat")]
     public class ChatController : ControllerBase
@@ -112,6 +110,5 @@ namespace Sbran.WebApp.Controllers
             var file = _chatMessageFileRepository.GetById(chatMessageFileId);
             return File(file.FileBinary, "application/octet-stream", file.fileName);
         }
-
     }
 }

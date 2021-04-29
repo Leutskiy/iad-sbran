@@ -1,14 +1,13 @@
 ﻿using JetBrains.Annotations;
-using Sbran.Domain.Entities.System;
 using System;
 using System.Collections.Generic;
 
 namespace Sbran.Domain.Entities
 {
-    /// <summary>
-    /// Сотрудник
-    /// </summary>
-    public sealed class Employee
+	/// <summary>
+	/// Сотрудник
+	/// </summary>
+	public sealed class Employee
     {
         [UsedImplicitly]
         private Employee() => Id = Guid.NewGuid();

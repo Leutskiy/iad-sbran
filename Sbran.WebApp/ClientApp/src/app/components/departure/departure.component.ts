@@ -15,6 +15,7 @@ export class DepartureComponent implements OnInit {
   profileId: string;
   employeeId: string;
   tableMode: boolean = true;
+  forManager: boolean = false;
 
   @Input() title: string;
   departures = [];
@@ -26,6 +27,7 @@ export class DepartureComponent implements OnInit {
     private authService: AuthService,
     private departureDataService: DepartureDataService) {
     this.departure = new Departure();
+    this.forManager = authService.isManager;
   }
 
   ngOnInit(): void {
@@ -48,7 +50,6 @@ export class DepartureComponent implements OnInit {
     this.tableMode = false;
   }
 
-
   public agree(id: string) {
     this.departureDataService.agree(id).subscribe(e => {
       console.log("agree");
@@ -63,14 +64,23 @@ export class DepartureComponent implements OnInit {
     console.log(this.departure);
     if (this.departure.id == null) {
       this.departureDataService.add(this.departure)
-        .subscribe((data: Departure) => this.departures.push(data));
+        //.subscribe((data: Departure) => this.departures.push(data));
+        .subscribe((data: any) => {
+          console.log("test:")
+          console.log(data);
+          this.departures.push(data);
+        });
     } else {
       this.departureDataService.update(this.departure.id, this.departure)
-        .subscribe(data => this.getAll());
+        //.subscribe(data => this.getAll());
+        .subscribe((data: any) => {
+          console.log("test:")
+          console.log(data);
+          this.getAll();
+        });
     }
     this.cancel();
   }
-
 
   cancel() {
     this.departure = new Departure();

@@ -1,12 +1,11 @@
 ﻿using Sbran.Domain.Entities.Chat;
-using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories.Contracts
 {
-    public interface IChatMessageRepository
+	public interface IChatMessageRepository
     {
         Task<List<ChatMessage>> GetAllAsync();
 
