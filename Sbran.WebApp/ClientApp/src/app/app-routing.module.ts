@@ -17,6 +17,7 @@ import { MembershipComponent } from './components/membership/membership.componen
 import { PublicationComponent } from './components/publication/publication.component';
 import { ScientificInterestsComponent } from './components/scientificInterests/scientificInterests.component';
 import { ReportComponent } from './components/report/report.component';
+import { NewDepartureComponent } from './components/departure/new/new-departure.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,11 @@ const routes: Routes = [
   },
   { path: 'login', component: SigninComponent, canActivate: [RedirectToProfileGuard] },
   { path: 'singup', component: SingupComponent },
-  { path: 'profile/:profileId/employee/:employeeId/departure/:employeeId', component: DepartureComponent, canActivate: [AuthGuard] },
+
+  { path: 'profile/:profileId/employee/:employeeId/departure', component: DepartureComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId', component: NewDepartureComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/departure/new', component: NewDepartureComponent, canActivate: [AuthGuard] },
+
   { path: 'profile/:profileId/employee/:employeeId/consularOffice/:employeeId', component: ConsularOfficeComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/internationalAgreement/:employeeId', component: InternationalAgreementComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/membership/:employeeId/:type', component: MembershipComponent, canActivate: [AuthGuard] },

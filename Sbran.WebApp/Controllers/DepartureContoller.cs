@@ -51,10 +51,18 @@ namespace Sbran.WebApp.Controllers
 
         //TODO: Почему это находится в этом контроллере?
         [HttpGet]
-        [Route("{employeeId:guid}")]
+        [Route("all/{employeeId:guid}")]
         public Task<List<Departure>> GetAllDepartures(Guid employeeId)
         {
             return _departureRepository.GetByEmplIdAsync(employeeId);
+        }
+
+        //TODO: Почему это находится в этом контроллере?
+        [HttpGet]
+        [Route("{departureId:guid}")]
+        public Task<Departure> GetDepartureById(Guid departureId)
+        {
+            return _departureRepository.GetAsync(departureId);
         }
 
         [HttpGet]

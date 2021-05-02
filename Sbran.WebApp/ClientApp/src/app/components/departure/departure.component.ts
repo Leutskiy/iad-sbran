@@ -12,108 +12,46 @@ import { DepartureDataService } from '../../services/component-providers/departu
 })
 export class DepartureComponent implements OnInit {
 
-  profileId: string;
-  employeeId: string;
-  tableMode: boolean = true;
+  @Input() title: string;
+
+  tableMode: boolean = false;
   forManager: boolean = false;
 
-  @Input() title: string;
+  profileId: string;
+  employeeId: string;
+  departureId: string;
   departures = [];
-  departure: Departure;
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private departureDataService: DepartureDataService) {
-    this.departure = new Departure();
-    this.forManager = authService.isManager;
-  }
+    private activatedRoute: ActivatedRoute,
+    private departureDataService: DepartureDataService) { }
 
   ngOnInit(): void {
+    this.forManager = this.authService.isManager;
+
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
-
-    this.getAll();
+    
+    this.fillAll();
   }
 
-  getAll(): void {
-    this.departureDataService.get(this.employeeId).subscribe(e => {
-      console.log(e);
-      this.departures = JSON.parse(JSON.stringify(e));
-      console.log(this.departures);
-    })
+  private fillAll(): void {
+    this.departureDataService.get(this.employeeId).subscribe(
+      result => {
+        this.departures = JSON.parse(JSON.stringify(result));
+      },
+      error => {
+        console.log(`${error}`);
+      });
   }
 
-  edit(p: Departure) {
-    this.departure = p;
-    this.tableMode = false;
-  }
-
-  public agree(id: string) {
-    this.departureDataService.agree(id).subscribe(e => {
-      console.log("agree");
-      this.departure.departureStatus = DepartureStatus.Agreement;
-      //this.departures = JSON.parse(JSON.stringify(e));
-    })
-  }
-
-  save() {
-    this.departure.dateStart = this.formatDate(this.departure.dateStart);
-    this.departure.dateEnd = this.formatDate(this.departure.dateEnd);
-    console.log(this.departure);
-    if (this.departure.id == null) {
-      this.departureDataService.add(this.departure)
-        //.subscribe((data: Departure) => this.departures.push(data));
-        .subscribe((data: any) => {
-          console.log("test:")
-          console.log(data);
-          this.departures.push(data);
-        });
-    } else {
-      this.departureDataService.update(this.departure.id, this.departure)
-        //.subscribe(data => this.getAll());
-        .subscribe((data: any) => {
-          console.log("test:")
-          console.log(data);
-          this.getAll();
-        });
-    }
-    this.cancel();
-  }
-
-  cancel() {
-    this.departure = new Departure();
-    this.departure.employeeId = this.employeeId;
-    this.tableMode = true;
+  edit(event, departure: Departure, index) {
+    this.router.navigate([this.activatedRoute.snapshot.url.join('/'),`${departure.id}`]);
   }
 
   add() {
-    this.cancel();
-    this.tableMode = false;
+    this.router.navigate([this.activatedRoute.snapshot.url.join('/'), 'new']);
   }
-
-  // TODO: Сделать стандартизацию формата даты (подходящий ISO)
-  // отформатировать дату (привести к правильному формату)
-  private formatDate(model: Date | string | null): Date | null {
-    if (model instanceof Date) {
-      return model;
-    }
-    else if (model) {
-      return new Date(this.parse(model));
-    } else {
-      return null;
-    }
-  }
-  private parse(value: string): string {
-    if (value) {
-      let date = value.split(".");
-      return date[2] + "-" + date[1] + "-" + date[0];
-    }
-
-    return null;
-  }
-
-
 }
-

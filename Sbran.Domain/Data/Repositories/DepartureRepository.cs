@@ -66,8 +66,8 @@ namespace Sbran.Domain.Data.Repositories
         {
             return _domainContext.Departures.Include(d => d.Report).ToListAsync();
         }
-        
-		public Task<List<Departure>> GetAllAsync() => _domainContext.Departures.ToListAsync();
+
+        public Task<List<Departure>> GetAllAsync() => _domainContext.Departures.ToListAsync();
 
 		public async Task<Departure> GetAsync(Guid id) => await _domainContext.Departures.Include(e => e.Report).FirstOrDefaultAsync(e => e.Id == id);
 

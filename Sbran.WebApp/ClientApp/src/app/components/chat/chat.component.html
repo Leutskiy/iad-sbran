@@ -4,60 +4,7 @@
   <div></div>
   <div class="row">
 
-    <div class="col-md-2 pr-md-0">
-      <div class="profile-menu border">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-home fa-fw"></i>
-              Главная
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" routerLink="/chat/{{profileId}}">
-              <i class="fa fa-envelope-o fa-fw"></i>
-              Сообщения
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="profile/{{profileId}}/employee/{{employeeId}}/invitation">
-              <i class="fa fa-globe fa-fw"></i>
-              Приглашения
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-plane fa-fw"></i>
-              Выезды
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-university fa-fw"></i>
-              Публикации
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-briefcase fa-fw"></i>
-              Проекты
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-cogs fa-fw"></i>
-              Настройки
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-flag-o fa-fw"></i>
-              Помощь
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+<!-- тут было меню-->
 
 
     <div class="col-md m-1 ml-4 pt-1 row rounded-lg overflow-hidden shadow">
@@ -118,7 +65,7 @@
 
             <ng-template #other_content>
               <!-- Reciever Message-->
-              <div class="media w-50 ml-auto mb-3">
+              <div *ngIf="item.message?.length > 0" class="media w-50 ml-auto mb-3">
                 <div class="media-body">
                   <div class="bg-warning rounded py-2 px-3 mb-2">
                     <p class="text-small mb-0 text-dark">{{item.message}}</p>
@@ -156,16 +103,19 @@
           </div>
         </div>
 
-        <!--<div id="loginBlock">
+        <!--
+        <div id="loginBlock">
           Токен:<br />
           <input id="token" type="text" value="{{accessToken}}" />
-        </div>-->
-        <!--<form id="inputForm" (submit)="sendMessage(message.value, receiver.value)">
+        </div>
+        -->
+        <!--
+        <form id="inputForm" (submit)="sendMessage(message.value, receiver.value)">
           <input #message type="text" id="message" placeholder="Введите сообщение" />
           <input #receiver type="text" id="receiver" placeholder="Введите получателя" />
           <input type="submit" value="Отправить" />
-        </form>-->
-
+        </form>
+        -->
 
       </div>
     </div>

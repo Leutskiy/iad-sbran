@@ -19,9 +19,17 @@ export class DepartureDataService {
 
   // получить все выезды сотрудника
   public get(employeeId: string): Observable<[]> {
-    let url = `${this.baseAddress}${this.uriDeparturePath}/${employeeId}`;
+    let url = `${this.baseAddress}${this.uriDeparturePath}/all/${employeeId}`;
     console.log(`get all departures for ${employeeId} by url: ` + url);
     return this.http.get<[]>(url, this.options);
+  }
+
+  // получить данные для формы приглашения
+  public getDepartureById(departureId: string): Observable<any> {
+    let url = `${this.baseAddress}${this.uriDeparturePath}/${departureId}`;
+    console.log(`get departure for ${departureId} by url: ` + url);
+
+    return this.http.get<any>(url, this.options);
   }
 
   // получить все выезды сотрудника

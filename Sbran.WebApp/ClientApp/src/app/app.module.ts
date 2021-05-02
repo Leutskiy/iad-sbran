@@ -43,6 +43,7 @@ import { MembershipComponent } from './components/membership/membership.componen
 import { PublicationComponent } from './components/publication/publication.component';
 import { ScientificInterestsComponent } from './components/scientificInterests/scientificInterests.component';
 import { ReportComponent } from './components/report/report.component';
+import { NewDepartureComponent } from './components/departure/new/new-departure.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { ReportComponent } from './components/report/report.component';
     PublicationComponent,
     ScientificInterestsComponent,
     VisitDetailsInvitationComponent,
-    ReportComponent
+    ReportComponent,
+    NewDepartureComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -14,15 +14,13 @@
         </div>
         <div class="profile-buttons text-center">
           <button type="button" class="btn" routerLink="information"><span class="glyphicon glyphicon-pencil"></span>Редактировать</button>
-          <button type="button" class="btn" routerLink="consularOffice/{{employeeId}}"><span class="glyphicon glyphicon-pencil"></span>Консульские учреждения</button>
         </div>
-        <div class="profile-buttons text-center">
+        <div *ngIf="forManager" class="profile-buttons text-center">
+          <button type="button" class="btn" routerLink="consularOffice/{{employeeId}}"><span class="glyphicon glyphicon-pencil"></span>Консульские учреждения</button>
           <button type="button" class="btn" routerLink="internationalAgreement/{{employeeId}}"><span class="glyphicon glyphicon-pencil"></span>Международные соглашения</button>
         </div>
         <div class="profile-buttons text-center">
           <button type="button" class="btn" routerLink="membership/{{employeeId}}/1"><span class="glyphicon glyphicon-pencil"></span>Членство в международных организациях</button>
-        </div>
-        <div class="profile-buttons text-center">
           <button type="button" class="btn" routerLink="membership/{{employeeId}}/2"><span class="glyphicon glyphicon-pencil"></span>Членство в редколлегиях российских и иностранных журналов</button>
         </div>
         <div class="profile-buttons text-center">
@@ -33,7 +31,7 @@
             <h5>Рейтинг</h5>
           </div>
           <div class="card-body">
-            <h1 class="card-title">90</h1>
+            <h3 class="card-title">не установлен</h3>
           </div>
         </div>
       </div>
@@ -138,7 +136,7 @@
             <div class="card-columns">
               <div class="card bg-dark">
                 <div class="card-body text-center">
-                  <a href="#">
+                  <a href="javascript:void(0);" disabled="disabled">
                     <p class="card-text">
                       Членство
                       <span class="badge badge-warning">{{userInfo.membershipsCount}}</span>
@@ -158,7 +156,7 @@
               </div>
               <div class="card bg-dark">
                 <div class="card-body text-center">
-                  <a routerLink="departure/{{employeeId}}">
+                  <a routerLink="departure">
                     <p class="card-text">
                       Выезды
                       <span class="badge badge-warning">{{userInfo.departuresCount}}</span>
@@ -168,27 +166,27 @@
               </div>
               <div class="card bg-dark">
                 <div class="card-body text-center">
-                  <a href="#">
+                  <a href="javascript:void(0);" disabled="disabled">
                     <p class="card-text">
                       Проекты
-                      <span class="badge badge-warning">1</span>
+                      <span class="badge badge-warning">0</span>
                     </p>
                   </a>
                 </div>
               </div>
               <div class="card bg-dark">
                 <div class="card-body text-center">
-                  <a href="#">
+                  <a href="javascript:void(0);" disabled="disabled">
                     <p class="card-text">
                       Соавторы
-                      <span class="badge badge-warning">13</span>
+                      <span class="badge badge-warning">0</span>
                     </p>
                   </a>
                 </div>
               </div>
               <div class="card bg-dark">
                 <div class="card-body text-center">
-                  <a href="profile/{{profileId}}/employee/{{employeeId}}/invitation">
+                  <a routerLink="invitation">
                     <p class="card-text">
                       Приглашения
                       <span class="badge badge-warning">{{userInfo.invitesCount}}</span>

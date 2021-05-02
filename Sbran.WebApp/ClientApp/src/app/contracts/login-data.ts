@@ -600,11 +600,13 @@ export class Message {
   account: string;
   chatRoomId: string;
   message: string;
+  length: number;
 
   constructor() {
     this.account = "";
     this.chatRoomId = "";
     this.message = "";
+    this.length = this.message.length;
   }
 
   public init(
@@ -614,6 +616,7 @@ export class Message {
     this.account = account;
     this.chatRoomId = chatRoomId;
     this.message = message;
+    this.length = this.message.length;
   }
 }
 

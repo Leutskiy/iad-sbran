@@ -9,38 +9,37 @@
         <h2>{{logoTitle}}</h2>
       </div>
       <div id="mySidenav" class="sidenav">
+        <!-- Cпециальная кнопка для раскрытия меню -->
         <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-
-        <a class="nav-link active" href="#">
+        <a class="nav-link active" routerLink="profile/{{profileId}}/employee/{{employeeId}}">
           <i class="fa fa-home fa-fw"></i>
           Главная
         </a>
-        <a class="nav-link" href="chat/{{profileId}}">
+        <a class="nav-link" routerLink="chat/{{profileId}}">
           <i class="fa fa-envelope-o fa-fw"></i>
           Сообщения
         </a>
-        <a class="nav-link" href="profile/{{profileId}}/employee/{{employeeId}}/invitation">
+        <a class="nav-link" routerLink="profile/{{profileId}}/employee/{{employeeId}}/invitation">
           <i class="fa fa-globe fa-fw"></i>
           Приглашения
         </a>
-        <a class="nav-link" routerLink="departure/{{employeeId}}">
+        <a class="nav-link" routerLink="profile/{{profileId}}/employee/{{employeeId}}/departure/{{departureId}}">
           <i class="fa fa-plane fa-fw"></i>
           Выезды
         </a>
-        <a class="nav-link" routerLink="publish/{{employeeId}}">
+        <a class="nav-link" routerLink="profile/{{profileId}}/employee/{{employeeId}}/publish/{{publicationId}}">
           <i class="fa fa-university fa-fw"></i>
           Публикации
         </a>
-        <a class="nav-link" href="#">
+        <a class="nav-link" style="cursor: pointer;">
           <i class="fa fa-briefcase fa-fw"></i>
           Проекты
         </a>
-        <a class="nav-link" href="#">
+        <a class="nav-link" style="cursor: pointer;">
           <i class="fa fa-cogs fa-fw"></i>
           Настройки
         </a>
-
-        <a class="nav-link" href="#">
+        <a class="nav-link" style="cursor: pointer;">
           <i class="fa fa-flag-o fa-fw"></i>
           Помощь
         </a>

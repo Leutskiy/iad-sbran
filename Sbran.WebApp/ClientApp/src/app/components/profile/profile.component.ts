@@ -21,17 +21,21 @@ export class ProfileComponent implements OnInit {
   employeeId: string;
   accessToken: string;
   userInfo: UserInfo;
+  forManager: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private profileDataService: ProfileDataService,
     private authService: AuthService) {
     this.userInfo = new UserInfo();
+    this.forManager = false;
   }
 
   ngOnInit(): void {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
+
+    this.forManager = this.authService.isManager;
 
     this.accessToken = this.authService.getToken();
     this.getProfileData(this.profileId, this.employeeId);

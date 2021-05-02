@@ -37,10 +37,8 @@ export class InvitationComponent implements OnInit {
   }
 
   public edit(event, invitation, index) {
-    console.log(invitation);
     let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/${invitation.id}/edit/form`;
-    console.log(`after edit button click for invitation ${invitation.id} redirect to: ` + url);
-    console.log(`invitation was clicked: ` + invitation);
+    console.log(`after the Edit button is clicked for invitation ${invitation.id} it should redirect to: ${url}`);
 
     this.router.navigate([url]);
   }
