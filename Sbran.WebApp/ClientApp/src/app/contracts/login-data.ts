@@ -1,4 +1,5 @@
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { join } from "path";
 
 export interface LoginData {
   login: string,
@@ -773,6 +774,14 @@ export class ListOfScientist {
   type: boolean | null;
   phoneNumber: string | null;
   reportId: string | null;
+  contacts: string | null;
+
+  constructor() {
+    this.contacts = [this.phoneNumber, this.email].filter((value, idx, arr) => { return value?.length > 0; }).join(', ');
+  }
+
+  
+
 }
 
 export class HomePage {

@@ -5,6 +5,7 @@ using Sbran.Domain.Entities;
 using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
@@ -64,7 +65,7 @@ namespace Sbran.Domain.Data.Repositories
         // TODO: подумать насчет SplitQuery
         public Task<List<Departure>> GetByEmplIdAsync(Guid employeeId)
         {
-            return _domainContext.Departures.Include(d => d.Report).ToListAsync();
+            return _domainContext.Departures.Where(d => d.EmployeeId == employeeId).Include(d => d.Report).ToListAsync();
         }
 
         public Task<List<Departure>> GetAllAsync() => _domainContext.Departures.ToListAsync();

@@ -49,8 +49,10 @@ const routes: Routes = [
   { path: 'profile/:profileId/employee/:employeeId/invitation', component: InvitationComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/invitation/new/form', component: NewInvitationFormComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/invitation/:invitationId/edit/form', component: NewInvitationFormComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/departure/:employeeId/report/:departureId/create/:reportId/departure', component: ReportComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/departure/:employeeId/report/:departureId/create/departure', component: ReportComponent, canActivate: [AuthGuard] },
+
+  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId/report/:reportId', component: ReportComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId/report', component: ReportComponent, canActivate: [AuthGuard] },
+
   { path: 'profile/:profileId/employee/:employeeId/report/:invitationId/create/:reportId/invitation', component: ReportComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/report/:invitationId/create/invitation', component: ReportComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundPageComponent },

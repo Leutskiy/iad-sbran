@@ -18,9 +18,7 @@ export class LoadingScreenComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.log('loading init');
-    this.loadingSubscription = this.loadingScreenService.loadingStatus.pipe(
-      debounceTime(200)
-    ).subscribe((value) => {
+    this.loadingSubscription = this.loadingScreenService.loadingStatus.pipe(debounceTime(200)).subscribe((value) => {
       this.loading = value;
     });
   }
@@ -29,5 +27,4 @@ export class LoadingScreenComponent implements OnInit, OnDestroy {
     this.loadingSubscription.unsubscribe();
     console.log('loading destroy');
   }
-
 }

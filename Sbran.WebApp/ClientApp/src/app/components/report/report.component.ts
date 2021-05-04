@@ -38,11 +38,11 @@ export class ReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
+    this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
     this.departureId = this.activatedRoute.snapshot.paramMap.get('departureId');
     this.invitationId = this.activatedRoute.snapshot.paramMap.get('invitationId');
     this.reportId = this.activatedRoute.snapshot.paramMap.get('reportId');
-    this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
-    this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
 
     if (this.reportId != null) {
       this.get();
@@ -56,6 +56,10 @@ export class ReportComponent implements OnInit {
     if (this.invitationId != null) {
       this.report.reportType = ReportType.Invition;
       this.report.parentId = this.invitationId;
+    }
+
+    if (!this.report.listOfScientists) {
+      this.report.listOfScientists = [];
     }
   }
 
@@ -80,18 +84,11 @@ export class ReportComponent implements OnInit {
     this.appendix = new Appendix();
   }
 
-  createScientistTrue(): void {
+  createScientist(type: boolean): void {
     this.isNew = false;
     this.createScientistflag = true;
     this.scientist = new ListOfScientist();
-    this.scientist.type = true;
-  }
-
-  createScientistFalse(): void {
-    this.isNew = false;
-    this.createScientistflag = true;
-    this.scientist = new ListOfScientist();
-    this.scientist.type = false;
+    this.scientist.type = type;
   }
 
   cancel(): void {
@@ -103,7 +100,6 @@ export class ReportComponent implements OnInit {
   }
 
   save() {
-    console.log(this.report);
     if (this.report.id == null) {
       this.reportDataService.add(this.report)
         .subscribe((data: Report) => this.report = JSON.parse(JSON.stringify(data)));
@@ -114,47 +110,48 @@ export class ReportComponent implements OnInit {
   }
 
   agree() {
-    console.log(this.report);
     this.reportDataService.agree(this.report.id)
       .subscribe(data => this.get());
   }
 
-  saveFile() {
-    console.log(this.report.appendix);
-    console.log(this.appendix);
-    if (!!!this.report.appendix) {
+  public saveFile(): void {
+    if (!this.report.appendix) {
       this.report.appendix = [];
     }
+
     this.report.appendix.push(this.appendix);
-    console.log(this.report.appendix);
     this.cancel();
   }
 
   saveScientist() {
-    console.log(this.report.listOfScientists);
-    console.log(this.scientist);
-    if (!!!this.report.listOfScientists) {
-      this.report.listOfScientists = [];
-    }
     this.report.listOfScientists.push(this.scientist);
-    console.log(this.report.listOfScientists);
     this.cancel();
   }
 
+  public getScientistsAsTheSameIssueResolvers(): ListOfScientist[] {
+    return this.report.listOfScientists.filter((val, idx, arr) => { return val.type; });
+  }
+
+  public getScientistsAsResearchParticipants(): ListOfScientist[] {
+    return this.report.listOfScientists.filter((val, idx, arr) => { return !val.type; });
+  }
+
   deleteFile(index: number) {
-    console.log(index);
     this.report.appendix.splice(index, 1);
   }
 
-  deleteScientist(index: number) {
-    console.log(index);
-    this.report.listOfScientists.splice(index, 1);
+  public deleteScientist(item: ListOfScientist): void {
+    this.report.listOfScientists.forEach((value, index) => {
+      if (value.id == item.id) {
+        delete this.report.listOfScientists[index];
+      }
+    });
   }
 
   public fileChange(event) {
     let fileList: FileList = event.target.files;
+
     if (fileList.length > 0 && fileList.length < 2) {
-      //console.log("sendFile");
       let me = this;
       let file: File = fileList[0];
       let reader = new FileReader();
@@ -162,11 +159,9 @@ export class ReportComponent implements OnInit {
       reader.onload = function () {
         var b64: string = typeof reader.result === 'string' ? reader.result : Buffer.from(reader.result).toString();
         b64 = b64.substr(b64.indexOf(',') + 1);
-        //console.log(b64);
         me.appendix.fileBinary = b64;
         me.appendix.fileName = file.name;
       }
     }
   }
 }
-

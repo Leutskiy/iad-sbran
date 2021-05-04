@@ -124,7 +124,7 @@ namespace Sbran.WebApp.Controllers
         [HttpGet]
         [Route("{reportId:guid}")]
         public async Task<ReportDto> GetById(Guid reportId)
-        {
+        {            
             var report = await _reportRepository.GetAsync(reportId);
             var reportDto = new ReportDto
             {

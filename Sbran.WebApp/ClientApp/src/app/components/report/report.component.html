@@ -1,130 +1,201 @@
 <div *ngIf="isNew">
+  <!-- Форма для отчета -->
   <div class="input-group mt-3 mb-3">
 
+    <!-- Поле с основная частью -->
     <div class="col-md-12">
       <div class="form-group">
-        <label data-toggle="tooltip" data-placement="top" title="Приводятся сравнительные данные по развитию изучаемой темы в нашей стране и за рубежом. Отбираются и анализируются факты, которые вызывают особый интерес с точки зрения полезности зарубежной информации для своевременного восприятия новинок науки и техники, а также новых научных программ и международных проектов.
-Сообщаются сведения о проделанной работе и достигнутых результатах. Описываются наиболее перспективные методики и удачные технические решения">
-          Основная часть
+        <label data-toggle="tooltip" data-placement="top"
+               title="
+Приводятся сравнительные данные по развитию изучаемой темы в нашей стране и за рубежом.
+Отбираются и анализируются факты, которые вызывают особый интерес с точки зрения полезности
+зарубежной информации для своевременного восприятия новинок науки и техники, а также новых
+научных программ и международных проектов. Сообщаются сведения о проделанной работе и
+достигнутых результатах. Описываются наиболее перспективные методики и удачные технические решения">
+          Основная часть:
         </label>
         <textarea type="text" id="mainPart" [(ngModel)]="report.mainPart" class="form-control"></textarea>
       </div>
     </div>
 
+    <!-- Поле с выводами -->
     <div class="col-md-12">
       <div class="form-group">
         <label data-toggle="tooltip" data-placement="top" title="Оценка новых зарубежных и совместных достижений, их сравнение и обобщение. Анализ существующего положения по той или иной проблеме (теме), а также вероятного развития событий в будущем">
-          Выводы
+          Выводы:
         </label>
         <textarea type="text" id="findings" [(ngModel)]="report.findings" class="form-control"></textarea>
       </div>
     </div>
 
+    <!-- Поле с предложениями -->
     <div class="col-md-12">
       <div class="form-group">
         <label data-toggle="tooltip" data-placement="top" title="Предложения по использованию полученных результатов в интересах российской науки. Специальный акцент делается на ожидаемой экономической эффективности выполнения конкретных заданий и отдельных разделов академических и государственных научно-технических программ">
-          Предложения
+          Предложения:
         </label>
         <textarea type="text" id="suggestion" [(ngModel)]="report.suggestion" class="form-control"></textarea>
       </div>
     </div>
 
+    <!-- Поле, где надо описать заинтересованность иностранной стороны -->
     <div class="col-md-12">
       <div class="form-group" *ngIf="!invitationId">
-        <label data-toggle="tooltip" data-placement="top" title="Случаи необычного интереса к вопросам, выходящим за определенный круг задач командировки со стороны иностранцев (Фамилия, имя, отчество, ученая степень, пост в международной организации, контактные данные) и к каким вопросам проявлял необычный интерес">
-          Заинтересованность иностранной стороны
+        <label data-toggle="tooltip" data-placement="top" title="
+Случаи необычного интереса к вопросам, выходящим за определённый круг задач командировки со стороны
+иностранцев (фамилия, имя, отчество, учёная степень, пост в международной организации, контактные данные)
+и к каким вопросам проявлял необычный интерес">
+          Заинтересованность иностранной стороны:
         </label>
         <textarea type="text" id="foreignInterest" [(ngModel)]="report.foreignInterest" class="form-control"></textarea>
       </div>
     </div>
 
+    <!-- Отступ в виде одной пустой строки -->
     <div class="col-md-12">
-      <b>Список ведущих зарубежных ученых-партнёров по данной научной проблематике</b>
       <br />
     </div>
 
+    <!-- Заголовок таблицы ученых-партнеров по проблематике -->
     <div class="col-md-12">
-      <!-- Таблица приглашений -->
+      <b>Список ведущих зарубежных учёных-партнёров по данной научной проблематике:</b>
+      <br />
+    </div>
+
+    <!-- Таблица ученых-партнеров по проблематике -->
+    <div class="col-md-12">
+
       <table class="table table-hover table-dark">
+        <!-- Шапка таблицы ученых-партнеров по проблематике -->
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col" width="5%">#</th>
             <th scope="col">ФИО</th>
-            <th scope="col">Место работы (город, университет, институт, фирма, компания, международная организация)</th>
+            <th scope="col" title="город, университет, институт, фирма, компания, международная организация">Место работы</th>
             <th scope="col">Должность</th>
-            <th scope="col">Ученая степень</th>
-            <th scope="col">Номер телефона, email</th>
+            <th scope="col">Учёная степень</th>
+            <th scope="col">Контакты</th>
+            <th scope="col" class="text-center" width="10%">Действия</th>
           </tr>
         </thead>
+        <!-- Тело таблицы ученых-партнеров по проблематике -->
         <tbody>
-          <tr *ngFor="let listOfScientist of report.listOfScientists; let i = index">
-            <th *ngIf="listOfScientist.type" scope="row">{{i+1}}</th>
-            <td *ngIf="listOfScientist.type">{{listOfScientist.fullName}}</td>
-            <td *ngIf="listOfScientist.type">{{listOfScientist.workPlace}}</td>
-            <td *ngIf="listOfScientist.type">{{listOfScientist.position}}</td>
-            <td *ngIf="listOfScientist.type">{{listOfScientist.academicDegree}}</td>
-            <td *ngIf="listOfScientist.type">{{listOfScientist.phoneNumber}},{{listOfScientist.email}}</td>
-            <td *ngIf="listOfScientist.type" class="text-center">
-              <a class="view" (click)="deleteScientist(i)">
+          <tr *ngFor="let listOfScientist of getScientistsAsTheSameIssueResolvers(); let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{listOfScientist.fullName}}</td>
+            <td>{{listOfScientist.workPlace}}</td>
+            <td>{{listOfScientist.position}}</td>
+            <td>{{listOfScientist.academicDegree}}</td>
+            <td>{{listOfScientist.contacts}}</td>
+            <td class="text-center">
+              <a class="view" (click)="deleteScientist(listOfScientist)">
                 <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="text-center">
+              <a class="view" (click)="createScientist(true)">
+                <i class="fa fa-plus"></i>
               </a>
             </td>
           </tr>
         </tbody>
       </table>
+
     </div>
 
-    <div class="col-md-12" *ngIf="!invitationId">
-      <b>Список ведущих зарубежных ученых-партнёров по исследованиям, с которыми состоялись встречи в период командировки</b>
+    <!-- Отступ в виде одной пустой строки -->
+    <div class="col-md-12">
       <br />
     </div>
 
+    <!-- Заголовок таблицы ученых-партнеров по исследованиям -->
     <div class="col-md-12" *ngIf="!invitationId">
-      <!-- Таблица приглашений -->
+      <b>Список ведущих зарубежных ученых-партнёров по исследованиям, с которыми состоялись встречи в период командировки:</b>
+      <br />
+    </div>
+
+    <!-- Таблица ученых-партнеров по исследованиям -->
+    <div class="col-md-12" *ngIf="!invitationId">
+
       <table class="table table-hover table-dark">
+        <!-- Шапка таблицы ученых-партнеров по исследованиям -->
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col" width="5%">#</th>
             <th scope="col">ФИО</th>
-            <th scope="col">Место работы (город, университет, институт, фирма, компания, международная организация)</th>
+            <th scope="col" title="город, университет, институт, фирма, компания, международная организация">Место работы</th>
             <th scope="col">Должность</th>
-            <th scope="col">Ученая степень</th>
-            <th scope="col">Номер телефона, email</th>
+            <th scope="col">Учёная степень</th>
+            <th scope="col">Контакты</th>
+            <th scope="col" class="text-center" width="10%">Действия</th>
           </tr>
         </thead>
+        <!-- Тело таблицы ученых-партнеров по исследованиям -->
         <tbody>
-          <tr *ngFor="let listOfScientist of report.listOfScientists; let i = index">
-            <th *ngIf="!listOfScientist.type" scope="row">{{i+1}}</th>
-            <td *ngIf="!listOfScientist.type">{{listOfScientist.fullName}}</td>
-            <td *ngIf="!listOfScientist.type">{{listOfScientist.workPlace}}</td>
-            <td *ngIf="!listOfScientist.type">{{listOfScientist.position}}</td>
-            <td *ngIf="!listOfScientist.type">{{listOfScientist.academicDegree}}</td>
-            <td *ngIf="!listOfScientist.type">{{listOfScientist.phoneNumber}},{{listOfScientist.email}}</td>
-            <td *ngIf="!listOfScientist.type" class="text-center">
-              <a class="view" (click)="deleteScientist(i)">
+          <!-- TODO: избавиться от type, сделать два отдельных списка в компоненте -->
+          <tr *ngFor="let listOfScientist of getScientistsAsResearchParticipants(); let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{listOfScientist.fullName}}</td>
+            <td>{{listOfScientist.workPlace}}</td>
+            <td>{{listOfScientist.position}}</td>
+            <td>{{listOfScientist.academicDegree}}</td>
+            <td>{{listOfScientist.contacts}}</td>
+            <td class="text-center">
+              <a class="view" (click)="deleteScientist(listOfScientist)">
                 <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="text-center">
+              <a class="view" (click)="createScientist(false)">
+                <i class="fa fa-plus"></i>
               </a>
             </td>
           </tr>
         </tbody>
       </table>
+
     </div>
+
+    <!-- Отступ в виде одной пустой строки -->
     <div class="col-md-12">
-      <b>Перечень научно-технических материалов и образцов, привезенных в Россию или полученных в результате совместных исследований (приложение файлов)</b>
       <br />
     </div>
 
-
+    <!-- Заголовок таблицы с файлами -->
     <div class="col-md-12">
-      <!-- Таблица приглашений -->
+      <b>Перечень научно-технических материалов и образцов, привезённых в Россию или полученных в результате совместных исследований (приложение файлов):</b>
+      <br />
+    </div>
+
+    <!-- Таблица с файлами -->
+    <div class="col-md-12">
+
       <table class="table table-hover table-dark">
+        <!-- Шапка таблицы с файлами -->
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col" width="5%">#</th>
             <th scope="col">Файл</th>
-            <th scope="col">Дейстия</th>
+            <th scope="col" class="text-center" width="10%">Действия</th>
           </tr>
         </thead>
+        <!-- Тело таблицы с файлами -->
         <tbody>
           <tr *ngFor="let file of report.appendix; let i = index">
             <th scope="row">{{i+1}}</th>
@@ -135,119 +206,155 @@
               </a>
             </td>
           </tr>
+          <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td class="text-center">
+              <a class="view" (click)="createFile()">
+                <i class="fa fa-plus"></i>
+              </a>
+            </td>
+          </tr>
         </tbody>
       </table>
+
     </div>
 
+    <!-- Отступ в виде одной пустой строки -->
     <div class="col-md-12">
       <br />
     </div>
 
-    <div class="col-md-2">
-      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+    <!-- Кнопки -->
+    <div class="col-md-12 text-right">
+      <!-- Кнопки Вернуть к выездам и Назад -->
+      <a *ngIf="departureId" class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure">Вернуться к выездам</a>
+      <a *ngIf="departureId" class="btn btn-warning ml-2" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure/{{deprtureId}}">Назад</a>
+      <!-- Кнопки Вернуть к приглашениям и Назад -->
+      <a *ngIf="invitationId" class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation">Вернуться к приглашениям</a>
+      <a *ngIf="invitationId" class="btn btn-warning ml-2" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation/{{invitationId}}">Назад</a>
     </div>
-    <div class="col-md-2" *ngIf="!report.status && forManager">
-      <a class="btn btn-warning" (click)="agree()">Удтвердить отчет</a>
+
+    <!-- Кнопки Сохроанить и Утвердить отчет -->
+    <div class="col-md-12">
+      <button type="button" class="btn btn-outline-dark" (click)="save()">
+        <span><b> Сохранить </b></span>
+      </button>
+      <button *ngIf="!report.status && !forManager" type="button" class="btn btn-outline-dark ml-2" (click)="agree()">
+        <span><b> Утвердить отчет </b></span>
+      </button>
     </div>
-    <div class="col-md-2">
-      <a class="btn btn-warning" (click)="createFile()">Добавить файл</a>
-    </div>
-    <div class="col-md-2">
-      <a class="btn btn-warning" (click)="createScientistTrue()">Добавить зарубежного ученого-партнёра по данной научной проблематике</a>
-    </div>
-    <div class="col-md-2" *ngIf="!invitationId">
-      <a class="btn btn-warning" (click)="createScientistFalse()">Добавить зарубежного ученого-партнёра по исследованиям, с которым состоялась встречи в период командировки</a>
-    </div>
-    <div class="col-md-3" *ngIf="departureId">
-      <a class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure/{{employeeId}}">Вернуться к выездам</a>
-    </div>
-    <div class="col-md-3" *ngIf="invitationId">
-      <a class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation">Вернуться к приглашениям</a>
-    </div>
+
   </div>
 </div>
 
+<!-- Форма создания ученого-партнера -->
 <div *ngIf="createScientistflag">
 
+  <!-- Фамилия/Имя/Отчество -->
   <div class="col-md-12">
     <div class="form-group">
       <label data-toggle="tooltip" data-placement="top">
-        ФИО
+        ФИО:
       </label>
       <textarea type="text" id="fullName" [(ngModel)]="scientist.fullName" class="form-control"></textarea>
     </div>
   </div>
 
+  <!-- Место работы -->
   <div class="col-md-12">
     <div class="form-group">
       <label data-toggle="tooltip" data-placement="top" title="город, университет, институт, фирма, компания, международная организация">
-        место работы
+        Место работы:
       </label>
       <textarea type="text" id="workPlace" [(ngModel)]="scientist.workPlace" class="form-control"></textarea>
     </div>
   </div>
 
+  <!-- Номер телефона -->
   <div class="col-md-12">
     <div class="form-group">
       <label data-toggle="tooltip" data-placement="top">
-        Номер телефона
+        Номер телефона:
       </label>
       <textarea type="text" id="phoneNumber" [(ngModel)]="scientist.phoneNumber" class="form-control"></textarea>
     </div>
   </div>
 
+  <!-- Адрес электронной почты -->
   <div class="col-md-12">
     <div class="form-group">
       <label data-toggle="tooltip" data-placement="top">
-        Email
+        Электронная почта:
       </label>
       <textarea type="text" id="email" [(ngModel)]="scientist.email" class="form-control"></textarea>
     </div>
   </div>
 
+  <!-- Должность -->
   <div class="col-md-12">
     <div class="form-group">
       <label data-toggle="tooltip" data-placement="top">
-        Должность
+        Должность:
       </label>
       <textarea type="text" id="position" [(ngModel)]="scientist.position" class="form-control"></textarea>
     </div>
   </div>
 
+  <!-- Ученая степень -->
   <div class="col-md-12">
     <div class="form-group">
       <label data-toggle="tooltip" data-placement="top">
-        Ученая степень
+        Учёная степень:
       </label>
       <textarea type="text" id="academicDegree" [(ngModel)]="scientist.academicDegree" class="form-control"></textarea>
     </div>
   </div>
 
-  <div class="col-md-2">
-    <a class="btn btn-warning" (click)="saveScientist()">Сохранить</a>
+  <!-- Отступ в виде одной пустой строки -->
+  <div class="col-md-12">
+    <br />
   </div>
 
-  <div class="col-md-2">
-    <a class="btn btn-warning" (click)="cancel()">Отменить</a>
+  <!-- Кнопки Сохранить/Отменить -->
+  <div class="col-md-4">
+    <button type="button" class="btn btn-outline-dark" (click)="saveScientist()">
+      <span><b>Сохранить</b></span>
+    </button>
+    <button type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
+      <span><b>Отменить</b></span>
+    </button>
   </div>
 
 </div>
 
+<!-- Форма добавления вложения -->
 <div *ngIf="createFileflag">
+
+  <!-- Кнопка добавления файла с диска компьютера -->
   <div class="col-md-12">
     <div class="form-group">
       <label data-toggle="tooltip" data-placement="top" title="Перечень научно-технических материалов и образцов, привезенных в Россию или полученных в результате совместных исследований (приложение файлов).">
-        Файл
+        Файл вложения:
       </label>
+      <br />
       <input type="file" (change)="fileChange($event)" />
     </div>
   </div>
 
-  <div class="col-md-2">
-    <a class="btn btn-warning" (click)="saveFile()">Сохранить</a>
+  <!-- Отступ в виде одной пустой строки -->
+  <div class="col-md-12">
+    <br />
   </div>
-  <div class="col-md-2">
-    <a class="btn btn-warning" (click)="cancel()">Отменить</a>
+
+  <!-- Кнопки Сохранить/Отменить [class.invisible]="!isNew"  -->
+  <div class="col-md-4">
+    <button type="button" class="btn btn-outline-dark" (click)="saveFile()">
+      <span><b>Сохранить</b></span>
+    </button>
+    <button type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
+      <span><b>Отменить</b></span>
+    </button>
   </div>
 
 </div>

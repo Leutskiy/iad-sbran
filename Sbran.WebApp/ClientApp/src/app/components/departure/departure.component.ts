@@ -1,6 +1,6 @@
 import { OnInit, Input, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Departure, DepartureStatus } from '../../contracts/login-data';
+import { Departure } from '../../contracts/login-data';
 import { AuthService } from '../../services/auth.service';
 import { DepartureDataService } from '../../services/component-providers/departure/departure-data.service';
 
@@ -26,7 +26,7 @@ export class DepartureComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private departureDataService: DepartureDataService) { }
+    private departureService: DepartureDataService) { }
 
   ngOnInit(): void {
     this.forManager = this.authService.isManager;
@@ -38,7 +38,7 @@ export class DepartureComponent implements OnInit {
   }
 
   private fillAll(): void {
-    this.departureDataService.get(this.employeeId).subscribe(
+    this.departureService.get(this.employeeId).subscribe(
       result => {
         this.departures = JSON.parse(JSON.stringify(result));
       },
@@ -47,11 +47,11 @@ export class DepartureComponent implements OnInit {
       });
   }
 
-  edit(event, departure: Departure, index) {
+  public edit(event, departure: Departure, index): void {
     this.router.navigate([this.activatedRoute.snapshot.url.join('/'),`${departure.id}`]);
   }
 
-  add() {
+  public add(): void {
     this.router.navigate([this.activatedRoute.snapshot.url.join('/'), 'new']);
   }
 }

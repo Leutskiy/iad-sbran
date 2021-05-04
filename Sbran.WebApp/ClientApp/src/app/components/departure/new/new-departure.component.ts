@@ -6,7 +6,7 @@ import { DepartureDataService } from '../../../services/component-providers/depa
 @Component({
   selector: 'app-new-departure',
   templateUrl: './new-departure.component.html',
-  styleUrls: ['./new-departure.component.css'],
+  styleUrls: ['./new-departure.component.scss'],
   providers: [DepartureDataService]
 })
 export class NewDepartureComponent implements OnInit {
@@ -60,11 +60,11 @@ export class NewDepartureComponent implements OnInit {
   }
 
 
-  public agree(id: string) {
+  public agree(id: string): void {
     this.departureService.agree(id).subscribe(() => {
       console.log("agree");
       this.departure.departureStatus = DepartureStatus.Agreement;
-    })
+    });
   }
 
   public save(): void {
@@ -78,7 +78,7 @@ export class NewDepartureComponent implements OnInit {
     this.cancel();
   }
 
-  cancel() {
+  public cancel(): void {
     this.router.navigate([this.activatedRoute.snapshot.url.slice(0, this.activatedRoute.snapshot.url.length - 1).join('/')]);
   }
 
