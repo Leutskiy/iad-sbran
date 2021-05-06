@@ -225,16 +225,6 @@
       <br />
     </div>
 
-    <!-- Кнопки -->
-    <div class="col-md-12 text-right">
-      <!-- Кнопки Вернуть к выездам и Назад -->
-      <a *ngIf="departureId" class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure">Вернуться к выездам</a>
-      <a *ngIf="departureId" class="btn btn-warning ml-2" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure/{{deprtureId}}">Назад</a>
-      <!-- Кнопки Вернуть к приглашениям и Назад -->
-      <a *ngIf="invitationId" class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation">Вернуться к приглашениям</a>
-      <a *ngIf="invitationId" class="btn btn-warning ml-2" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation/{{invitationId}}">Назад</a>
-    </div>
-
     <!-- Кнопки Сохроанить и Утвердить отчет -->
     <div class="col-md-12">
       <button type="button" class="btn btn-outline-dark" (click)="save()">
@@ -243,6 +233,16 @@
       <button *ngIf="!report.status && !forManager" type="button" class="btn btn-outline-dark ml-2" (click)="agree()">
         <span><b> Утвердить отчет </b></span>
       </button>
+    </div>
+
+    <!-- Кнопки -->
+    <div class="col-md-12 text-right">
+      <!-- Кнопки Вернуть к выездам и Назад -->
+      <a *ngIf="departureId" class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure/list">Вернуться к выездам</a>
+      <a *ngIf="departureId" class="btn btn-warning ml-2" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/departure/{{departureId}}">Назад</a>
+      <!-- Кнопки Вернуть к приглашениям и Назад -->
+      <a *ngIf="invitationId" class="btn btn-warning" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation">Вернуться к приглашениям</a>
+      <a *ngIf="invitationId" class="btn btn-warning ml-2" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation/{{invitationId}}">Назад</a>
     </div>
 
   </div>

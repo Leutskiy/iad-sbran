@@ -86,24 +86,29 @@
     <br />
   </div>
 
-  <div class="col-md-3">
-    <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
+  <!-- Кнопки Сохранить/Отменить [class.invisible]="!isNew"  -->
+  <div class="col-md-4">
+    <button type="button" class="btn btn-outline-dark" (click)="save()">
+      <span><b>Сохранить</b></span>
+    </button>
+    <button type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
+      <span><b>Отменить</b></span>
+    </button>
   </div>
 
-  <div class="col-md-3">
-    <input type="button" value="Отменить" (click)="cancel()" class="btn btn-warning" />
+  <!-- TODO: изменить расположение кнопок -->
+  <div class="col-md-8">
+    <br />
   </div>
 
-  <div class="col-md-3">
-    <div *ngIf="departure.id">
-      <a routerLink="report/{{departure.reportId}}" class="btn btn-warning"> Отчет </a>
-    </div>
-  </div>
+  <!-- Кнопки -->
+  <div class="col-md-12 text-right" *ngIf="!isNew">
+    <!-- Кнопки Согласовать выезд и Отчет -->
+    <a *ngIf="departure.departureStatus==0 && !forManager;" (click)="agree(departure.id)" class="btn btn-warning"> Согласовать </a>
+    <a *ngIf="departure.reportId; else newReport" routerLink="report/{{departure.reportId}}" class="btn btn-warning ml-2"> Отчет </a>
 
-  <div class="col-md-3">
-    <div *ngIf="departure.departureStatus==0 && forManager;">
-      <a (click)="agree(departure.id)" class="btn btn-warning"> Согласовать </a>
-    </div>
+    <ng-template #newReport>
+      <a routerLink="report" class="btn btn-warning ml-2"> Отчет </a>
+    </ng-template>
   </div>
-
 </div>

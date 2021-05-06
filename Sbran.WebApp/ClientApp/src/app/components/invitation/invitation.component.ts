@@ -26,7 +26,7 @@ export class InvitationComponent implements OnInit {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
 
-    this.fillTable();
+    this.refreshInvitationTable();
   }
 
   public new(): void {
@@ -43,32 +43,19 @@ export class InvitationComponent implements OnInit {
     this.router.navigate([url]);
   }
 
-
-
-  // заполнить таблицу приглашениями сотрудника
-  private fillTable(): void {
+  private refreshInvitationTable(): void {
     this.invitationService.getInvitationsByEmployeeId(this.employeeId).subscribe(
-      queryInvitationListResult => {
-        console.log(`queryInvitationListResult: ` + queryInvitationListResult);
-        //this.invitations = JSON.parse(JSON.stringify(queryInvitationListResult));
-
-        queryInvitationListResult.filter((val: any, index, array) => val.visitDetail !== null).forEach((val: any, index, array) =>
+      invitations => {
+        invitations.filter((val: any, index, array) => val.visitDetail !== null).forEach((val: any, index, array) =>
         {
-
-          console.log(val);
           val.visitDetail.arrivalDate = new Date(val.visitDetail.arrivalDate);
           val.visitDetail.departureDate = new Date(val.visitDetail.departureDate);;
 
           this.invitations.push(val);
         });
-
-        ////queryInvitationListResult.visitDetail.arrivalDate = new Date(queryInvitationListResult.visitDetail.arrivalDate);
-        ////queryInvitationListResult.visitDetail.departureDate = new Date(queryInvitationListResult.visitDetail.departureDate);;
-
-        //this.invitations = queryInvitationListResult;
       },
-      queryInvitationListError => {
-        console.error(`queryInvitationListError: ` + queryInvitationListError);
+      error => {
+        console.error(`error: ${error}`);
       }
     );
   }

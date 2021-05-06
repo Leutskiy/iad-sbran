@@ -33,9 +33,9 @@ const routes: Routes = [
   { path: 'login', component: SigninComponent, canActivate: [RedirectToProfileGuard] },
   { path: 'singup', component: SingupComponent },
 
-  { path: 'profile/:profileId/employee/:employeeId/departure', component: DepartureComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/departure/list', component: DepartureComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/departure/:departureId', component: NewDepartureComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/departure/new', component: NewDepartureComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/departure', component: NewDepartureComponent, canActivate: [AuthGuard] },
 
   { path: 'profile/:profileId/employee/:employeeId/consularOffice/:employeeId', component: ConsularOfficeComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/internationalAgreement/:employeeId', component: InternationalAgreementComponent, canActivate: [AuthGuard] },

@@ -633,9 +633,9 @@ export class Departure {
   status: string | null;
   justificationOfTheBusiness: string | null;
   dateStart: Date | string | null;
+  dateEnd: Date | string | null;
   departureStatus: DepartureStatus | null;
   reportId: string | null;
-  dateEnd: Date | string | null;
   employeeId: string | null;
   report: Report | null;
 }

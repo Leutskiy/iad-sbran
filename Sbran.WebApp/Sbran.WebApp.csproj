@@ -27,6 +27,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.8.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.2.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NJsonSchema.CodeGeneration" Version="10.3.3" />
@@ -60,7 +64,15 @@
     </ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="ClientApp\src\app\common\helpers\DateHelper.ts" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Folder Include="ClientApp\src\assets\images\profilephotos\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <TypeScriptCompile Include="ClientApp\src\app\common\helpers\DateHelper.ts" />
 	</ItemGroup>
 	
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">

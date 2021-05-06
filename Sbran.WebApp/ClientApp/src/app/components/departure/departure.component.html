@@ -1,15 +1,16 @@
 <div class="container">
   <div class="table-wrapper">
+
     <!-- Шапка страницы -->
     <div class="table-title">
       <div class="row">
         <div class="col-sm-12 d-inline-flex">
-          <div class="mr-auto"><h2><b>Выезды</b></h2></div>
+          <div class="mr-auto"><h2><b> Выезды </b></h2></div>
           <div class="input-group w-auto">
             <div class="input-group-append">
               <!-- TODO: тут короче фикс под себя надо -->
-              <button type="button" class="btn btn-warning ml-2" (click)="add()">
-                <span><b>Новое</b></span>
+              <button type="button" class="btn btn-warning ml-2" (click)="new()">
+                <span><b> Новое </b></span>
               </button>
             </div>
           </div>
@@ -17,18 +18,18 @@
       </div>
     </div>
 
-    <!-- Таблица приглашений -->
+    <!-- Таблица выездов -->
     <table class="table table-hover table-dark">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Страна командирования</th>
-          <th scope="col">Город командирования</th>
-          <th scope="col">Статус</th>
-          <th scope="col">Дата начала</th>
-          <th scope="col">Дата окончания</th>
-          <th scope="col">Статус отчета</th>
-          <th scope="col">Действия</th>
+          <th scope="col"> Страна </th>
+          <th scope="col"> Город </th>
+          <th scope="col"> Статус</th>
+          <th scope="col"> Начало </th>
+          <th scope="col"> Окончание </th>
+          <th scope="col"> Статус отчета </th>
+          <th scope="col"> Действия </th>
         </tr>
       </thead>
       <tbody>
@@ -37,14 +38,17 @@
           <td>{{departure.sendingCountry}}</td>
           <td>{{departure.cityOfBusiness}}</td>
           <td>
-            <div *ngIf="departure.departureStatus==0;else another">Не согласован</div>
+            <div *ngIf="departure.departureStatus==0;else another"> Не согласован </div>
             <ng-template #another>
-              Согласован
+              Согласован 
             </ng-template>
           </td>
           <td>{{departure.dateStart}}</td>
           <td>{{departure.dateEnd}}</td>
-          <td><b *ngIf="departure.report && departure.report.status;else status">Подтвержден</b><ng-template #status> Не подтвержден</ng-template> </td>
+          <td>
+            <b *ngIf="departure.report && departure.report.status;else status"> Подтвержден </b>
+            <ng-template #status> Не подтвержден </ng-template>
+          </td>
           <td class="text-center">
             <a class="view" (click)="edit($event, departure, i)">
               <i class="fa fa-share-square-o"></i>
@@ -53,5 +57,6 @@
         </tr>
       </tbody>
     </table>
+
   </div>
 </div>
