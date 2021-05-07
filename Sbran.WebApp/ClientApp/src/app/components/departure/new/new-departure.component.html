@@ -91,8 +91,11 @@
     <button type="button" class="btn btn-outline-dark" (click)="save()">
       <span><b>Сохранить</b></span>
     </button>
-    <button type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
+    <button *ngIf="isNew" type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
       <span><b>Отменить</b></span>
+    </button>
+    <button *ngIf="!isNew" type="button" class="btn btn-outline-dark ml-2" (click)="backward()">
+      <span><b> Назад </b></span>
     </button>
   </div>
 

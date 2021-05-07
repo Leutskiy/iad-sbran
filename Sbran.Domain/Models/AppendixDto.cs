@@ -1,24 +1,32 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Sbran.Domain.Models
 {
 	public sealed class AppendixDto
     {
         /// <summary>
-        /// Описание
+        /// Идентификатор
         /// </summary>
+        [JsonProperty("id")]
         public Guid? Id { get; set; }
 
         /// <summary>
-        /// Файл
+        /// Содержимое файла
         /// </summary>
+        [JsonProperty("fileBinary")]
         public byte[] FileBinary { get; set; }
 
         /// <summary>
-        /// Файл
+        /// Наименование файла
         /// </summary>
+        [JsonProperty("fileName")]
         public string FileName { get; set; }
 
+        /// <summary>
+        /// Идентификатор отчета
+        /// </summary>
+        [JsonProperty("reportId")]
         public Guid? ReportId { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using TemplateEngine.Docx;
 using Sbran.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Sbran.WebApp.Controllers
 {
@@ -35,7 +36,10 @@ namespace Sbran.WebApp.Controllers
         private readonly IReadCommand<InvitationResult> _invitationReadCommand;
         private IWebHostEnvironment _environment;
 
-        public InvitationController(
+		public ILogger<InvitationController> Logger { get; }
+
+		public InvitationController(
+            ILogger<InvitationController> logger,
 			IEmployeeRepository employeeRepository,
 			InvitationWriteCommand invitationWriteCommand,
 			IReadCommand<InvitationResult> invitationReadCommand,
@@ -44,7 +48,8 @@ namespace Sbran.WebApp.Controllers
 			IConsularOfficeRepository consularOfficeRepository,
 			IWebHostEnvironment environment)
         {
-            _employeeRepository = employeeRepository;
+			Logger = logger;
+			_employeeRepository = employeeRepository;
             _invitationReadCommand = invitationReadCommand;
             _invitationWriteCommand = invitationWriteCommand;
             _invitationRepository = invitationRepository;
@@ -302,10 +307,16 @@ namespace Sbran.WebApp.Controllers
             #endregion
             var emp = await _employeeRepository.GetAsync(empId);
             var invitation = await _invitationReadCommand.ExecuteAsync(id);
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-            Console.WriteLine(path);
-            string templatePath = path + "Приглашение_1.docx";
-            string tempPath = path + "Приглашение.docx";
+
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot");
+            string templatePath = Path.Combine(path, "приглашение_1.docx");
+            string tempPath = Path.Combine(path, "Приглашение.docx");
+
+            /*
+            var path = AppDomain.CurrentDomain.BaseDirectory;
+            string tempPath = path + "приглашение_1.docx";
+            string templatePath = path + "Приглашение.docx";
+            */
             try
             {
                 System.IO.File.Copy(tempPath, templatePath, true);
@@ -330,6 +341,10 @@ namespace Sbran.WebApp.Controllers
             }
             catch (Exception e)
             {
+                Logger.LogInformation($"{e.Message}");
+                Logger.LogInformation($"{e.StackTrace}");
+                Logger.LogInformation($"{e.Data}");
+
                 return Ok();
             }
 

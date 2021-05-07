@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="col-md-3">
-        <div *ngIf="forManager;">
+        <div *ngIf="!forManager">
           <a href="api/v1/invitation/{{invitation.id}}/report/{{employeeId}}" class="btn btn-outline-dark ml-2" (click)="report(invitation.id)">
             <span><b>Сформировать приглашение</b></span>
           </a>

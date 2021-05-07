@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Appendix, ListOfScientist, Report, ReportType } from '../../contracts/login-data';
 import { AuthService } from '../../services/auth.service';
 import { ReportDataService } from '../../services/component-providers/report/report-data.service';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-report',
@@ -17,7 +18,7 @@ export class ReportComponent implements OnInit {
   departureId: string;
   invitationId: string;
   reportId: string;
-  isNew: boolean = true;
+  isMainReportForm: boolean = true;
   createScientistflag: boolean = false;
   createFileflag: boolean = false;
   forManager: boolean = false;
@@ -25,6 +26,7 @@ export class ReportComponent implements OnInit {
   @Input() report: Report;
   scientist: ListOfScientist;
   appendix: Appendix;
+  isNew: boolean;
 
   constructor(
     private router: Router,
@@ -44,7 +46,9 @@ export class ReportComponent implements OnInit {
     this.invitationId = this.activatedRoute.snapshot.paramMap.get('invitationId');
     this.reportId = this.activatedRoute.snapshot.paramMap.get('reportId');
 
-    if (this.reportId != null) {
+    this.isNew = !this.reportId
+
+    if (!this.isNew) {
       this.get();
     }
 
@@ -57,42 +61,39 @@ export class ReportComponent implements OnInit {
       this.report.reportType = ReportType.Invition;
       this.report.parentId = this.invitationId;
     }
-
-    if (!this.report.listOfScientists) {
-      this.report.listOfScientists = [];
-    }
   }
 
   get(): void {
-    this.reportDataService.get(this.reportId).subscribe(report => {
+    this.reportDataService.get(this.reportId).subscribe((report: Report) => {
       this.report.id = report.id;
       this.report.mainPart = report.mainPart;
       this.report.findings = report.findings;
       this.report.suggestion = report.suggestion;
       this.report.foreignInterest = report.foreignInterest;
+      this.report.status = report.status;
       this.report.reportType = report.reportType;
       this.report.parentId = report.parentId;
-      this.report.status = report.status;
       this.report.appendix = report.appendix;
       this.report.listOfScientists = report.listOfScientists;
     })
   }
 
   createFile(): void {
-    this.isNew = false;
+    this.isMainReportForm = false;
     this.createFileflag = true;
     this.appendix = new Appendix();
   }
 
   createScientist(type: boolean): void {
-    this.isNew = false;
+    this.isMainReportForm = false;
     this.createScientistflag = true;
     this.scientist = new ListOfScientist();
+    this.scientist.id = uuid.v4();
     this.scientist.type = type;
   }
 
   cancel(): void {
-    this.isNew = true;
+    this.isMainReportForm = true;
     this.createScientistflag = false;
     this.createFileflag = false;
     this.appendix = new Appendix();
@@ -102,7 +103,10 @@ export class ReportComponent implements OnInit {
   save() {
     if (this.report.id == null) {
       this.reportDataService.add(this.report)
-        .subscribe((data: Report) => this.report = JSON.parse(JSON.stringify(data)));
+        .subscribe((data: Report) => {
+          this.report = JSON.parse(JSON.stringify(data));
+          this.router.navigate([this.activatedRoute.snapshot.url.join("/"), `${this.report.id}`]);
+        });
     } else {
       this.reportDataService.update(this.report.id, this.report)
         .subscribe(data => this.get());

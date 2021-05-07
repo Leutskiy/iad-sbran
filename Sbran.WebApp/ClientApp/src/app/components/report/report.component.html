@@ -1,4 +1,4 @@
-<div *ngIf="isNew">
+<div *ngIf="isMainReportForm">
   <!-- Форма для отчета -->
   <div class="input-group mt-3 mb-3">
 
@@ -86,7 +86,16 @@
             <td>{{listOfScientist.workPlace}}</td>
             <td>{{listOfScientist.position}}</td>
             <td>{{listOfScientist.academicDegree}}</td>
-            <td>{{listOfScientist.contacts}}</td>
+            <td>
+              <p *ngIf="listOfScientist.email && listOfScientist.phoneNumber; else part">
+                {{listOfScientist.phoneNumber}}, {{listOfScientist.email}}
+              </p>
+              <ng-template #part>
+                <p>
+                  {{listOfScientist.phoneNumber}}{{listOfScientist.email}}
+                </p>
+              </ng-template>
+            </td>
             <td class="text-center">
               <a class="view" (click)="deleteScientist(listOfScientist)">
                 <i class="fa fa-trash"></i>
@@ -147,7 +156,16 @@
             <td>{{listOfScientist.workPlace}}</td>
             <td>{{listOfScientist.position}}</td>
             <td>{{listOfScientist.academicDegree}}</td>
-            <td>{{listOfScientist.contacts}}</td>
+            <td>
+              <p *ngIf="listOfScientist.email && listOfScientist.phoneNumber; else part">
+                {{listOfScientist.phoneNumber}}, {{listOfScientist.email}}
+              </p>
+              <ng-template #part>
+                <p>
+                  {{listOfScientist.phoneNumber}}{{listOfScientist.email}}
+                </p>
+              </ng-template>
+            </td>
             <td class="text-center">
               <a class="view" (click)="deleteScientist(listOfScientist)">
                 <i class="fa fa-trash"></i>
@@ -230,7 +248,7 @@
       <button type="button" class="btn btn-outline-dark" (click)="save()">
         <span><b> Сохранить </b></span>
       </button>
-      <button *ngIf="!report.status && !forManager" type="button" class="btn btn-outline-dark ml-2" (click)="agree()">
+      <button *ngIf="!report.status && !isNew && !forManager" type="button" class="btn btn-outline-dark ml-2" (click)="agree()">
         <span><b> Утвердить отчет </b></span>
       </button>
     </div>
@@ -347,7 +365,7 @@
     <br />
   </div>
 
-  <!-- Кнопки Сохранить/Отменить [class.invisible]="!isNew"  -->
+  <!-- Кнопки Сохранить/Отменить  -->
   <div class="col-md-4">
     <button type="button" class="btn btn-outline-dark" (click)="saveFile()">
       <span><b>Сохранить</b></span>

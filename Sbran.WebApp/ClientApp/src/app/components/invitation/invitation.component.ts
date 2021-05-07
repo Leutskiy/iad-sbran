@@ -30,14 +30,14 @@ export class InvitationComponent implements OnInit {
   }
 
   public new(): void {
-    let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/new/form`;
+    let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation`;
     console.log(`after new button click redirect to: ` + url);
 
     this.router.navigate([url]);
   }
 
   public edit(event, invitation, index) {
-    let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/${invitation.id}/edit/form`;
+    let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/${invitation.id}`;
     console.log(`after the Edit button is clicked for invitation ${invitation.id} it should redirect to: ${url}`);
 
     this.router.navigate([url]);

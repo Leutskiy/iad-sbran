@@ -137,11 +137,12 @@ namespace Sbran.WebApp.Controllers
                 Appendix = report?.Appendices
                 .Select(e => new AppendixDto()
                 {
-                    FileBinary = e.FileBinary,
-                    FileName = e.FileName,
+                    FileBinary = e.FileBinary!,
+                    FileName = e.FileName!,
                     Id = e.Id,
                     ReportId = e.ReportId
                 }).ToList(),
+                ReportType = report!.ReportType,
                 ListOfScientists = report?.ListOfScientists
                 .Select(e => new ListOfScientistDto()
                 {

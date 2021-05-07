@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DateHelper } from '../../../common/helpers/DateHelper';
 import { Invitation, InvitationStatus, Job, NewInvitationDto, Passport, ScientificInfo, VisitDetail } from '../../../contracts/login-data';
 import { AuthService } from '../../../services/auth.service';
 import { InvitationDataService } from '../../../services/component-providers/invitation/invitation-data.service';
@@ -15,7 +16,7 @@ import { VisitDetailsInvitationComponent } from '../../visit-details/visit-detai
   selector: 'app-new-invitation-form',
   templateUrl: './new-invitation-form.component.html',
   styleUrls: ['./new-invitation-form.component.scss'],
-  providers: [InvitationDataService]
+  providers: [InvitationDataService, DateHelper]
 })
 export class NewInvitationFormComponent implements OnInit {
 
@@ -58,6 +59,7 @@ export class NewInvitationFormComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private dateHelper: DateHelper,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private invitationService: InvitationDataService) {
@@ -86,12 +88,12 @@ export class NewInvitationFormComponent implements OnInit {
 
     var newInvitation = new NewInvitationDto();
     newInvitation.visitDetail = this.visitDetailsComponent.visitDetails;
-    newInvitation.visitDetail.arrivalDate = this.formatDate(this.visitDetailsComponent.visitDetails.arrivalDate);
-    newInvitation.visitDetail.departureDate = this.formatDate(this.visitDetailsComponent.visitDetails.departureDate);
+    newInvitation.visitDetail.arrivalDate = this.dateHelper.formatDateForBack(this.visitDetailsComponent.visitDetails.arrivalDate);
+    newInvitation.visitDetail.departureDate = this.dateHelper.formatDateForBack(this.visitDetailsComponent.visitDetails.departureDate);
     newInvitation.alien.alienJob = this.jobComponent.job;
     newInvitation.alien.alienPassport = this.passportComponent.passport;
-    newInvitation.alien.alienPassport.birthDate = this.formatDate(this.passportComponent.passport.birthDate);
-    newInvitation.alien.alienPassport.issueDate = this.formatDate(this.passportComponent.passport.issueDate);
+    newInvitation.alien.alienPassport.birthDate = this.dateHelper.formatDateForBack(this.passportComponent.passport.birthDate);
+    newInvitation.alien.alienPassport.issueDate = this.dateHelper.formatDateForBack(this.passportComponent.passport.issueDate);
     // TODO: доделать заполнение о научных достижениях приглашенного
     newInvitation.alien.alienScientificInfo = new ScientificInfo();
     newInvitation.alien.alienContact = this.contactDetailsComponent.contact;
@@ -100,41 +102,45 @@ export class NewInvitationFormComponent implements OnInit {
     newInvitation.alien.alienWorkAddress = "";
     newInvitation.alien.alienStayAddress = "";
 
+    // TODO: Назвать FromEmployee
     this.invitationService.newInvitationForEmployee(this.employeeId, newInvitation).subscribe(
-      operationResult => {
-        let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/`;
-        console.log(`new invitation: redirect to: ` + url);
-        console.log(`operationResult: ` + operationResult);
-
-        this.router.navigate([url]);
+      _invitationId => {
+        console.info(`>>> перенаправление на созданное приглашение: ${_invitationId}`);
+        this.router.navigate([this.router.url, _invitationId]);
       },
-      operationError => {
-        console.log(`operationError: ` + operationError);
+      _error => {
+        console.error(`>>> ошибка при создании приглашения: ${_error}`);
       }
     );
   }
 
   public cancel(): void {
-    let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/`;
-    console.log(`cancel: redirect to: ` + url);
-
+    console.info(">>> нажата кнопка Отменить")
+    let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/list`;
+    console.info(`>>> перенаправление на список приглашений: ${url}`);
     this.router.navigate([url]);
   }
 
-  public agree(id: string) {
-    this.invitationService.agree(id).subscribe(e => {
-      console.log("agree");
-      this.invitation.invitationStatus = InvitationStatus.Agreement;
-      //this.departures = JSON.parse(JSON.stringify(e));
-    })
+  public agree(invitationId: string): void {
+    console.info(`>>> нажата кнопка Согласовать`);
+    this.invitationService.agree(invitationId).subscribe(
+      _success => {
+        console.info(`>>> приглашение успешно согласовано`);
+        this.invitation.invitationStatus = InvitationStatus.Agreement;
+      },
+      _error => {
+        console.error(`>>> во время согласования приглашения произошла ошибка: ${_error}`);
+      })
   }
   
-  public report(id: string) {
-    this.invitationService.report(id).subscribe(e => {
-      console.log("report");
-      //this.invitation.invitationStatus = InvitationStatus.Agreement;
-      //this.departures = JSON.parse(JSON.stringify(e));
-    })
+  public report(invitationId: string): void {
+    this.invitationService.report(invitationId).subscribe(
+      _success => {
+        console.info(`>>> приглашение успешно сформировано`);
+      },
+      _error => {
+        console.error(`>>> во время формирования приглашения произошла ошибка: ${_error}`);
+      });
   }
 
   private fill(): void {
@@ -149,25 +155,25 @@ export class NewInvitationFormComponent implements OnInit {
         // если задана дата рождения, то форматируем
         if (!!queryInvitationResult.alien.passport.birthDate) {
           let birthDate = new Date(queryInvitationResult.alien.passport.birthDate);
-          queryInvitationResult.alien.passport.birthDate = this.formatDateToDatePickerString(birthDate);
+          queryInvitationResult.alien.passport.birthDate = this.dateHelper.formatDateForFront(birthDate);
         }
 
         // если задана дата выдачи документа удостоверяющего личность, то форматируем
         if (!!queryInvitationResult.alien.passport.issueDate) {
           let issueDate = new Date(queryInvitationResult.alien.passport.issueDate);
-          queryInvitationResult.alien.passport.issueDate = this.formatDateToDatePickerString(issueDate);
+          queryInvitationResult.alien.passport.issueDate = this.dateHelper.formatDateForFront(issueDate);
         }
 
         // если задана дата пребытия, то форматируем
         if (!!queryInvitationResult.visitDetail.arrivalDate) {
           let arrivalDate = new Date(queryInvitationResult.visitDetail.arrivalDate);
-          queryInvitationResult.visitDetail.arrivalDate = this.formatDateToDatePickerString(arrivalDate);
+          queryInvitationResult.visitDetail.arrivalDate = this.dateHelper.formatDateForFront(arrivalDate);
         }
 
         // если задана дата отъезда, то форматируем
         if (!!queryInvitationResult.visitDetail.departureDate) {
           let departureDate = new Date(queryInvitationResult.visitDetail.departureDate);
-          queryInvitationResult.visitDetail.departureDate = this.formatDateToDatePickerString(departureDate);
+          queryInvitationResult.visitDetail.departureDate = this.dateHelper.formatDateForFront(departureDate);
         }
 
         this.job.position = queryInvitationResult.alien.position;
@@ -177,33 +183,6 @@ export class NewInvitationFormComponent implements OnInit {
         console.log(`queryInvitationError: ` + queryInvitationError);
       }
     );
-  }
-
-  // TODO: вынести в helper для форматирования дат
-  private formatDateToDatePickerString(model: Date | null): string | null {
-    if (model) {
-      let date = {
-        day: model.getDate(),
-        month: model.getMonth() + 1,
-        year: model.getFullYear()
-      };
-
-      let dateDay = `${date.day}`;
-      let dateYear = `${date.year}`;
-      let dateMonth = `${date.month}`;
-
-      if (date.day < 10) {
-        dateDay = 0 + dateDay;
-      }
-
-      if (date.month < 10) {
-        dateMonth = 0 + dateMonth;
-      }
-
-      return dateDay + "." + dateMonth + "." + dateYear;
-    }
-
-    return null;
   }
 
   // TODO: не на продакшн, только тест и разработка
@@ -216,27 +195,5 @@ export class NewInvitationFormComponent implements OnInit {
     console.log(this.organizationComponent.organization);
     console.log(this.stateRegistrationComponent.stateRegistration);
     console.log("saved new invitation form");
-  }
-
-  // TODO: Сделать стандартизацию формата даты (подходящий ISO)
-  // отформатировать дату (привести к правильному формату)
-  private formatDate(model: Date | string | null): Date | null {
-    if (model instanceof Date) {
-      return model;
-    }
-    else if (model) {
-      return new Date(this.parse(model));
-    } else {
-      return null;
-    }
-  }
-
-  private parse(value: string): string {
-    if (value) {
-      let date = value.split(".");
-      return date[2] + "-" + date[1] + "-" + date[0];
-    }
-
-    return null;
   }
 }

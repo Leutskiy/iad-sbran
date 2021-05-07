@@ -18,10 +18,10 @@ export class ReportDataService {
   }
 
   // получить отчет
-  public get(reportId: string): Observable<any> {
+  public get(reportId: string): Observable<Report> {
     let url = `${this.baseAddress}${this.uriReportPath}/${reportId}`;
     console.log(`get all reports for ${reportId} by url: ` + url);
-    return this.http.get<any>(url, this.options);
+    return this.http.get<Report>(url, this.options);
   }
   // получить отчет
   public agree(reportId: string): Observable<any> {

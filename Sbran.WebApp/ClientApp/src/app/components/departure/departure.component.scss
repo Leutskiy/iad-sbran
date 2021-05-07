@@ -17,8 +17,13 @@
   border-radius: 10px;
 }
 
+table.table {
+  table-layout: fixed;
+}
+
 table.table td, th {
   vertical-align: middle;
+  word-wrap: break-word;
 }
 
 table.table td a {
@@ -36,3 +41,4 @@ table.table td a.view {
 table.table td a.view:hover {
   color: #e0a800;
 }
+

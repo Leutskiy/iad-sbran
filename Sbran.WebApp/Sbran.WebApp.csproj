@@ -74,6 +74,15 @@
 	<ItemGroup>
 	  <TypeScriptCompile Include="ClientApp\src\app\common\helpers\DateHelper.ts" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\Приглашение.doc">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="wwwroot\приглашение_1.docx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
 	
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->

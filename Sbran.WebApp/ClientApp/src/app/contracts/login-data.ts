@@ -736,6 +736,7 @@ export enum InvitationStatus {
   Agreement
 }
 
+
 export class Report {
   id: string | null;
   mainPart: string | null;
@@ -746,7 +747,7 @@ export class Report {
   appendix: Appendix[] | null;
   listOfScientists: ListOfScientist[] | null;
 
-  reportType: ReportType | null;
+  reportType: ReportType;
   parentId: string | null;
 
   constructor() {
@@ -754,13 +755,16 @@ export class Report {
     this.findings = "";
     this.suggestion = "";
     this.foreignInterest = "";
+
+    this.appendix = Array<Appendix>();
+    this.listOfScientists = Array<ListOfScientist>();
   }
 }
 
 export class Appendix {
   id: string | null;
-  fileBinary: string | null;
-  fileName: string | null;
+  fileBinary: string;
+  fileName: string;
   reportId: string | null;
 }
 
@@ -770,18 +774,10 @@ export class ListOfScientist {
   workPlace: string | null;
   position: string | null;
   email: string | null;
-  academicDegree: string | null;
-  type: boolean | null;
   phoneNumber: string | null;
-  reportId: string | null;
-  contacts: string | null;
-
-  constructor() {
-    this.contacts = [this.phoneNumber, this.email].filter((value, idx, arr) => { return value?.length > 0; }).join(', ');
-  }
-
-  
-
+  academicDegree: string | null;
+  type: boolean;
+  reportId: string;
 }
 
 export class HomePage {
