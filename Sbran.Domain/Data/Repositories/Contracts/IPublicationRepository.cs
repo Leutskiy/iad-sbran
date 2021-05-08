@@ -8,6 +8,9 @@ namespace Sbran.Domain.Data.Repositories.Contracts
 {
     public interface IPublicationRepository
     {
+        Task<int> Total();
+
+        Task<List<Publication>> GetByEmplIdAsync(Guid employeeId);
 
         Publication Add(PublicationDto addedPublication);
 

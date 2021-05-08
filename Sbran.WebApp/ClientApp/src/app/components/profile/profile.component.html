@@ -28,15 +28,17 @@
         </div>
         <div class="profile-rating card text-center">
           <div class="card-header">
-            <h5>Рейтинг</h5>
+            <h5>Рейтинг: не установлен</h5>
           </div>
+          <!--
           <div class="card-body">
             <h3 class="card-title">не установлен</h3>
           </div>
+          -->
         </div>
       </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-9">
       <div class="profile-content border">
         <div class="container">
           <div class="row">
@@ -88,12 +90,14 @@
               <span class="form-control" id="email" [class.empty-field]="!!userInfo.email">{{userInfo.email}}</span>
             </div>
           </div>
+          <!-- в следующей версии
           <div class="form-group row">
             <label for="fax" class="col-md-4 col-form-label">Факс:</label>
             <div class="col-md-8">
               <span class="form-control" id="fax" [class.empty-field]="!!userInfo.fax">Не заполнено</span>
             </div>
           </div>
+          -->
           <div class="form-group row">
             <label for="education" class="col-md-4 col-form-label">Образование:</label>
             <div class="col-md-8">
@@ -103,7 +107,7 @@
           <div class="form-group row">
             <label for="webPage" class="col-md-4 col-form-label">Страница <br>(researchgate, WoS):</label>
             <div class="col-md-8">
-              <span class="form-control" id="webPage">
+              <span class="form-control cutting-text" id="webPage">
                 <span *ngFor="let webPage of userInfo.profile.webPages">
                   <a target="_blank" rel="noopener noreferrer" href="{{webPage}}">
                     {{webPage}},
@@ -118,7 +122,7 @@
           <div class="form-group row">
             <label for="memberships" class="col-md-4 col-form-label">Членство:</label>
             <div class="col-md-8">
-              <span class="form-control" id="memberships" [class.empty-field]="!!userInfo.education">
+              <span class="form-control cutting-text" id="memberships" [class.empty-field]="!!userInfo.memberships" >
                 {{userInfo.memberships}}
               </span>
             </div>
@@ -127,7 +131,7 @@
           <div class="form-group row">
             <label for="scientificInterests" class="col-md-4 col-form-label">Научные интересы:</label>
             <div class="col-md-8">
-              <span class="form-control" id="scientificInterests" [class.empty-field]="!!userInfo.education">
+              <span class="form-control cutting-text" id="scientificInterests" [class.empty-field]="!!userInfo.scientificInterests">
                 {{userInfo.scientificInterests}}
               </span>
             </div>
@@ -146,7 +150,7 @@
               </div>
               <div class="card bg-dark">
                 <div class="card-body text-center">
-                  <a routerLink="publish/{{employeeId}}">
+                  <a routerLink="publication/list">
                     <p class="card-text">
                       Публикации
                       <span class="badge badge-warning">{{userInfo.publishsCount}}</span>

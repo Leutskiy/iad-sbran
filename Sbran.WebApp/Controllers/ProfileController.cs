@@ -10,6 +10,7 @@ using Sbran.CQS.Read.Results;
 using Sbran.Domain.Models;
 using Sbran.Domain.Entities;
 using System.Collections.Generic;
+using Sbran.Domain.Data.Repositories.Contracts;
 
 namespace Sbran.WebApp.Controllers
 {
@@ -24,25 +25,44 @@ namespace Sbran.WebApp.Controllers
     {
         private readonly IReadCommand<ProfileResult> _profileReadCommand;
         private readonly EmployeeReadCommand _employeeReadCommand;
+        private readonly IInvitationRepository _invitationRepositore;
+        private readonly IMembershipRepository _membershipRepository;
+        private readonly IPublicationRepository _publicationRepository;
+        private readonly IDepartureRepository _departureRepository;
 
         private readonly ProfileWriteCommand _profileWriteCommand;
 
-        public ProfileController(
-            IReadCommand<ProfileResult> profileReadCommand,
-            EmployeeReadCommand employeeReadCommand,
-            ProfileWriteCommand profileWriteCommand)
-        {
-            _profileReadCommand = profileReadCommand;
-            _employeeReadCommand = employeeReadCommand;
-            _profileWriteCommand = profileWriteCommand;
-        }
+		public ProfileController(
+			IReadCommand<ProfileResult> profileReadCommand,
+			EmployeeReadCommand employeeReadCommand,
+			ProfileWriteCommand profileWriteCommand,
+			IInvitationRepository invitationRepositore,
+			IMembershipRepository membershipRepository,
+			IPublicationRepository publicationRepository,
+			IDepartureRepository departureRepository)
+		{
+			_profileReadCommand = profileReadCommand;
+			_employeeReadCommand = employeeReadCommand;
+			_profileWriteCommand = profileWriteCommand;
+			_invitationRepositore = invitationRepositore;
+			_membershipRepository = membershipRepository;
+			_publicationRepository = publicationRepository;
+			_departureRepository = departureRepository;
+		}
 
-        [HttpGet]
+		[HttpGet]
         [Route("{profileId:guid}/employee/{employeeId:guid}")]
         public async Task<IActionResult> GetById(Guid profileId, Guid employeeId)
         {
             var profileResult = await _profileReadCommand.ExecuteAsync(profileId);
             var employeeResult = await _employeeReadCommand.ExecuteAsync(employeeId);
+
+            var isAdmin = User.IsInRole(UserRoles.Admin);
+
+            var invitesCount = isAdmin ? await _invitationRepositore.Total() : employeeResult.Invitations.Count;
+            var publishsCount = isAdmin ? await _publicationRepository.Total() : employeeResult.Publications.Count;
+            var departuresCount = isAdmin ? await _departureRepository.Total() : employeeResult.Departures.Count;
+            var membershipsCount = isAdmin ? await _membershipRepository.Total() : employeeResult.Memberships.Count;
 
             var userInfo = new UserInfoResult
             {
@@ -58,10 +78,10 @@ namespace Sbran.WebApp.Controllers
                 MobilePhoneNumber = employeeResult.Contact?.MobilePhoneNumber,
                 WorkPlace = employeeResult.WorkPlace,
                 Position = employeeResult.Position,
-                InvitesCount = employeeResult.Invitations.Count,
-                DeparturesCount = employeeResult.Departures.Count,
-                MembershipsCount = employeeResult.Memberships.Count,
-                PublishsCount = employeeResult.Publications.Count,
+                InvitesCount = invitesCount,
+                DeparturesCount = departuresCount,
+                MembershipsCount = membershipsCount,
+                PublishsCount = publishsCount,
                 ScientificInterests = ConvertScientificInterestsListForString(employeeResult.ScientificInterests),
                 Memberships = ConvertMembershipsListForString(employeeResult.Memberships)
             };

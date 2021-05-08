@@ -51,12 +51,17 @@ namespace Sbran.WebApp.Controllers
         [Route("{employeeId:guid}/{type}")]
         public async Task<List<Membership>> getAllMemberships(Guid employeeId, int type)
         {
-            var list = await _membershipRepository.GetAllAsync();
-            if (type == 1)
-            {
-                return list.Where(e => e.EmployeeId == employeeId && e.MembershipType == Domain.Enums.MembershipType.Russian).ToList();
-            }
-            return list.Where(e => e.EmployeeId == employeeId && e.MembershipType == Domain.Enums.MembershipType.Other).ToList();
+            var isAdmin = User.IsInRole(UserRoles.Admin);
+
+            var list = isAdmin
+                ? await _membershipRepository.GetAllAsync()
+                : await _membershipRepository.GetByEmplIdAsync(employeeId);
+
+            var membershipFilter = type == 1
+                ? Domain.Enums.MembershipType.Russian
+                : Domain.Enums.MembershipType.Other;
+
+            return list.Where(e => e.MembershipType == membershipFilter).ToList();
 
         }
     }

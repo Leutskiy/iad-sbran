@@ -12,62 +12,80 @@ import { PublicationDataService } from '../../services/component-providers/publi
 })
 export class PublicationComponent implements OnInit {
 
+  @Input() title: string;
+
   profileId: string;
   employeeId: string;
-  tableMode: boolean = true;
 
-  @Input() title: string;
   publications = [];
-  publication: Publication;
+  publicationListUrl: string;
+  publicationFormUrl: string;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
-    private publicationDataService: PublicationDataService) {
-    this.publication = new Publication();
-  }
+    private publicationService: PublicationDataService) { }
 
   ngOnInit(): void {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
 
-    this.getAll();
+    let urlSegmentArray = this.activatedRoute.snapshot.url;
+    this.publicationListUrl = urlSegmentArray.join('/');
+    this.publicationFormUrl = `${urlSegmentArray.slice(0, urlSegmentArray.length - 1).join('/')}`;
+
+    this.refreshPublicationTable();
   }
 
-  getAll(): void {
-    this.publicationDataService.get(this.employeeId).subscribe(e => {
-      this.publications = JSON.parse(JSON.stringify(e));
-    })
+  // обновить таблицу с публикациями
+  private refreshPublicationTable(): void {
+
+    console.info(`>>> начинаем получение списка публикаций`);
+    this.publicationService.getAll(this.employeeId).subscribe(
+      _publications => {
+        console.info(`>>> список публикаций успешно получен:`);
+        console.table(_publications);
+
+        _publications.forEach((publication: Publication, idx: number, arr: Publication[]) => {
+          this.publications.push(publication);
+        });
+
+        // obsolete
+        // this.publications = JSON.parse(JSON.stringify(e));
+      },
+      _error => {
+        // JSON.stringify(JSON.parse(JSON.stringify(_error)), null, 2)
+        // http://jsfiddle.net/KJQ9K/554/
+        console.error(`>>> во время получения списка публикаций проищошла ошибка: ${JSON.stringify(_error)}`);
+      });
   }
 
-  edit(p: Publication) {
-    this.publication = p;
-    this.tableMode = false;
+  // перейти на форму добавления новой публикации
+  public add(): void {
+
+    console.info(`>>> нажата кнопка Новая для создания новой публикации`);
+    this.router.navigate([this.publicationFormUrl]).then(
+      _success => {
+        console.info(`>>> открыта форма для создания новой публикации`);
+      },
+      _error => {
+        console.error(`>>> открытие формы для созданий новой публикации завершилось ошибкой:`);
+        console.error(`>>> ${JSON.stringify(_error)}`);
+      }
+    );
   }
 
-  save() {
-    console.log(this.publication);
-    if (this.publication.id == null) {
-      this.publicationDataService.add(this.publication)
-        .subscribe((data: Publication) => this.publications.push(data));
-    } else {
-      this.publicationDataService.update(this.publication.id, this.publication)
-        .subscribe(data => this.getAll());
-    }
-    this.cancel();
-  }
+  // перейти на форму редактирования существующей публикации
+  public edit(publication: Publication): void {
 
-
-  cancel() {
-    this.publication = new Publication();
-    this.publication.employeeId = this.employeeId;
-    this.tableMode = true;
-  }
-
-  add() {
-    this.cancel();
-    this.tableMode = false;
+    console.info(`>>> нажата кнопка Редактировать для редактирования публикации`);
+    this.router.navigate([this.publicationFormUrl, `${publication.id}`]).then(
+      _success => {
+        console.info(`>>> форма редактирования публикации успешно открыта`);
+      },
+      _error => {
+        console.error(`>>> открытие формы редактирования публикации завершилось ошибкой: ${_error}`);
+      }
+    );
   }
 }
-

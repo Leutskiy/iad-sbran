@@ -1,5 +1,6 @@
 import { OnInit, Input, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DateHelper } from '../../common/helpers/DateHelper';
 import { InternationalAgreement } from '../../contracts/login-data';
 import { AuthService } from '../../services/auth.service';
 import { InternationalAgreementDataService } from '../../services/component-providers/internationalAgreement/internationalAgreement-data.service';
@@ -8,9 +9,11 @@ import { InternationalAgreementDataService } from '../../services/component-prov
   selector: 'app-internationalAgreement',
   templateUrl: './internationalAgreement.component.html',
   styleUrls: ['./internationalAgreement.component.scss'],
-  providers: [InternationalAgreementDataService, AuthService]
+  providers: [InternationalAgreementDataService, AuthService, DateHelper]
 })
 export class InternationalAgreementComponent implements OnInit {
+
+  isNew: boolean;
 
   profileId: string;
   employeeId: string;
@@ -23,6 +26,7 @@ export class InternationalAgreementComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private dateHelper: DateHelper,
     private authService: AuthService,
     private internationalAgreementDataService: InternationalAgreementDataService) {
     this.internationalAgreement = new InternationalAgreement();
@@ -32,29 +36,52 @@ export class InternationalAgreementComponent implements OnInit {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
 
-    this.getAll();
+    this.isNew = false;
+
+    this.refreshInternationalAgreementTable();
   }
 
-  getAll(): void {
-    this.internationalAgreementDataService.get(this.employeeId).subscribe(e => {
-      this.internationalAgreements = JSON.parse(JSON.stringify(e));
+  refreshInternationalAgreementTable(): void {
+    this.internationalAgreementDataService.get(this.employeeId).subscribe(
+      _internationalAgreements => {
+        _internationalAgreements.forEach((internationalAgreement: InternationalAgreement) => {
+          if (internationalAgreement.dateOfEntry) {
+            internationalAgreement.dateOfEntry = this.dateHelper.formatDateForFront(new Date(internationalAgreement.dateOfEntry));
+            this.internationalAgreements.push(internationalAgreement);
+          }
+      });
     })
   }
 
-  edit(p: InternationalAgreement) {
-    this.internationalAgreement = p;
+  edit(internationalAgreement: InternationalAgreement) {
+    this.internationalAgreement = new InternationalAgreement();
+    this.internationalAgreement.id = internationalAgreement.id;
+    this.internationalAgreement.employeeId = internationalAgreement.employeeId;
+    this.internationalAgreement.dateOfEntry = internationalAgreement.dateOfEntry;
+    this.internationalAgreement.placeOfSigning = internationalAgreement.placeOfSigning;
+    this.internationalAgreement.textOfTheAgreement = internationalAgreement.textOfTheAgreement;
+    this.internationalAgreement.theFirstPartyToTheAgreement = internationalAgreement.theFirstPartyToTheAgreement;
+    this.internationalAgreement.theNameOfTheAgreement = internationalAgreement.theNameOfTheAgreement;
+    this.internationalAgreement.theSecondPartyToTheAgreement = internationalAgreement.theSecondPartyToTheAgreement;
+
     this.tableMode = false;
+    this.isNew = false;
   }
 
   save() {
-    console.log(this.internationalAgreement);
+
+    this.internationalAgreement.dateOfEntry = this.dateHelper.formatDateForBack(this.internationalAgreement.dateOfEntry);
     if (this.internationalAgreement.id == null) {
-      this.internationalAgreementDataService.add(this.internationalAgreement)
-        .subscribe((data: InternationalAgreement) => this.internationalAgreements.push(data));
+      this.internationalAgreementDataService.add(this.internationalAgreement).subscribe(
+        (_internationalAgreement: InternationalAgreement) => {
+          _internationalAgreement.dateOfEntry = this.dateHelper.formatDateForFront(new Date(_internationalAgreement.dateOfEntry));
+          this.internationalAgreements.push(_internationalAgreement);
+        });
     } else {
       this.internationalAgreementDataService.update(this.internationalAgreement.id, this.internationalAgreement)
-        .subscribe(data => this.getAll());
+        .subscribe(data => this.refreshInternationalAgreementTable());
     }
+
     this.cancel();
   }
 
@@ -63,34 +90,16 @@ export class InternationalAgreementComponent implements OnInit {
     this.internationalAgreement = new InternationalAgreement();
     this.internationalAgreement.employeeId = this.employeeId;
     this.tableMode = true;
+    this.isNew = false;
+  }
+
+  backward() {
+    this.cancel();
   }
 
   add() {
     this.cancel();
     this.tableMode = false;
+    this.isNew = true;
   }
-
-  // TODO: Сделать стандартизацию формата даты (подходящий ISO)
-  // отформатировать дату (привести к правильному формату)
-  private formatDate(model: Date | string | null): Date | null {
-    if (model instanceof Date) {
-      return model;
-    }
-    else if (model) {
-      return new Date(this.parse(model));
-    } else {
-      return null;
-    }
-  }
-  private parse(value: string): string {
-    if (value) {
-      let date = value.split(".");
-      return date[2] + "-" + date[1] + "-" + date[0];
-    }
-
-    return null;
-  }
-
-
 }
-

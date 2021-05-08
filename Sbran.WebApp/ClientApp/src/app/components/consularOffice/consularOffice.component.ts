@@ -12,6 +12,8 @@ import { ConsularOfficeDataService } from '../../services/component-providers/co
 })
 export class ConsularOfficeComponent implements OnInit {
 
+  isNew: boolean;
+
   profileId: string;
   employeeId: string;
   tableMode: boolean = true;
@@ -32,65 +34,56 @@ export class ConsularOfficeComponent implements OnInit {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
 
-    this.getAll();
+    this.isNew = false;
+
+    this.refreshConsularOfficeTable();
   }
 
-  getAll(): void {
+  refreshConsularOfficeTable(): void {
     this.consularOfficeDataService.get(this.employeeId).subscribe(e => {
       this.consularOffices = JSON.parse(JSON.stringify(e));
     })
   }
 
-  edit(p: ConsularOffice) {
-    this.consularOffice = p;
+  edit(consularOffice: ConsularOffice) {
+    this.consularOffice = new ConsularOffice();
+    this.consularOffice.id = consularOffice.id;
+    this.consularOffice.employeeId = consularOffice.employeeId;
+    this.consularOffice.countryOfLocation = consularOffice.countryOfLocation;
+    this.consularOffice.cityOfLocation = consularOffice.cityOfLocation;
+    this.consularOffice.nameOfTheConsularPost = consularOffice.nameOfTheConsularPost;
+
     this.tableMode = false;
+    this.isNew = false;
   }
 
   save() {
-    console.log(this.consularOffice);
     if (this.consularOffice.id == null) {
       this.consularOfficeDataService.add(this.consularOffice)
         .subscribe((data: ConsularOffice) => this.consularOffices.push(data));
     } else {
       this.consularOfficeDataService.update(this.consularOffice.id, this.consularOffice)
-        .subscribe(data => this.getAll());
+        .subscribe(data => this.refreshConsularOfficeTable());
     }
+
     this.cancel();
   }
-
 
   cancel() {
     this.consularOffice = new ConsularOffice();
     this.consularOffice.employeeId = this.employeeId;
     this.tableMode = true;
+    this.isNew = false;
+  }
+
+  backward() {
+    this.cancel();
   }
 
   add() {
     this.cancel();
     this.tableMode = false;
+    this.isNew = true;
   }
-
-  // TODO: Сделать стандартизацию формата даты (подходящий ISO)
-  // отформатировать дату (привести к правильному формату)
-  private formatDate(model: Date | string | null): Date | null {
-    if (model instanceof Date) {
-      return model;
-    }
-    else if (model) {
-      return new Date(this.parse(model));
-    } else {
-      return null;
-    }
-  }
-  private parse(value: string): string {
-    if (value) {
-      let date = value.split(".");
-      return date[2] + "-" + date[1] + "-" + date[0];
-    }
-
-    return null;
-  }
-
-
 }
 

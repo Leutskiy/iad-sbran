@@ -26,6 +26,8 @@ namespace Sbran.Domain.Data.Repositories
 
         public ChatMessageFile GetById(Guid id) => _domainContext.ChatMessageFiles.FirstOrDefault(e => e.Id == id);
 
+        public Task<List<ChatMessageFile>> GetMessageFilesByIds(Guid[] messageIds) => _domainContext.ChatMessageFiles.Where(e => messageIds.Contains(e.ChatMessageId)).ToListAsync();
+
         public async Task<List<ChatMessageFile>> GetForRoomId(Guid id)
         {
             return await _domainContext.ChatMessageFiles.Include(e => e.ChatMessage).Where(e => e.ChatMessage.ChatRoomId == id).ToListAsync();

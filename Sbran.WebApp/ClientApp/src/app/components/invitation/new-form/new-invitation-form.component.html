@@ -31,32 +31,42 @@
 
   <!-- Дополнительные кнопки для создания приглашени с нуля -->
   <div class="row mt-5">
+
+    <div class="col-md-12 text-left">
+      <a *ngIf="invitation.id && !forManager" href="api/v1/invitation/{{invitation.id}}/report/{{employeeId}}" class="btn btn-outline-dark" (click)="report(invitation.id)">
+        <span>
+          <b>
+            Сформировать приглашение
+          </b>
+        </span>
+      </a>
+      <button *ngIf="invitation.id && invitation.invitationStatus==0 && !forManager;" type="button" class="btn btn-outline-dark ml-2" (click)="agree(invitation.id)">
+        <span>
+          <b>
+            Согласовать
+          </b>
+        </span>
+      </button>
+      <a *ngIf="invitation.id" routerLink="/profile/{{profileId}}/employee/{{employeeId}}/invitation/{{invitation.id}}/report/{{invitation.reportId}}" class="btn btn-warning ml-2">
+        Отчет
+      </a>
+    </div>
+
+  </div>
+
+
+  <div class="row mt-1 mb-5">
     <div class="col-md-12 text-right">
-      <button type="button" class="btn btn-outline-dark" [class.invisible]="!isNew" (click)="save()">
+      <button type="button" class="btn btn-outline-dark" *ngIf="isNew" (click)="save()">
         <span><b>Сохранить</b></span>
       </button>
-      <button type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
+      <button type="button" class="btn btn-outline-dark ml-2" *ngIf="isNew" (click)="cancel()">
         <span><b>Отменить</b></span>
       </button>
-      <div class="col-md-3">
-        <div *ngIf="invitation.id">
-          <a routerLink="/profile/{{profileId}}/employee/{{employeeId}}/report/{{invitation.id}}/create/{{invitation.reportId}}/invitation" class="btn btn-warning"> Отчет </a>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div *ngIf="invitation.invitationStatus==0 && forManager;">
-          <button type="button" class="btn btn-outline-dark ml-2" (click)="agree(invitation.id)">
-            <span><b>Согласовать</b></span>
-          </button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div *ngIf="!forManager">
-          <a href="api/v1/invitation/{{invitation.id}}/report/{{employeeId}}" class="btn btn-outline-dark ml-2" (click)="report(invitation.id)">
-            <span><b>Сформировать приглашение</b></span>
-          </a>
-        </div>
-      </div>
+      <button type="button" class="btn btn-outline-dark ml-2" *ngIf="!isNew" (click)="backward()">
+        <span><b> Назад </b></span>
+      </button>
+    </div>
   </div>
+
 </div>

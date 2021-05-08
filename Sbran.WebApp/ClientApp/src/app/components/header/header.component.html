@@ -1,21 +1,21 @@
 <header *ngIf="authService.isLoggedIn">
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-2">
-    <span style="font-size: 30px;cursor: pointer;color: #fff" (click)="openNav()">&#9776;</span>
-    <div class="container">
-      <a class="navbar-brand" href="#">
+
+    <div class="container pl-4 pr-0">
+      <a class="navbar-brand" routerLink="profile/{{profileId}}/employee/{{employeeId}}">
         <img [src]="logoRelativePath" [alt]="logoAlt" width="40">
       </a>
       <div class="text-white mr-auto">
         <h2>{{logoTitle}}</h2>
       </div>
-      <div id="mySidenav" class="sidenav">
+      <div id="mySidenav" class="sidenav" [style.width.px]="width">
         <!-- Cпециальная кнопка для раскрытия меню -->
         <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-        <a class="nav-link active" routerLink="profile/{{profileId}}/employee/{{employeeId}}">
+        <a class="nav-link active" routerLink="panel/info">
           <i class="fa fa-home fa-fw"></i>
           Главная
         </a>
-        <a class="nav-link" routerLink="chat/{{profileId}}">
+        <a class="nav-link" routerLink="profile/{{profileId}}/employee/{{employeeId}}/chat">
           <i class="fa fa-envelope-o fa-fw"></i>
           Сообщения
         </a>
@@ -27,7 +27,7 @@
           <i class="fa fa-plane fa-fw"></i>
           Выезды
         </a>
-        <a class="nav-link" routerLink="profile/{{profileId}}/employee/{{employeeId}}/publish/{{publicationId}}">
+        <a class="nav-link" routerLink="profile/{{profileId}}/employee/{{employeeId}}/publication/list">
           <i class="fa fa-university fa-fw"></i>
           Публикации
         </a>
@@ -52,11 +52,16 @@
           <button type="button" class="btn btn-warning" disabled="disabled" title="Будет работать в следующих версиях">
             <i class="fa fa-search"></i>
           </button>
-          <button type="button" class="ml-2 btn btn-warning" (click)="onLogout()">
+          <button *ngIf="showToMainPageButton" type="button" class="ml-2 btn btn-warning" (click)="onGoToPanelInfo()">
+            <span><b>На главную</b></span>
+          </button>
+          <button type="button" class="ml-2 btn btn-warning ml-2" (click)="onLogout()">
             <span><b>Выйти</b></span>
           </button>
         </div>
       </div>
     </div>
+
+    <span style="font-size: 30px; cursor: pointer; color: #fff;" (click)="openNav()">&#9776;</span>
   </nav>
 </header>

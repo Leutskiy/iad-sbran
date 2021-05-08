@@ -17,8 +17,18 @@
   border-radius: 10px;
 }
 
-table.table td, th {
+table.table {
+  table-layout: fixed;
+}
+
+table.table thead th {
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
+table.table td {
   vertical-align: middle;
+  word-wrap: break-word;
 }
 
 table.table td a {

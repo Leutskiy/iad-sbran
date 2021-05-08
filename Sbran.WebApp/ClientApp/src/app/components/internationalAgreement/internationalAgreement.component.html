@@ -60,49 +60,55 @@
     <!-- Страна командирования-->
     <div class="col-md-6">
       <div class="form-group">
-        <label>Наименование соглашения</label>
+        <label>Наименование соглашения:</label>
         <input type="text" [(ngModel)]="internationalAgreement.theNameOfTheAgreement" class="form-control" />
       </div>
     </div>
 
     <div class="col-md-6">
       <div class="form-group">
-        <label>первая сторона соглашения</label>
+        <label>Первая сторона соглашения:</label>
         <input type="text" [(ngModel)]="internationalAgreement.theFirstPartyToTheAgreement" class="form-control" />
       </div>
     </div>
 
     <div class="col-md-12">
       <div class="form-group">
-        <label>вторая сторона соглашения</label>
+        <label>Вторая сторона соглашения:</label>
         <input type="text" [(ngModel)]="internationalAgreement.theSecondPartyToTheAgreement" class="form-control" />
       </div>
     </div>
 
     <div class="col-md-12">
       <div class="form-group">
-        <label>место подписания</label>
+        <label>Место подписания:</label>
         <input type="text" [(ngModel)]="internationalAgreement.placeOfSigning" class="form-control" />
       </div>
     </div>
 
     <div class="col-md-12">
       <div class="form-group">
-        <label>дата подписания</label>
-        <input type="date" [(ngModel)]="internationalAgreement.dateOfEntry" class="form-control" />
+        <ngbd-datepicker-adapter [(date)]="internationalAgreement.dateOfEntry" title="Дата подписания:" binding-label-input="dateOfEntry"></ngbd-datepicker-adapter>
       </div>
     </div>
 
     <div class="col-md-12">
       <div class="form-group">
-        <label>текст соглашения</label>
+        <label>Текст соглашения:</label>
         <input type="text" [(ngModel)]="internationalAgreement.textOfTheAgreement" class="form-control" />
       </div>
     </div>
 
     <div class="col-md-12">
-      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
-      <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+      <button type="button" class="btn btn-outline-dark" (click)="save()">
+        <span><b>Сохранить</b></span>
+      </button>
+      <button type="button" class="btn btn-outline-dark ml-2" *ngIf="isNew" (click)="cancel()">
+        <span><b>Отменить</b></span>
+      </button>
+      <button type="button" class="btn btn-outline-dark ml-2" *ngIf="!isNew" (click)="backward()">
+        <span><b> Назад </b></span>
+      </button>
     </div>
 
   </div>

@@ -6,6 +6,7 @@ using Sbran.Domain.Entities;
 using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sbran.WebApp.Controllers
@@ -54,7 +55,15 @@ namespace Sbran.WebApp.Controllers
         [Route("all/{employeeId:guid}")]
         public Task<List<Departure>> GetAllDepartures(Guid employeeId)
         {
-            return _departureRepository.GetByEmplIdAsync(employeeId);
+            var isAdmin = User.IsInRole(UserRoles.Admin);
+            if (isAdmin)
+			{
+                return _departureRepository.GetAllAsync();
+			}
+            else
+			{
+                return _departureRepository.GetByEmplIdAsync(employeeId);
+            } 
         }
 
         //TODO: Почему это находится в этом контроллере?

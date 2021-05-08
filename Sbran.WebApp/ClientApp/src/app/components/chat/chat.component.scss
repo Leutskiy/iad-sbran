@@ -7,6 +7,14 @@ body {
   background: #F1F3FA;
 }
 
+.cutting-text {
+  display: block;
+  width: 170px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 /*profile-header h1, h2, h3, h4, h5 {
   color: white;
   margin-bottom: 0px;

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using TemplateEngine.Docx;
 using Sbran.Domain.Entities;
 using Microsoft.Extensions.Logging;
+using FileHelper = System.IO.File;
 
 namespace Sbran.WebApp.Controllers
 {
@@ -86,7 +87,17 @@ namespace Sbran.WebApp.Controllers
             var employee = await _employeeRepository.GetAsync(employeeId);
 
             var invitationResults = new List<InvitationResult>();
-            var invitations = employee.Invitations;
+            var invitations = new List<Invitation>();
+
+            var isAdmin = User.IsInRole(UserRoles.Admin);
+            if (isAdmin)
+            {
+                invitations = await _invitationRepository.GetAllAsync();
+            }
+            else
+            {
+                invitations = employee.Invitations;
+            }
 
             foreach (var invitation in invitations)
             {
@@ -214,141 +225,142 @@ namespace Sbran.WebApp.Controllers
         public async Task<IActionResult> Report(Guid id, Guid empId)
         {
             #region firstPDF
-            //var invitation = await _invitationReadCommand.ExecuteAsync(id);
-            //if (invitation == null)
-            //{
-            //    return NotFound();
-            //}
-            //MemoryStream workStream = new MemoryStream();
-            //iTextSharp.text.Document document = new iTextSharp.text.Document(PageSize.A4, 35f, 50f, 25f, 15f);
-            //PdfWriter.GetInstance(document, workStream).CloseStream = false;
-            //PdfWriter writer = PdfWriter.GetInstance(document, workStream);
-            //writer.CloseStream = false;
-            //document.Open();
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            //string ttf = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "ARIAL.TTF");
-            //var baseFont = BaseFont.CreateFont(ttf, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            //iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, 10, iTextSharp.text.Font.NORMAL);
-            //iTextSharp.text.Font engfont = new iTextSharp.text.Font(baseFont, 9, iTextSharp.text.Font.NORMAL);
-            //iTextSharp.text.Font smalfont = new iTextSharp.text.Font(baseFont, 8, iTextSharp.text.Font.NORMAL);
-            //iTextSharp.text.Font fontunder = new iTextSharp.text.Font(baseFont, 8, iTextSharp.text.Font.UNDERLINE);
-            //iTextSharp.text.Font fontbold = new iTextSharp.text.Font(baseFont, 10, iTextSharp.text.Font.BOLD);
-            //iTextSharp.text.Font smallfontbold = new iTextSharp.text.Font(baseFont, 10, iTextSharp.text.Font.BOLD);
-
-            //Paragraph p = new Paragraph("\nСО РАН\n", font);
-            //p.Alignment = Element.ALIGN_LEFT;
-            //document.Add(p);
-            //var organization = invitation?.Alien?.Organization?.ShortName ?? "не указано";
-            //organization += "  " + invitation?.Alien?.Organization?.LegalAddress ?? "не указано";
-            //p = new Paragraph("Наименование и адрес консульского учреждения, в зависимости от гражданства приглашаемого:\n" + organization, fontbold);
-            //p.Alignment = Element.ALIGN_CENTER;
-            //document.Add(p);
-            //PdfPTable table = new PdfPTable(3);
-            //table.TotalWidth = document.PageSize.Width - 200;
-            //table.SpacingAfter = 10;
-            //table.SpacingBefore = 10;
-
-            //table.HorizontalAlignment = Element.ALIGN_CENTER;
-            //document.Add(table);
-
-            //table = new PdfPTable(new float[] { 2.5f, 2.5f, 3f, 2.5f });
-            //table.TotalWidth = document.PageSize.Width - 50;
-            //table.SpacingAfter = 10;
-            //// table.SpacingBefore = 10;
-            //table.HorizontalAlignment = Element.ALIGN_CENTER;
-            //PdfPCell lcell = new PdfPCell();
-            //lcell.Border = 0; lcell.HorizontalAlignment = Element.ALIGN_RIGHT;
-            //lcell.AddElement(new Phrase("Паспортные данные иностранца (из введенных данных на иностранца):", smalfont));
-            //lcell.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
-            //table.AddCell(lcell);
-            //PdfPCell rcell = new PdfPCell();
-            //rcell.Border = 0;
-            //var bio = "Фамилия: " + invitation?.Alien?.Passport?.SurnameRus ?? "не указано";
-            //bio += ".\nИмя: " + invitation?.Alien?.Passport?.NameRus ?? "не указано";
-            //bio += ".\nПол: " + invitation?.Alien?.Passport?.Gender;
-            //bio += ".\nДата, государство и город рождения: " + invitation?.Alien?.Passport?.BirthDate?.ToString("g") ?? "не указано";
-            //bio += "," + invitation?.Alien?.Passport?.BirthCountry ?? "не указано";
-            //bio += ", " + invitation?.Alien?.Passport?.BirthPlace ?? "не указано";
-            //bio += ".\nГосударство и город постоянного проживания: " + invitation?.Alien?.Passport?.ResidenceCountry ?? "не указано";
-            //bio += " " + invitation?.Alien?.Passport?.ResidenceRegion ?? "не указано";
-            //bio += ".\nПаспорт: " + invitation?.Alien?.Passport?.IdentityDocument ?? "не указано";
-            //bio += ".\nСрок действия: " + invitation?.Alien?.Passport?.IssueDate ?? "не указано";
-            //bio += ".\nОрганизация, должность: " + invitation?.Alien?.Organization?.Name ?? "не указано";
-            //bio += " " + invitation?.Alien?.Position ?? "";
-            //bio += ".\nФдрес, телефон: " + invitation?.Alien?.StayAddress ?? "не указано";
-            //bio += " " + invitation?.Alien?.Contact?.MobilePhoneNumber ?? "не указано";
-            //bio += ".\nЦель поездки: " + invitation?.VisitDetail?.Goal ?? "не указано";
-            //bio += ".\nКратность визы: " + invitation?.VisitDetail?.VisaMultiplicity ?? "не указано";
-            //bio += ".\nПредполагаемый въезд в РФ: " + invitation?.VisitDetail?.ArrivalDate ?? "не указано";
-            //bio += ".\nНа срок: " + invitation?.VisitDetail?.DepartureDate ?? "не указано";
-            //bio += ".\nМесто предполагаемого проживания: " + invitation?.VisitDetail?.VisaCity ?? "не указано";
-            //bio += ".\nПункты посещения в РФ: " + invitation?.VisitDetail?.VisitingPoints ?? "не указано";
-
-            //rcell.AddElement(new Phrase(bio, smalfont));
-            //table.AddCell(rcell);
-            //var worldAgreement = await _iInternationalAgreementRepository.GetAgreementWithSecondName(invitation?.Alien?.Passport?.BirthCountry ?? "");
-            //var agreement = worldAgreement?.TextOfTheAgreement ?? "не указано";
-            //lcell = new PdfPCell();
-            //lcell.Border = 0; lcell.HorizontalAlignment = Element.ALIGN_RIGHT;
-            //lcell.AddElement(new Phrase("«Основания для приглашения»: отображается наименование международного соглашения в зависимости от гражданства приглашенного (БД «приглашения» - данные иностранца) путем поиска страны в поле «вторая сторона соглашения» БД «международные соглашения»: " + agreement, smalfont));
-            //lcell.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
-            //table.AddCell(lcell);
-            //rcell = new PdfPCell();
-            //rcell.Border = 0;
-            //rcell.AddElement(new Phrase("Должность начальника ОВС СО РАН", smalfont));
-            //table.AddCell(rcell);
-            //document.Add(table);
-            //document.Close();
-
-            //byte[] byteInfo = workStream.ToArray();
-            //workStream.Write(byteInfo, 0, byteInfo.Length);
-            //workStream.Position = 0;
-            //return File(workStream, "application/pdf");
-            #endregion
-            var emp = await _employeeRepository.GetAsync(empId);
-            var invitation = await _invitationReadCommand.ExecuteAsync(id);
-
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot");
-            string templatePath = Path.Combine(path, "приглашение_1.docx");
-            string tempPath = Path.Combine(path, "Приглашение.docx");
 
             /*
-            var path = AppDomain.CurrentDomain.BaseDirectory;
-            string tempPath = path + "приглашение_1.docx";
-            string templatePath = path + "Приглашение.docx";
+			var invitation = await _invitationReadCommand.ExecuteAsync(id);
+			if (invitation == null)
+			{
+				return NotFound();
+			}
+			MemoryStream workStream = new MemoryStream();
+			iTextSharp.text.Document document = new iTextSharp.text.Document(PageSize.A4, 35f, 50f, 25f, 15f);
+			PdfWriter.GetInstance(document, workStream).CloseStream = false;
+			PdfWriter writer = PdfWriter.GetInstance(document, workStream);
+			writer.CloseStream = false;
+			document.Open();
+			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+			string ttf = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "ARIAL.TTF");
+			var baseFont = BaseFont.CreateFont(ttf, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+			iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, 10, iTextSharp.text.Font.NORMAL);
+			iTextSharp.text.Font engfont = new iTextSharp.text.Font(baseFont, 9, iTextSharp.text.Font.NORMAL);
+			iTextSharp.text.Font smalfont = new iTextSharp.text.Font(baseFont, 8, iTextSharp.text.Font.NORMAL);
+			iTextSharp.text.Font fontunder = new iTextSharp.text.Font(baseFont, 8, iTextSharp.text.Font.UNDERLINE);
+			iTextSharp.text.Font fontbold = new iTextSharp.text.Font(baseFont, 10, iTextSharp.text.Font.BOLD);
+			iTextSharp.text.Font smallfontbold = new iTextSharp.text.Font(baseFont, 10, iTextSharp.text.Font.BOLD);
+
+			Paragraph p = new Paragraph("\nСО РАН\n", font);
+			p.Alignment = Element.ALIGN_LEFT;
+			document.Add(p);
+			var organization = invitation?.Alien?.Organization?.ShortName ?? "не указано";
+			organization += "  " + invitation?.Alien?.Organization?.LegalAddress ?? "не указано";
+			p = new Paragraph("Наименование и адрес консульского учреждения, в зависимости от гражданства приглашаемого:\n" + organization, fontbold);
+			p.Alignment = Element.ALIGN_CENTER;
+			document.Add(p);
+			PdfPTable table = new PdfPTable(3);
+			table.TotalWidth = document.PageSize.Width - 200;
+			table.SpacingAfter = 10;
+			table.SpacingBefore = 10;
+
+			table.HorizontalAlignment = Element.ALIGN_CENTER;
+			document.Add(table);
+
+			table = new PdfPTable(new float[] { 2.5f, 2.5f, 3f, 2.5f });
+			table.TotalWidth = document.PageSize.Width - 50;
+			table.SpacingAfter = 10;
+			// table.SpacingBefore = 10;
+			table.HorizontalAlignment = Element.ALIGN_CENTER;
+			PdfPCell lcell = new PdfPCell();
+			lcell.Border = 0; lcell.HorizontalAlignment = Element.ALIGN_RIGHT;
+			lcell.AddElement(new Phrase("Паспортные данные иностранца (из введенных данных на иностранца):", smalfont));
+			lcell.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
+			table.AddCell(lcell);
+			PdfPCell rcell = new PdfPCell();
+			rcell.Border = 0;
+			var bio = "Фамилия: " + invitation?.Alien?.Passport?.SurnameRus ?? "не указано";
+			bio += ".\nИмя: " + invitation?.Alien?.Passport?.NameRus ?? "не указано";
+			bio += ".\nПол: " + invitation?.Alien?.Passport?.Gender;
+			bio += ".\nДата, государство и город рождения: " + invitation?.Alien?.Passport?.BirthDate?.ToString("g") ?? "не указано";
+			bio += "," + invitation?.Alien?.Passport?.BirthCountry ?? "не указано";
+			bio += ", " + invitation?.Alien?.Passport?.BirthPlace ?? "не указано";
+			bio += ".\nГосударство и город постоянного проживания: " + invitation?.Alien?.Passport?.ResidenceCountry ?? "не указано";
+			bio += " " + invitation?.Alien?.Passport?.ResidenceRegion ?? "не указано";
+			bio += ".\nПаспорт: " + invitation?.Alien?.Passport?.IdentityDocument ?? "не указано";
+			bio += ".\nСрок действия: " + invitation?.Alien?.Passport?.IssueDate ?? "не указано";
+			bio += ".\nОрганизация, должность: " + invitation?.Alien?.Organization?.Name ?? "не указано";
+			bio += " " + invitation?.Alien?.Position ?? "";
+			bio += ".\nФдрес, телефон: " + invitation?.Alien?.StayAddress ?? "не указано";
+			bio += " " + invitation?.Alien?.Contact?.MobilePhoneNumber ?? "не указано";
+			bio += ".\nЦель поездки: " + invitation?.VisitDetail?.Goal ?? "не указано";
+			bio += ".\nКратность визы: " + invitation?.VisitDetail?.VisaMultiplicity ?? "не указано";
+			bio += ".\nПредполагаемый въезд в РФ: " + invitation?.VisitDetail?.ArrivalDate ?? "не указано";
+			bio += ".\nНа срок: " + invitation?.VisitDetail?.DepartureDate ?? "не указано";
+			bio += ".\nМесто предполагаемого проживания: " + invitation?.VisitDetail?.VisaCity ?? "не указано";
+			bio += ".\nПункты посещения в РФ: " + invitation?.VisitDetail?.VisitingPoints ?? "не указано";
+
+			rcell.AddElement(new Phrase(bio, smalfont));
+			table.AddCell(rcell);
+			var worldAgreement = await _iInternationalAgreementRepository.GetAgreementWithSecondName(invitation?.Alien?.Passport?.BirthCountry ?? "");
+			var agreement = worldAgreement?.TextOfTheAgreement ?? "не указано";
+			lcell = new PdfPCell();
+			lcell.Border = 0; lcell.HorizontalAlignment = Element.ALIGN_RIGHT;
+			lcell.AddElement(new Phrase("«Основания для приглашения»: отображается наименование международного соглашения в зависимости от гражданства приглашенного (БД «приглашения» - данные иностранца) путем поиска страны в поле «вторая сторона соглашения» БД «международные соглашения»: " + agreement, smalfont));
+			lcell.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
+			table.AddCell(lcell);
+			rcell = new PdfPCell();
+			rcell.Border = 0;
+			rcell.AddElement(new Phrase("Должность начальника ОВС СО РАН", smalfont));
+			table.AddCell(rcell);
+			document.Add(table);
+			document.Close();
+
+			byte[] byteInfo = workStream.ToArray();
+			workStream.Write(byteInfo, 0, byteInfo.Length);
+			workStream.Position = 0;
+			return File(workStream, "application/pdf");
             */
+            #endregion
+
+            // TODO: подумать, куда лучше вынести
+            const string invitationtemplateName = "Приглашение.docx";
+            var templateDirectory = Path.Combine("Resources", "Templates");
+
+            var employee = await _employeeRepository.GetAsync(empId);
+            var invitation = await _invitationReadCommand.ExecuteAsync(id);
+
+            string invitationTemplateDirectorty = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, templateDirectory);
+            string invitationTemplateFullPath = Path.Combine(invitationTemplateDirectorty, invitationtemplateName);
+            string dummyInvitationTemplatePath = Path.Combine(invitationTemplateDirectorty, "Приглашение_Заглушка.docx");
+
             try
             {
-                System.IO.File.Copy(tempPath, templatePath, true);
-                System.IO.File.SetAttributes(templatePath, FileAttributes.Normal);
+                // настраиваем заглушку
+				FileHelper.Copy(invitationTemplateFullPath, dummyInvitationTemplatePath, true);
+				FileHelper.SetAttributes(dummyInvitationTemplatePath, FileAttributes.Normal);
 
-                var valuesToFill = await GetContentAsync(invitation, emp);
-                using (var outputDocument = new TemplateProcessor(templatePath)
-                     .SetRemoveContentControls(true))
+                var valuesToFill = await GetContentAsync(invitation, employee);
+                using (var outputDocument = new TemplateProcessor(dummyInvitationTemplatePath))
                 {
+                    outputDocument.SetRemoveContentControls(true);
                     outputDocument.FillContent(valuesToFill);
                     outputDocument.SaveChanges();
                 }
 
-                //System.IO.File.Delete(templatePath);
-                //SautinSoft.Document.DocumentCore dc = SautinSoft.Document.DocumentCore.Load(templatePath);
-                //dc.Save(AppDomain.CurrentDomain.BaseDirectory + "DocToPDF.pdf");
-                //var bytes = System.IO.File.ReadAllBytes(AppDomain.CurrentDomain.BaseDirectory + "DocToPDF.pdf");
-                var bytes = System.IO.File.ReadAllBytes(templatePath);
-                string file_name = invitation.Alien.Passport.ToFio() + ".docx";
-                System.IO.File.Delete(templatePath);
-                return File(bytes, DOCX_FILE_MIME_TYPE, file_name);
+                var filledInvitationTemplateBinary = FileHelper.ReadAllBytes(dummyInvitationTemplatePath);
+                var fileNameWithoutExtention = invitation!.Alien?.Passport?.ToFio() ?? $"{DateTime.Now:dd_MM_yyyy}";
+                var fileName = $"{fileNameWithoutExtention}.docx";
+
+                // удаляем заглушку приглашения
+				FileHelper.Delete(dummyInvitationTemplatePath);
+
+                return File(filledInvitationTemplateBinary, DOCX_FILE_MIME_TYPE, fileName);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Logger.LogInformation($"{e.Message}");
-                Logger.LogInformation($"{e.StackTrace}");
-                Logger.LogInformation($"{e.Data}");
-
-                return Ok();
+                Logger.LogError($"{exception}");
             }
 
-
+            // TODO: Костыль! Нужно сделать нормальную обработку ошибок 
+            return File(Array.Empty<byte>(), DOCX_FILE_MIME_TYPE);
         }
 
         private async Task<Content> GetContentAsync(InvitationResult invitation, Employee employee)

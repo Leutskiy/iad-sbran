@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { timer } from 'rxjs';
 import { read } from 'fs';
+import { DateHelper } from '../../common/helpers/DateHelper';
 
 declare var $: any;
 
@@ -15,7 +16,7 @@ declare var $: any;
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
-  providers: [ChatService, AuthService]
+  providers: [ChatService, AuthService, DateHelper]
 })
 
 export class ChatComponent implements OnInit {
@@ -28,7 +29,7 @@ export class ChatComponent implements OnInit {
   search: string;
   receiver: string;
   chatRoomId: string;
-  chatDataJson: any[];
+  chatDataJson: ChatRoomsInfo[] = null;
   messages: any[];
   selectedUserid: string;
   message: Message;
@@ -36,11 +37,12 @@ export class ChatComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
 
   constructor(
+    private dateHelper: DateHelper,
     private activatedRoute: ActivatedRoute,
     private chatService: ChatService,
     private authService: AuthService) {
     this.message = new Message();
-    this.chatDataJson = new Array(ChatRoomsInfo);
+    this.chatDataJson = [];
     this.search = "";
     this.messageSearch = "";
     this.messages = new Array(MyMessagesInRoom);
@@ -60,7 +62,6 @@ export class ChatComponent implements OnInit {
 
     this.hubConnection = new signalR.HubConnectionBuilder()
       //конфигурации на сервере 
-      //.withUrl("https://localhost:5001/chatsocket", {  })
       .configureLogging(signalR.LogLevel.Error)
       .withUrl("https://localhost:5001/chatsocket", {
         skipNegotiation: true,
@@ -79,6 +80,7 @@ export class ChatComponent implements OnInit {
       //console.log("this.receiver " + this.receiver);
       //console.log("userName " + userName);
       if (userName == this.receiver && element.profileId == this.profileId) {
+        element.dateTime = this.dateHelper.formatDateForChat(new Date(element.dateTime));
         this.messages.push(element);
       }
 
@@ -167,7 +169,16 @@ export class ChatComponent implements OnInit {
     this.selectedUserid = userid;
     this.chatService.getDataByMyChats(chatRoomId, this.receiver).subscribe(userInfoResult => {
       console.log(userInfoResult);
-      this.messages = JSON.parse(JSON.stringify(userInfoResult));
+
+      userInfoResult.forEach((message: MyMessagesInRoom) => {
+        if (message.dateTime) {
+          message.dateTime = this.dateHelper.formatDateForChat(new Date(message.dateTime));
+          this.messages.push(message);
+        }
+      });
+
+      // obsolete
+      //this.messages = JSON.parse(JSON.stringify(userInfoResult));
       //console.log(this.messages);
       var objDiv = document.getElementById("chatroom");
       objDiv.scrollTop = 10000;
@@ -180,7 +191,17 @@ export class ChatComponent implements OnInit {
     //console.log(name);
     if (name != "") {
       this.chatService.getDataByMyChatsForName(userid, name).subscribe(userInfoResult => {
-        this.chatDataJson = JSON.parse(JSON.stringify(userInfoResult));
+
+        userInfoResult.forEach((chatRoomInfo: ChatRoomsInfo) => {
+          if (chatRoomInfo.lastmessagedate) {
+            chatRoomInfo.lastmessagedate = this.dateHelper.formatDateForChat(new Date(chatRoomInfo.lastmessagedate));
+            this.chatDataJson.push(chatRoomInfo);
+          }
+        });
+
+
+        // obsolete
+        //this.chatDataJson = JSON.parse(JSON.stringify(userInfoResult));
         //console.log(this.messages);
       });
     }
@@ -193,8 +214,17 @@ export class ChatComponent implements OnInit {
 
   private getMyChats(profileId: string): void {
     this.chatService.getDataById(profileId).subscribe(userInfoResult => {
-      console.log(userInfoResult);
-      this.chatDataJson = JSON.parse(JSON.stringify(userInfoResult));
+
+      userInfoResult.forEach((chatRoomInfo: ChatRoomsInfo) => {
+        if (chatRoomInfo.lastmessagedate) {
+          chatRoomInfo.lastmessagedate = this.dateHelper.formatDateForChat(new Date(chatRoomInfo.lastmessagedate));
+          this.chatDataJson.push(chatRoomInfo);
+        }
+      });
+
+
+      // obsolete
+      // this.chatDataJson = JSON.parse(JSON.stringify(userInfoResult));
       //console.log(this.chatDataJson);
     });
   }

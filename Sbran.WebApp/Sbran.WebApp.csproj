@@ -15,6 +15,12 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
+	
+  <!-- http://abdulraufcheema.com/solved-ts1219-experimental-support-for-decorators-is-a-feature-that-is-subject-to-change-in-a-future-release/ -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+	<TypeScriptExperimentalDecorators>True</TypeScriptExperimentalDecorators>
+	<TypeScriptEmitDecoratorMetadata>True</TypeScriptEmitDecoratorMetadata>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.7.1" />
@@ -65,6 +71,17 @@
 
 	<ItemGroup>
 	  <None Remove="ClientApp\src\app\common\helpers\DateHelper.ts" />
+	  <None Remove="Resources\Templates\Приглашение.docx" />
+	  <None Remove="Resources\Templates\Приглашение_Заглушка.docx" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Resources\Templates\Приглашение.docx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Resources\Templates\Приглашение_Заглушка.docx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,147 +1,27 @@
-<div class="container-fluid">
-  <div class="grid-container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h3 class="text-danger">ОВС СО РАН</h3>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-2 p-0">
-        <button class="form_btn w-100" type="button">Об ОВС СО РАН</button>
-      </div>
-      <div class="col-2 p-0">
-        <button class="form_btn w-100" type="button">Документы</button>
-      </div>
-      <div class="col-2 p-0">
-        <button class="form_btn w-100" type="button">Гранты</button>
-      </div>
-      <div class="col-2 p-0">
-        <button class="form_btn w-100" type="button">Запрос предложений</button>
-      </div>
-      <div class="col-2 p-0">
-        <button class="form_btn w-100" type="button">Мероприятия</button>
-      </div>
-      <div class="col-2 p-0">
-
-        <div class="row m-0">
-          <div class="col-6 text-center p-0 bg-blue cell">
-            <label> Логин </label>
-            <input [(ngModel)]="username" class="w-100" type="text" id="login" placeholder="Логин" required="required" />
-          </div>
-          <div class="col-6 text-center p-0 bg-blue cell">
-            <label> Пароль </label>
-            <input [(ngModel)]="password" class="w-100" type="text" id="password" #passwordBox placeholder="Пароль" required="required" />
-          </div>
-        </div>
-        <div class="row m-0">
-          <div class="col-12 text-center p-0">
-            <button class="form_btn w-100"  routerLink="/singup">Зарегистрироваться</button>
-          </div>
-        </div>
-        <div class="row m-0">
-          <div class="col-12 text-center p-0">
-            <button class="form_btn w-100" (click)="login()">Войти</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row" style="background-color: antiquewhite">
-      <div class="col-9 cell news_list_container">
-        <div class="row w-100">
-          <div class="col-12" *ngFor="let tempNews of mainDatas.news; let i = index">
-            <h6>Новость: {{tempNews.name}}</h6>
-            <h6>Дата: {{tempNews.dateTime | date:'MM.dd.yyyy HH:mm'}}</h6>
-            <h6>Событие: </h6>
-            <hr />
-          </div>
-        </div>
-      </div>
-      <div class="col-3 cell">
-        <div class="row">
-          <label>Сотрудники ОВС СО РАН </label>
-        </div>
-        <div class="row users_list_container">
-          <div class="card p-2" style="height: 90px; width: 98.5%" *ngFor="let employee of mainDatas.employees; let i = index">
-            <div class="row">
-              <div class="col-1">
-                <label>{{i+1}}</label>
-              </div>
-              <div class="col-3">
-                <img src="{{employee.avatar}}" class="profile-photo" alt="ФОТО" />
-              </div>
-              <div class="col-8">
-                <h6>ФИО: {{employee.fullName}}</h6>
-                <h6>Тел: {{employee.phoneNumber}}</h6>
-                <h6>Email: {{employee.email}}</h6>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="row">
-          <div class="col-12 text-center">
-            <h6>Голосование:</h6>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-1">
-            <label>1</label>
-            <label>2</label>
-            <label>3</label>
-            <label>4</label>
-          </div>
-          <div class="col-11 pl-0">
-            <input [(ngModel)]="voteL1.name" class="w-100" type="text" id="q1" />
-            <input [(ngModel)]="voteL2.name" class="w-100" type="text" id="q2" />
-            <input [(ngModel)]="voteL3.name" class="w-100" type="text" id="q3" />
-            <input [(ngModel)]="voteL4.name" class="w-100" type="text" id="q4" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 pl-5 pr-5 pb-2">
-            <button class="form_btn w-100" (click)="sendVoteList()" value="Опубликовать">Опубликовать</button>
-          </div>
-        </div>
-
-        <div class="row">
-          <label>Результаты голосования в %: </label>
-        </div>
-        <div class="row voting_list_container pb-3">
-          <div class="w-100" *ngFor="let vote of mainDatas.votes; let i = index">
-            <div class="row cell w-100" *ngFor="let tempvoteList of vote.voteLists; let j = index">
-              <div class="col-8">{{j}}) {{tempvoteList.name}} {{tempvoteList.count}}</div>
-              <div class="col-4">
-                <button class="btn btn-primary" (click)="sendVoteListCount(tempvoteList.id)">Голосовать</button>
-              </div>
-            </div>
-            <br>
-            <hr>
-            <br>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <div class="row" style="background-color: antiquewhite">
-      <div class="col-9 cell">
-        <div class="row">
-          <textarea [(ngModel)]="news.name" id="news" class="w-100" rows="2">Введите...</textarea>
-        </div>
-        <div class="row">
-          <div class="col-12 text-center">
-            <button class="form_btn" (click)="sendNews()">Опубликовать</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-3 cell">
-        <div class="row">
-          <div class="col-12">
-            <h6>Статистика</h6>
-            <h6>Активных пользователей: {{mainDatas.countOnlineEmployees}}</h6>
-            <h6>Зарегистрировано: {{mainDatas.countEmployees}}</h6>
-          </div>
-        </div>
-      </div>
-    </div>
+<form class="form-signin" (submit)="login(loginBox.value, passwordBox.value)">
+  <div class="title">
+    <span class="main-title text-uppercase text-center text-dark">Вход в систему</span>
+    <br>
   </div>
-</div>
+  <div class="form-group">
+    <input #loginBox id="login" name="login" type="text" class="form-control" placeholder="Электронный адрес" autofocus="autofocus" required="required">
+  </div>
+  <div class="form-group">
+    <input #passwordBox id="password" name="password" type="password" class="form-control" placeholder="Пароль" required="required">
+  </div>
+  <!-->
+  <div class="form-group subform">
+    <label class="checkbox-inline" for="rememberMe">
+      <input type="checkbox" (change)="onChangeRememberMe($event.target.checked)">
+      Запомнить
+    </label>
+    <a href="#" class="resetpassword">Сбросить пароль</a>
+  </div>
+  </!-->
+  <div class="form-group">
+    <button class="btn btn-signin btn-warning" type="submit">Войти</button>
+  </div>
+  <div class="form-group text-center">
+    <a class="signup" routerLink="/singup">Зарегистрироваться</a>
+  </div>
+</form>

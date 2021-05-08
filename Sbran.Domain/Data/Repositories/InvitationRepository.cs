@@ -127,10 +127,7 @@ namespace Sbran.Domain.Data.Repositories
             return invitation;
         }
 
-        public Task<List<Invitation>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<List<Invitation>> GetAllAsync() => _domainContext.Invitations.ToListAsync();
 
         public async Task SetReport(Guid id, Guid parentId)
         {
@@ -152,6 +149,11 @@ namespace Sbran.Domain.Data.Repositories
                 _domainContext.Update(invitation);
                 await _domainContext.SaveChangesAsync();
             }
+        }
+
+        public Task<int> Total()
+        {
+            return _domainContext.Invitations.CountAsync();
         }
     }
 }

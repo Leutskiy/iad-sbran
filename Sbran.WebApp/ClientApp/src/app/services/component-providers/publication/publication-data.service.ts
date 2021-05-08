@@ -17,27 +17,34 @@ export class PublicationDataService {
     this.baseAddress = `${config.icsApiEndpoint}`;
   }
 
-  // получить все выезды сотрудника
-  public get(employeeId: string): Observable<[]> {
-    let url = `${this.baseAddress}${this.uriPublicationPath}/${employeeId}`;
+  // получить все публикации
+  public getAll(employeeId: string): Observable<Publication[]> {
+    let url = `${this.baseAddress}${this.uriPublicationPath}/${employeeId}/all`;
     console.log(`get all publications for ${employeeId} by url: ` + url);
     return this.http.get<[]>(url, this.options);
   }
 
-  // создать нового выезда
-  public add(publication: Publication): Observable<any> {
+  // создать новой публикации
+  public add(publication: Publication): Observable<Publication> {
     let url = `${this.baseAddress}${this.uriPublicationPath}`;
     console.log("publication data for new instance: " + publication);
-    return this.http.post<any>(url, publication, this.options);
+    return this.http.post<Publication>(url, publication, this.options);
   }
 
-  // создать новое приглашение для конкретного сотрудника
-  public update(publicationId: string, publication: Publication): Observable<any> {
+  // создать новую публикацию для конкретного сотрудника
+  public update(publicationId: string, publication: Publication): Observable<Publication> {
     let url = `${this.baseAddress}${this.uriPublicationPath}/${publicationId}`;
     console.log(`update publication for ${publicationId} by url: ` + url);
     console.log("publication data for new instance: " + publication);
 
-    return this.http.post<any>(url, publication, this.options);
+    return this.http.post<Publication>(url, publication, this.options);
   }
 
+  // получить данные для формы публикации
+  public getPublicationById(publicationId: string): Observable<Publication> {
+    let url = `${this.baseAddress}${this.uriPublicationPath}/${publicationId}`;
+    console.log(`>>> запрос публикации с ${publicationId}: ${url}`);
+
+    return this.http.get<Publication>(url, this.options);
+  }
 }

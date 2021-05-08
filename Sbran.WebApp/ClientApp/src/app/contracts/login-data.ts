@@ -525,7 +525,7 @@ export class ChatRoomsInfo {
   image: string | null;
   userId: string | null;
   chatRoomId: string | null;
-  lastmessagedate: string | null;
+  lastmessagedate: Date | string | null;
   lastmessage: string | null;
 
   constructor() {
@@ -559,7 +559,7 @@ export class MyMessagesInRoom {
 
   isValid: boolean | null;
   message: string | null;
-  dateTime: string | null;
+  dateTime: Date | string | null;
   profileId: string | null;
   profileTo: string | null;
   isFile: boolean | null;
@@ -669,7 +669,12 @@ export class Membership {
   siteOfTheOrganization: string | null;
   dateOfEntry: Date | string | null;
   membershipType: MembershipType | null;
+  siteOfJournal: string | null;
   employeeId: string | null;
+
+  constructor() {
+    this.siteOfJournal = "";
+  }
 }
 
 export enum MembershipType {
@@ -679,20 +684,20 @@ export enum MembershipType {
 
 export class Publication {
   id: string | null;
-  scientificAdvisor: string | null;
-  titleOfTheArticle: string | null;
   abstract: string | null;
   keywords: string | null;
-  mainTextOfTheArticle: string | null;
   literature: string | null;
-  employeeId: string | null;
+  employeeId: string | null; // TODO: костыль
+  scientificAdvisor: string | null;
+  titleOfTheArticle: string | null;
+  mainTextOfTheArticle: string | null;
 }
 
 
 export class ScientificInterests {
   id: string | null;
-  NameOfScientificInterests: string | null;
-  employeeId: string | null;
+  nameOfScientificInterests: string | null;
+  employeeId: string | null; // TODO: костыль
 }
 
 

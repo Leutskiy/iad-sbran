@@ -8,6 +8,13 @@ body {
   background: #F1F3FA;
 }
 
+.cutting-text {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 /*profile-header h1, h2, h3, h4, h5 {
   color: white;
   margin-bottom: 0px;
@@ -36,7 +43,7 @@ body {
 }
 
 .profile-rating {
-  height: 59%;
+  height: auto;
 }
 
 .profile-rating div.card-body {
@@ -48,12 +55,12 @@ body {
 }
 
 .profile-rating h1 {
-  padding-top: 70%;
+  padding-top: 5%;
   margin: 0;
 }
 
 .profile-rating .card-body {
-  padding-top: 65px;
+  padding-top: 5px;
   color: black;
 }
 

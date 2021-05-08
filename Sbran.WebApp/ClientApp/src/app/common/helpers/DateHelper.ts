@@ -11,6 +11,18 @@ export class DateHelper {
     return null;
   }
 
+  public formatDateForChat(dateSource: Date | string | null): string | null {
+
+    if (dateSource instanceof Date) {
+      return this.parseDate(dateSource) + " " + this.parseTime(dateSource);
+    } else if (dateSource) {
+      let dateSourceAsDate = new Date(dateSource);
+      return this.parseDate(dateSourceAsDate) + " " + this.parseTime(dateSourceAsDate);;
+    }
+
+    return null;
+  }
+
   // Используем для форматирования перед передачей на сервер
   // TODO: Сделать стандартизацию формата даты (подходящий ISO)
   // TODO: Отформатировать дату (привести к правильному формату)
@@ -50,5 +62,12 @@ export class DateHelper {
     dateMonth = date.month < 10 ? 0 + dateMonth : dateMonth;
 
     return `${dateDay}.${dateMonth}.${dateYear}`;
+  }
+
+  private parseTime(dateSource: Date | null): string | null {
+
+    return ("0" + dateSource.getHours()).slice(-2) + ":" +
+      ("0" + dateSource.getMinutes()).slice(-2) + ":" +
+      ("0" + dateSource.getSeconds()).slice(-2);
   }
 }

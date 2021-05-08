@@ -12,6 +12,8 @@ import { ScientificInterestsDataService } from '../../services/component-provide
 })
 export class ScientificInterestsComponent implements OnInit {
 
+  isNew: boolean;
+
   profileId: string;
   employeeId: string;
   tableMode: boolean = true;
@@ -32,6 +34,8 @@ export class ScientificInterestsComponent implements OnInit {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
 
+    this.isNew = false;
+
     this.getAll();
   }
 
@@ -41,9 +45,14 @@ export class ScientificInterestsComponent implements OnInit {
     })
   }
 
-  edit(p: ScientificInterests) {
-    this.scientificInterests = p;
+  edit(scientificInterests: ScientificInterests) {
+    this.scientificInterests = new ScientificInterests();
+    this.scientificInterests.id = scientificInterests.id;
+    this.scientificInterests.employeeId = scientificInterests.employeeId;
+    this.scientificInterests.nameOfScientificInterests = scientificInterests.nameOfScientificInterests;
+
     this.tableMode = false;
+    this.isNew = false;
   }
 
   save() {
@@ -58,39 +67,21 @@ export class ScientificInterestsComponent implements OnInit {
     this.cancel();
   }
 
-
   cancel() {
     this.scientificInterests = new ScientificInterests();
     this.scientificInterests.employeeId = this.employeeId;
     this.tableMode = true;
+    this.isNew = false;
+  }
+
+  backward() {
+    this.cancel();
+    this.isNew = false;
   }
 
   add() {
     this.cancel();
     this.tableMode = false;
+    this.isNew = true;
   }
-
-  // TODO: Сделать стандартизацию формата даты (подходящий ISO)
-  // отформатировать дату (привести к правильному формату)
-  private formatDate(model: Date | string | null): Date | null {
-    if (model instanceof Date) {
-      return model;
-    }
-    else if (model) {
-      return new Date(this.parse(model));
-    } else {
-      return null;
-    }
-  }
-  private parse(value: string): string {
-    if (value) {
-      let date = value.split(".");
-      return date[2] + "-" + date[1] + "-" + date[0];
-    }
-
-    return null;
-  }
-
-
 }
-

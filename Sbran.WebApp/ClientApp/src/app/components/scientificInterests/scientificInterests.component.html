@@ -56,8 +56,15 @@
     </div>
 
     <div class="col-md-12">
-      <input type="button" value="Сохранить" (click)="save()" class="btn btn-success" />
-      <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+      <button type="button" class="btn btn-outline-dark" (click)="save()">
+        <span><b>Сохранить</b></span>
+      </button>
+      <button type="button" class="btn btn-outline-dark ml-2" *ngIf="isNew" (click)="cancel()">
+        <span><b>Отменить</b></span>
+      </button>
+      <button type="button" class="btn btn-outline-dark ml-2" *ngIf="!isNew" (click)="backward()">
+        <span><b> Назад </b></span>
+      </button>
     </div>
 
   </div>

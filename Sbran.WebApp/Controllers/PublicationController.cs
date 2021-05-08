@@ -48,11 +48,26 @@ namespace Sbran.WebApp.Controllers
         }
 
         [HttpGet]
-        [Route("{employeeId:guid}")]
-        public async Task<List<Publication>> getAllPublications(Guid employeeId)
+        [Route("{employeeId:guid}/all")]
+        public Task<List<Publication>> getAllPublications(Guid employeeId)
         {
-            var list = await _publicationRepository.GetAllAsync();
-            return list.Where(e => e.EmployeeId == employeeId).ToList();
+            var isAdmin = User.IsInRole(UserRoles.Admin);
+            if (isAdmin)
+			{
+                return _publicationRepository.GetAllAsync();
+            }
+            else
+			{
+                return _publicationRepository.GetByEmplIdAsync(employeeId);
+            }
+        }
+
+        //TODO: Почему это находится в этом контроллере?
+        [HttpGet]
+        [Route("{publicationId:guid}")]
+        public Task<Publication> GetPublicationById(Guid publicationId)
+        {
+            return _publicationRepository.GetAsync(publicationId);
         }
     }
 }

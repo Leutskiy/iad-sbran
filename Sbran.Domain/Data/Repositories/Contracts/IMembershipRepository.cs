@@ -8,6 +8,10 @@ namespace Sbran.Domain.Data.Repositories.Contracts
 {
     public interface IMembershipRepository
     {
+        Task<List<Membership>> GetByEmplIdAsync(Guid employeeId);
+
+        Task<int> Total();
+
         Membership Add(MembershipDto addedMembership);
 
         Task DeleteAsync(Guid id);

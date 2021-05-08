@@ -13,6 +13,17 @@ var DateHelper = /** @class */ (function () {
         }
         return null;
     };
+    DateHelper.prototype.formatDateForChat = function (dateSource) {
+        if (dateSource instanceof Date) {
+            return this.parseDate(dateSource) + " " + this.parseTime(dateSource);
+        }
+        else if (dateSource) {
+            var dateSourceAsDate = new Date(dateSource);
+            return this.parseDate(dateSourceAsDate) + " " + this.parseTime(dateSourceAsDate);
+            ;
+        }
+        return null;
+    };
     // Используем для форматирования перед передачей на сервер
     // TODO: Сделать стандартизацию формата даты (подходящий ISO)
     // TODO: Отформатировать дату (привести к правильному формату)
@@ -44,6 +55,11 @@ var DateHelper = /** @class */ (function () {
         dateDay = date.day < 10 ? 0 + dateDay : dateDay;
         dateMonth = date.month < 10 ? 0 + dateMonth : dateMonth;
         return dateDay + "." + dateMonth + "." + dateYear;
+    };
+    DateHelper.prototype.parseTime = function (dateSource) {
+        return ("0" + dateSource.getHours()).slice(-2) + ":" +
+            ("0" + dateSource.getMinutes()).slice(-2) + ":" +
+            ("0" + dateSource.getSeconds()).slice(-2);
     };
     return DateHelper;
 }());

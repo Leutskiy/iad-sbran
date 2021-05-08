@@ -5,6 +5,7 @@ using Sbran.Domain.Entities;
 using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sbran.Domain.Data.Repositories
@@ -43,6 +44,12 @@ namespace Sbran.Domain.Data.Repositories
             }
         }
 
+        // TODO: подумать насчет SplitQuery
+        public Task<List<Publication>> GetByEmplIdAsync(Guid employeeId)
+        {
+            return _domainContext.Publications.Where(d => d.EmployeeId == employeeId).ToListAsync();
+        }
+
         public async Task<List<Publication>> GetAllAsync() => await _domainContext.Publications.ToListAsync();
 
         public async Task<Publication> GetAsync(Guid id) => await _domainContext.Publications.FirstOrDefaultAsync(e => e.Id == id);
@@ -61,6 +68,11 @@ namespace Sbran.Domain.Data.Repositories
                 publication.Literature = newPublication.Literature;
                 publication.EmployeeId = newPublication.EmployeeId;
             }
+        }
+
+        public Task<int> Total()
+        {
+            return _domainContext.Publications.CountAsync();
         }
     }
 }

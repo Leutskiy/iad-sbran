@@ -8,6 +8,8 @@ namespace Sbran.Domain.Data.Repositories.Contracts
 {
     public interface IDepartureRepository
     {
+        Task<int> Total();
+
         Task DeleteAsync(Guid id);
 
         Task<List<Departure>> GetByEmplIdAsync(Guid employeeId);

@@ -44,6 +44,8 @@ import { PublicationComponent } from './components/publication/publication.compo
 import { ScientificInterestsComponent } from './components/scientificInterests/scientificInterests.component';
 import { ReportComponent } from './components/report/report.component';
 import { NewDepartureComponent } from './components/departure/new/new-departure.component';
+import { PublicationItemComponent } from './components/publication/form/publication-item.component';
+import { PanelInfoComponent } from './components/panel-info/panel-info.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,9 @@ import { NewDepartureComponent } from './components/departure/new/new-departure.
     ScientificInterestsComponent,
     VisitDetailsInvitationComponent,
     ReportComponent,
-    NewDepartureComponent
+    NewDepartureComponent,
+    PublicationItemComponent,
+    PanelInfoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -31,9 +31,12 @@
                     <div class="d-flex align-items-center justify-content-between mb-1">
                       <h6 class="mb-0">{{item.account}}</h6><small class="small font-weight-bold">{{item.lastmessagedate}}</small>
                     </div>
-                    <p class="text-dark mb-0 text-small">
+                    <span class="cutting-text  mb-0 text-small">
                       {{item.lastmessage}}
-                    <p class="text-dark mb-0 text-small">{{item.fileName}}</p>
+                    </span>
+                    <span class="cutting-text mb-0 text-small">
+                      {{item.fileName}}
+                    </span>
 
                   </div>
                 </div>
@@ -65,7 +68,7 @@
 
             <ng-template #other_content>
               <!-- Reciever Message-->
-              <div *ngIf="item.message?.length > 0" class="media w-50 ml-auto mb-3">
+              <div *ngIf="item.message?.length > 0 || item.isFile" class="media w-50 ml-auto mb-3">
                 <div class="media-body">
                   <div class="bg-warning rounded py-2 px-3 mb-2">
                     <p class="text-small mb-0 text-dark">{{item.message}}</p>

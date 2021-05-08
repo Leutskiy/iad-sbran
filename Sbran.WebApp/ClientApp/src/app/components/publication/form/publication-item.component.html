@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="input-group mt-3 mb-3">
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Научный руководитель, соавторы</label>
+        <input type="text" [(ngModel)]="publication.scientificAdvisor" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Название статьи</label>
+        <input type="text" [(ngModel)]="publication.titleOfTheArticle" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Аннотация</label>
+        <input type="text" [(ngModel)]="publication.abstract" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Ключевые слова</label>
+        <input type="text" [(ngModel)]="publication.keywords" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Основной текст статьи</label>
+        <input type="text" [(ngModel)]="publication.mainTextOfTheArticle" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Литература</label>
+        <input type="text" [(ngModel)]="publication.literature" class="form-control" />
+      </div>
+    </div>
+
+    <div class="col-md-4 mt-5">
+      <button type="button" class="btn btn-outline-dark" (click)="save()">
+        <span><b>Сохранить</b></span>
+      </button>
+      <button *ngIf="isNew" type="button" class="btn btn-outline-dark ml-2" (click)="cancel()">
+        <span><b>Отменить</b></span>
+      </button>
+      <button *ngIf="!isNew" type="button" class="btn btn-outline-dark ml-2" (click)="backward()">
+        <span><b> Назад </b></span>
+      </button>
+    </div>
+
+  </div>
+</div>

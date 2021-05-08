@@ -4,7 +4,7 @@ import { DateHelper } from '../../../common/helpers/DateHelper';
 import { Departure, DepartureStatus } from '../../../contracts/login-data';
 import { DepartureDataService } from '../../../services/component-providers/departure/departure-data.service';
 
-// TODO: назвать просто form-departure.component
+// TODO: назвать просто departure-form.component
 @Component({
   selector: 'app-new-departure',
   templateUrl: './new-departure.component.html',
@@ -48,11 +48,11 @@ export class NewDepartureComponent implements OnInit {
     this.departureListUrl = `${this.departureBaseUrl}/list`;
 
     if (!this.isNew) {
-      console.info(`>>> перешли на форму редактирования, так как departureId равен ${this.departureId};`);
+      console.info(`>>> перешли на форму редактирования выезда с идентификатором равным ${this.departureId}`);
       this.fillForm();
     }
     else {
-      console.info(`>>> перешли на форму создания нового приглашения, так как departureId равен ${this.departureId};`);
+      console.info(`>>> перешли на форму создания нового выезда`);
       this.departure = new Departure();
     }
   }
@@ -60,12 +60,12 @@ export class NewDepartureComponent implements OnInit {
   // обработчик нажатия кнопки Согласовать
   public agree(departureId: string): void {
     this.departureService.agree(departureId).subscribe(
-      success => {
-        console.info(`>>> выезд c departureId равным ${departureId} был успешно согласован;`);
+      _success => {
+        console.info(`>>> выезд c ${departureId} был успешно согласован`);
         this.departure.departureStatus = DepartureStatus.Agreement;
       },
-      error => {
-        console.error(`>>> согласование выезда c departureId равным ${departureId} завершилось ошибкой ${JSON.stringify(error)}`);
+      _error => {
+        console.error(`>>> согласование выезда c идентификатором равным ${departureId} завершилось ошибкой ${JSON.stringify(_error)}`);
       });
   }
 
@@ -138,7 +138,7 @@ export class NewDepartureComponent implements OnInit {
         // если задана дата "с", то форматируем
         if (_departure.dateStart) {
           let dateStart = new Date(_departure.dateStart);
-          _departure.dateStart = dateStart;
+          _departure.dateStart = this.dateHelper.formatDateForFront(dateStart);
         }
 
         // если задана дата "по", то форматируем

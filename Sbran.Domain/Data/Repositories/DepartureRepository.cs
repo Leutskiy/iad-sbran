@@ -106,5 +106,10 @@ namespace Sbran.Domain.Data.Repositories
 
             _domainContext.Departures.Update(departure);
         }
-    }
+
+		public Task<int> Total()
+		{
+            return _domainContext.Departures.CountAsync();
+        }
+	}
 }

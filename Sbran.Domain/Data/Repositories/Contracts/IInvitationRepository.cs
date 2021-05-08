@@ -8,6 +8,8 @@ namespace Sbran.Domain.Data.Repositories.Contracts
 {
     public interface IInvitationRepository
     {
+        Task<int> Total();
+
         Invitation Create(Alien alien, Employee employee);
 
         Invitation Add(Employee employee, InvitationDto addedInvitation);

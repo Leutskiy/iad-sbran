@@ -18,6 +18,8 @@ import { PublicationComponent } from './components/publication/publication.compo
 import { ScientificInterestsComponent } from './components/scientificInterests/scientificInterests.component';
 import { ReportComponent } from './components/report/report.component';
 import { NewDepartureComponent } from './components/departure/new/new-departure.component';
+import { PublicationItemComponent } from './components/publication/form/publication-item.component';
+import { PanelInfoComponent } from './components/panel-info/panel-info.component';
 
 const routes: Routes = [
   {
@@ -30,33 +32,51 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+
+  // вход/выход
   { path: 'login', component: SigninComponent, canActivate: [RedirectToProfileGuard] },
   { path: 'singup', component: SingupComponent },
 
-  { path: 'profile/:profileId/employee/:employeeId/departure/list', component: DepartureComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId', component: NewDepartureComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/departure', component: NewDepartureComponent, canActivate: [AuthGuard] },
+  // информационная панель
+  { path: 'panel/info', component: PanelInfoComponent, canActivate: [AuthGuard] },
 
-  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId/report/:reportId', component: ReportComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId/report', component: ReportComponent, canActivate: [AuthGuard] },
+  // чат
+  { path: 'profile/:profileId/employee/:employeeId/chat', component: ChatComponent, canActivate: [AuthGuard] },
 
-  { path: 'profile/:profileId/employee/:employeeId/consularOffice/:employeeId', component: ConsularOfficeComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/internationalAgreement/:employeeId', component: InternationalAgreementComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/membership/:employeeId/:type', component: MembershipComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/membership/:employeeId/:type', component: MembershipComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/publish/:employeeId', component: PublicationComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/scientificInterests/:employeeId', component: ScientificInterestsComponent, canActivate: [AuthGuard] },
-  { path: 'chat/:profileId', component: ChatComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/information', component: MainComponent, canActivate: [AuthGuard] },
 
+
+  { path: 'profile/:profileId/employee/:employeeId/consularOffice/:employeeId', component: ConsularOfficeComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/scientificInterests/:employeeId', component: ScientificInterestsComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/internationalAgreement/:employeeId', component: InternationalAgreementComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/membership/:employeeId/:type', component: MembershipComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/membership/:employeeId/:type', component: MembershipComponent, canActivate: [AuthGuard] },
+
+  // публикации
+  { path: 'profile/:profileId/employee/:employeeId/publication/list', component: PublicationComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/publication', component: PublicationItemComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/publication/:publicationId', component: PublicationItemComponent, canActivate: [AuthGuard] },
+
+  // приглашения
   { path: 'profile/:profileId/employee/:employeeId/invitation/list', component: InvitationComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/invitation', component: NewInvitationFormComponent, canActivate: [AuthGuard] },
   { path: 'profile/:profileId/employee/:employeeId/invitation/:invitationId', component: NewInvitationFormComponent, canActivate: [AuthGuard] },
 
-  { path: 'profile/:profileId/employee/:employeeId/report/:invitationId/create/:reportId/invitation', component: ReportComponent, canActivate: [AuthGuard] },
-  { path: 'profile/:profileId/employee/:employeeId/report/:invitationId/create/invitation', component: ReportComponent, canActivate: [AuthGuard] },
+  // отчет по пригшалшению
+  { path: 'profile/:profileId/employee/:employeeId/invitation/:invitationId/report/:reportId', component: ReportComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/invitation/:invitationId/report', component: ReportComponent, canActivate: [AuthGuard] },
 
+  // выезды
+  { path: 'profile/:profileId/employee/:employeeId/departure/list', component: DepartureComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId', component: NewDepartureComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/departure', component: NewDepartureComponent, canActivate: [AuthGuard] },
+
+  // отчет по выезду
+  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId/report/:reportId', component: ReportComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:profileId/employee/:employeeId/departure/:departureId/report', component: ReportComponent, canActivate: [AuthGuard] },
+
+  // страница не найдена
   { path: '**', component: NotFoundPageComponent }
 ];
 

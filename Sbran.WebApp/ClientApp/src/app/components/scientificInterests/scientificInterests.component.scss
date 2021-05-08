@@ -21,6 +21,11 @@ table.table td, th {
   vertical-align: middle;
 }
 
+table.table thead th {
+  vertical-align: top;
+  word-wrap: break-word;
+}
+
 table.table td a {
   cursor: pointer;
   display: inline-block;

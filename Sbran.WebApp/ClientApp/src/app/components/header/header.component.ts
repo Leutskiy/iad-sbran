@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as signalR from '@microsoft/signalr';
-import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
+  width: number;
+
   logoAlt: string = "СИГМА";
   logoTitle: string = "Cибирское отделение РАН ";
   logoRelativePath: string = "assets/images/sum.svg";
@@ -19,12 +20,19 @@ export class HeaderComponent implements OnInit {
   profileId: string;
   employeeId: string;
 
+  showToMainPageButton: boolean;
+
   constructor(
-    public authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    private authService: AuthService) {
   }
 
   ngOnInit(): void {
+
+    this.width = 0;
+
+    this.showToMainPageButton = true;
+
     this.authService.profileId.subscribe(e => {
       this.profileId = e;
     });
@@ -35,7 +43,6 @@ export class HeaderComponent implements OnInit {
     this.accessToken = this.authService.getToken();
     this.hubConnection = new signalR.HubConnectionBuilder()
       //конфигурации на сервере 
-      //.withUrl("https://localhost:5001/chatsocket", {  })
       .configureLogging(signalR.LogLevel.Error)
       .withUrl("https://localhost:5001/chatsocket", {
         skipNegotiation: true,
@@ -45,7 +52,6 @@ export class HeaderComponent implements OnInit {
       .build();
   }
 
-  
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/']);
@@ -54,13 +60,18 @@ export class HeaderComponent implements OnInit {
     this.hubConnection.stop();
   }
 
-  openNav(): any {
-    document.getElementById("mySidenav").style.width = "250px";
-    // document.getElementById("main").style.marginLeft = "250px";
-  }
-  closeNav(): any {
-    document.getElementById("mySidenav").style.width = "0";
-    // document.getElementById("main").style.marginLeft = "0";
+  onGoToPanelInfo() {
+    this.router.navigate(['panel/info']);
   }
 
+  openNav(): any {
+    this.width === 0 ? this.width = 250 : this.width = 0;
+    //let style = document.getElementById("mySidenav").style;
+    //style.width === "0px" ? style.width = "250px" : style.width = "0px";
+  }
+
+  closeNav(): any {
+    this.width = 0;
+    //document.getElementById("mySidenav").style.width = "0px";
+  }
 }

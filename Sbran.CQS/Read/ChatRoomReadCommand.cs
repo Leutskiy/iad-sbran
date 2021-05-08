@@ -12,20 +12,23 @@ namespace Sbran.CQS.Read
 	public sealed class ChatRoomReadCommand : IChatRoomReadCommand
     {
         private readonly IChatMessageRepository _chatMessageRepository;
+        private readonly IChatMessageFileRepository _chatMessageFileRepository;
         private readonly IChatRoomListRepository _chatRoomListRepository;
         private readonly IUserRepository _userRepository;
 
-        public ChatRoomReadCommand(
-            IChatMessageRepository chatMessageRepository,
-            IChatRoomListRepository chatRoomListRepository,
-            IUserRepository userRepository)
-        {
-            _chatMessageRepository = chatMessageRepository;
-            _chatRoomListRepository = chatRoomListRepository;
-            _userRepository = userRepository;
-        }
+		public ChatRoomReadCommand(
+			IChatMessageRepository chatMessageRepository,
+			IChatRoomListRepository chatRoomListRepository,
+			IUserRepository userRepository,
+            IChatMessageFileRepository chatMessageFileRepository)
+		{
+			_chatMessageRepository = chatMessageRepository;
+			_chatRoomListRepository = chatRoomListRepository;
+			_userRepository = userRepository;
+			_chatMessageFileRepository = chatMessageFileRepository;
+		}
 
-        public async Task<List<ChatRoomResult>> GetAllRooms(Guid profileId, string name)
+		public async Task<List<ChatRoomResult>> GetAllRooms(Guid profileId, string name)
         {
             var listRooms = await _chatRoomListRepository.GetAllAsync();
             var usersFull = await _userRepository.GetUsersFull();
@@ -93,6 +96,13 @@ namespace Sbran.CQS.Read
             var usersFull = await _userRepository.GetUsersFull();
             var user = usersFull.FirstOrDefault(e => e.ProfileId == profileId);
             var messages = await _chatMessageRepository.GetAllAsync();
+
+
+            var emptyMessageIds = messages.Where(m => string.IsNullOrEmpty(m.Message)).Select(m => m.Id).ToArray();
+            var chatMessageFiles = await _chatMessageFileRepository.GetMessageFilesByIds(emptyMessageIds);
+
+            var specialDictionary = chatMessageFiles.ToDictionary(k => k.ChatMessageId, v => v.fileName);
+
             var chatRooms = listRooms
                 .Where(e => e.UserId.CompareTo(user.Id) == 0);
             List<ChatRoomResult> chats = new List<ChatRoomResult>();
@@ -101,15 +111,17 @@ namespace Sbran.CQS.Read
                 var tempRoom = listRooms.FirstOrDefault(e => e.ChatRoomId.CompareTo(temp.ChatRoomId) == 0 && e.UserId.CompareTo(user.Id) != 0);
                 if (tempRoom != null)
                 {
-                    var lastMessage = messages
+                    var lastMessageCandidate = messages
                         .OrderByDescending(e => e.DateTime)
                         .FirstOrDefault(e => e.ChatRoomId == tempRoom.ChatRoomId);
+
+                    lastMessageCandidate!.Message = string.IsNullOrEmpty(lastMessageCandidate?.Message) ? specialDictionary[lastMessageCandidate!.Id] : lastMessageCandidate.Message;
                     var tempUser = usersFull
                         .FirstOrDefault(e => e.Id.CompareTo(tempRoom.UserId) == 0);
                     var tempRoomDto = DomainEntityConverter.ConvertToResult(
                                user: tempUser,
                                chatRoomList: tempRoom,
-                               chatMessage: lastMessage
+                               chatMessage: lastMessageCandidate
                            );
                     chats.Add(tempRoomDto);
                 }

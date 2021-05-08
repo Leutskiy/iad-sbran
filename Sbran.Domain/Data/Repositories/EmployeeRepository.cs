@@ -29,7 +29,7 @@ namespace Sbran.Domain.Data.Repositories
         /// <returns><Сотрудники</returns>
         public Task<List<Employee>> GetAllAsync()
         {
-            return _domainContext.Set<Employee>().ToListAsync();
+            return _domainContext.Set<Employee>().Include(e => e.Passport). Include(e => e.Contact).ToListAsync();
         }
 
         /// <summary>

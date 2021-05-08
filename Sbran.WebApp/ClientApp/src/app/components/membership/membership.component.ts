@@ -1,5 +1,6 @@
 import { OnInit, Input, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DateHelper } from '../../common/helpers/DateHelper';
 import { Membership, MembershipType } from '../../contracts/login-data';
 import { AuthService } from '../../services/auth.service';
 import { MembershipDataService } from '../../services/component-providers/membership/membership-data.service';
@@ -8,9 +9,11 @@ import { MembershipDataService } from '../../services/component-providers/member
   selector: 'app-membership',
   templateUrl: './membership.component.html',
   styleUrls: ['./membership.component.scss'],
-  providers: [MembershipDataService, AuthService]
+  providers: [MembershipDataService, AuthService, DateHelper]
 })
 export class MembershipComponent implements OnInit {
+
+  isNew: boolean;
 
   profileId: string;
   employeeId: string;
@@ -23,6 +26,7 @@ export class MembershipComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private dateHelper: DateHelper,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private membershipDataService: MembershipDataService) {
@@ -33,29 +37,51 @@ export class MembershipComponent implements OnInit {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
     this.type = + this.activatedRoute.snapshot.paramMap.get('type');
-    console.log(this.type);
-    this.getAll();
+
+    this.isNew = false;
+
+    this.refreshMembershipTable();
   }
 
-  getAll(): void {
-    this.membershipDataService.get(this.employeeId, this.type).subscribe(e => {
-      this.memberships = JSON.parse(JSON.stringify(e));
-    })
+  refreshMembershipTable(): void {
+    this.membershipDataService.get(this.employeeId, this.type).subscribe(
+      _memberships => {
+        _memberships.forEach((membership: Membership) => {
+          if (membership.dateOfEntry) {
+            membership.dateOfEntry = this.dateHelper.formatDateForFront(new Date(membership.dateOfEntry));
+            this.memberships.push(membership);
+          }
+        });
+      });
   }
 
-  edit(p: Membership) {
-    this.membership = p;
+  edit(membership: Membership) {
+    this.membership = new Membership();
+    this.membership.id = membership.id;
+    this.membership.statusInTheOrganization = membership.statusInTheOrganization;
+    this.membership.siteOfTheOrganization = membership.siteOfTheOrganization;
+    this.membership.siteOfJournal = membership.siteOfJournal;
+    this.membership.nameOfCompany = membership.nameOfCompany;
+    this.membership.membershipType = membership.membershipType;
+    this.membership.dateOfEntry = membership.dateOfEntry;
+    this.membership.employeeId = membership.employeeId;
+
     this.tableMode = false;
+    this.isNew = false;
   }
 
   save() {
-    console.log(this.membership);
+
+    this.membership.dateOfEntry = this.dateHelper.formatDateForBack(this.membership.dateOfEntry);
     if (this.membership.id == null) {
       this.membershipDataService.add(this.membership)
-        .subscribe((data: Membership) => this.memberships.push(data));
+        .subscribe((_membership: Membership) => {
+          _membership.dateOfEntry = this.dateHelper.formatDateForFront(new Date(_membership.dateOfEntry));
+          this.memberships.push(_membership);
+        });
     } else {
       this.membershipDataService.update(this.membership.id, this.membership)
-        .subscribe(data => this.getAll());
+        .subscribe(data => this.refreshMembershipTable());
     }
     this.cancel();
   }
@@ -71,34 +97,16 @@ export class MembershipComponent implements OnInit {
     }
     this.membership.employeeId = this.employeeId;
     this.tableMode = true;
+    this.isNew = false;
+  }
+
+  backward() {
+    this.cancel();
   }
 
   add() {
     this.cancel();
     this.tableMode = false;
+    this.isNew = true;
   }
-
-  // TODO: Сделать стандартизацию формата даты (подходящий ISO)
-  // отформатировать дату (привести к правильному формату)
-  private formatDate(model: Date | string | null): Date | null {
-    if (model instanceof Date) {
-      return model;
-    }
-    else if (model) {
-      return new Date(this.parse(model));
-    } else {
-      return null;
-    }
-  }
-  private parse(value: string): string {
-    if (value) {
-      let date = value.split(".");
-      return date[2] + "-" + date[1] + "-" + date[0];
-    }
-
-    return null;
-  }
-
-
 }
-

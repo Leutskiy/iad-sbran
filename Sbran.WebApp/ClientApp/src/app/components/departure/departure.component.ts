@@ -5,6 +5,7 @@ import { Departure } from '../../contracts/login-data';
 import { AuthService } from '../../services/auth.service';
 import { DepartureDataService } from '../../services/component-providers/departure/departure-data.service';
 
+// TODO: назвать просто departure-list.component
 @Component({
   selector: 'app-departure',
   templateUrl: './departure.component.html',
@@ -14,12 +15,12 @@ import { DepartureDataService } from '../../services/component-providers/departu
 export class DepartureComponent implements OnInit {
 
   @Input() title: string;
-
+  
   profileId: string;
   employeeId: string;
-  departures = [];
-
   forManager: boolean = false;
+
+  departures = [];
 
   departureListUrl: string;
   departureFormUrl: string;

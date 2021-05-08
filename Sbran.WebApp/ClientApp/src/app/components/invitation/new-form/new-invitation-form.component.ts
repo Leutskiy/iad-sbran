@@ -74,7 +74,7 @@ export class NewInvitationFormComponent implements OnInit {
     this.invitationId = this.activatedRoute.snapshot.paramMap.get('invitationId');
 
     // TODO: надо упростить - вынести отдельно, проверку поменять и иные scope прописать
-    this.isNew = !!!this.invitationId;
+    this.isNew = !this.invitationId;
     this.scope = this.isNew ? "invitation" : "profile";
 
     if (!this.isNew) {
@@ -116,6 +116,13 @@ export class NewInvitationFormComponent implements OnInit {
 
   public cancel(): void {
     console.info(">>> нажата кнопка Отменить")
+    let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/list`;
+    console.info(`>>> перенаправление на список приглашений: ${url}`);
+    this.router.navigate([url]);
+  }
+
+  public backward(): void {
+    console.info(">>> нажата кнопка Назад")
     let url = `profile/${this.profileId}/employee/${this.employeeId}/invitation/list`;
     console.info(`>>> перенаправление на список приглашений: ${url}`);
     this.router.navigate([url]);
