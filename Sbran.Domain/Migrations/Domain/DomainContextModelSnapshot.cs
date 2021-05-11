@@ -625,6 +625,10 @@ namespace Sbran.Domain.Migrations.Domain
                         .HasColumnType("text")
                         .HasColumnName("NameOfCompany");
 
+                    b.Property<string>("SiteOfTheJournal")
+                        .HasColumnType("text")
+                        .HasColumnName("SiteOfTheJournal");
+
                     b.Property<string>("SiteOfTheOrganization")
                         .HasColumnType("text")
                         .HasColumnName("SiteOfTheOrganization");

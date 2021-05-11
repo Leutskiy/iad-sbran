@@ -28,7 +28,8 @@ namespace Sbran.Domain.Data.Repositories
                 DateOfEntry = addedMembership.DateOfEntry,
                 MembershipType = addedMembership.MembershipType,
                 EmployeeId = addedMembership.EmployeeId,
-                SiteOfTheOrganization = addedMembership.SiteOfTheOrganization
+                SiteOfTheOrganization = addedMembership.SiteOfTheOrganization,
+                SiteOfTheJournal = addedMembership.SiteOfTheJournal
             };
             _domainContext.Memberships.Add(membership);
             return membership;
@@ -57,6 +58,7 @@ namespace Sbran.Domain.Data.Repositories
                 membership.StatusInTheOrganization = newMembership.StatusInTheOrganization;
                 membership.DateOfEntry = newMembership.DateOfEntry;
                 membership.SiteOfTheOrganization = newMembership.SiteOfTheOrganization;
+                membership.SiteOfTheJournal = newMembership.SiteOfTheJournal;
                 membership.EmployeeId = newMembership.EmployeeId;
             }
         }

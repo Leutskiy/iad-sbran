@@ -51,16 +51,16 @@
             <th scope="row">{{i+1}}</th>
             <td>{{membership.nameOfCompany}}</td>
             <td>{{membership.statusInTheOrganization}}</td>
-            <td>
-              <p *ngIf="type==1;else other">
-                {{membership.siteOfTheOrganization}}
-              </p>
-              <ng-template #other>
-                <p>
-                  {{membership.siteOfJournal}}
-                </p>
-              </ng-template>
+            <td *ngIf="type==1;else other">
+              {{membership.siteOfTheOrganization}}
             </td>
+
+            <ng-template #other>
+              <td>
+                {{membership.siteOfTheJournal}}
+              </td>
+            </ng-template>
+
             <td>{{membership.dateOfEntry}}</td>
             <td class="text-center">
               <a class="view" (click)="edit(membership)">
@@ -112,7 +112,7 @@
       </div>
       <ng-template #date>
         <label class="mt-3">Сайт журнала:</label>
-        <input type="text" [(ngModel)]="membership.siteOfJournal" class="form-control mb-3" />
+        <input type="text" [(ngModel)]="membership.siteOfTheJournal" class="form-control mb-3" />
       </ng-template>
     </div>
 

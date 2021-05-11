@@ -47,8 +47,9 @@ export class InternationalAgreementComponent implements OnInit {
         _internationalAgreements.forEach((internationalAgreement: InternationalAgreement) => {
           if (internationalAgreement.dateOfEntry) {
             internationalAgreement.dateOfEntry = this.dateHelper.formatDateForFront(new Date(internationalAgreement.dateOfEntry));
-            this.internationalAgreements.push(internationalAgreement);
           }
+
+          this.internationalAgreements.push(internationalAgreement);
       });
     })
   }
@@ -79,7 +80,11 @@ export class InternationalAgreementComponent implements OnInit {
         });
     } else {
       this.internationalAgreementDataService.update(this.internationalAgreement.id, this.internationalAgreement)
-        .subscribe(data => this.refreshInternationalAgreementTable());
+        .subscribe((_internationalAgreement: InternationalAgreement) => {
+          _internationalAgreement.dateOfEntry = this.dateHelper.formatDateForFront(new Date(_internationalAgreement.dateOfEntry));
+          this.internationalAgreements = this.internationalAgreements.filter((membershipValue: InternationalAgreement) => { return membershipValue.id != _internationalAgreement.id; });
+          this.internationalAgreements.push(_internationalAgreement);
+        });
     }
 
     this.cancel();

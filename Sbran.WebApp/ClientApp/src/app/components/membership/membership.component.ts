@@ -36,7 +36,7 @@ export class MembershipComponent implements OnInit {
   ngOnInit(): void {
     this.profileId = this.activatedRoute.snapshot.paramMap.get('profileId');
     this.employeeId = this.activatedRoute.snapshot.paramMap.get('employeeId');
-    this.type = + this.activatedRoute.snapshot.paramMap.get('type');
+    this.type = +this.activatedRoute.snapshot.paramMap.get('type');
 
     this.isNew = false;
 
@@ -46,11 +46,13 @@ export class MembershipComponent implements OnInit {
   refreshMembershipTable(): void {
     this.membershipDataService.get(this.employeeId, this.type).subscribe(
       _memberships => {
-        _memberships.forEach((membership: Membership) => {
+        var mappingType = this.type == 2 ? 0 : 1;
+        _memberships.filter((membreship: Membership) => { return membreship.membershipType == mappingType; }).forEach((membership: Membership) => {
           if (membership.dateOfEntry) {
             membership.dateOfEntry = this.dateHelper.formatDateForFront(new Date(membership.dateOfEntry));
-            this.memberships.push(membership);
           }
+
+          this.memberships.push(membership);
         });
       });
   }
@@ -60,7 +62,7 @@ export class MembershipComponent implements OnInit {
     this.membership.id = membership.id;
     this.membership.statusInTheOrganization = membership.statusInTheOrganization;
     this.membership.siteOfTheOrganization = membership.siteOfTheOrganization;
-    this.membership.siteOfJournal = membership.siteOfJournal;
+    this.membership.siteOfTheJournal = membership.siteOfTheJournal;
     this.membership.nameOfCompany = membership.nameOfCompany;
     this.membership.membershipType = membership.membershipType;
     this.membership.dateOfEntry = membership.dateOfEntry;
@@ -81,7 +83,11 @@ export class MembershipComponent implements OnInit {
         });
     } else {
       this.membershipDataService.update(this.membership.id, this.membership)
-        .subscribe(data => this.refreshMembershipTable());
+        .subscribe((_membership: Membership) => {
+          _membership.dateOfEntry = this.dateHelper.formatDateForFront(new Date(_membership.dateOfEntry));
+          this.memberships = this.memberships.filter((membershipValue: Membership) => { return membershipValue.id != _membership.id; });
+          this.memberships.push(_membership);
+        });
     }
     this.cancel();
   }
@@ -89,12 +95,13 @@ export class MembershipComponent implements OnInit {
 
   cancel() {
     this.membership = new Membership();
-    if (this.type == 1) {
+    if (this.type == 2) {
       this.membership.membershipType = MembershipType.russian;
     }
     else {
       this.membership.membershipType = MembershipType.other;
     }
+
     this.membership.employeeId = this.employeeId;
     this.tableMode = true;
     this.isNew = false;

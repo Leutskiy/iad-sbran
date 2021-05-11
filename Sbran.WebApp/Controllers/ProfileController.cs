@@ -55,7 +55,7 @@ namespace Sbran.WebApp.Controllers
         public async Task<IActionResult> GetById(Guid profileId, Guid employeeId)
         {
             var profileResult = await _profileReadCommand.ExecuteAsync(profileId);
-            var employeeResult = await _employeeReadCommand.ExecuteAsync(employeeId);
+            var employeeResult = await _employeeReadCommand.ExecuteForProfileAsync(employeeId);
 
             var isAdmin = User.IsInRole(UserRoles.Admin);
 

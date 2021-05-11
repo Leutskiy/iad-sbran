@@ -23,6 +23,12 @@ namespace Sbran.Domain.Models
         /// сайт организации
         /// </summary>
         public string? SiteOfTheOrganization { get; set; }
+
+        /// <summary>
+        /// сайт организации
+        /// </summary>
+        public string? SiteOfTheJournal { get; set; }
+
         /// <summary>
         /// сайт организации
         /// </summary>

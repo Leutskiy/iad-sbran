@@ -2,7 +2,7 @@
 {
 	public enum MembershipType
     {
-        Russian,
-        Other
+        Russian = 0,
+        Other = 1
     }
 }

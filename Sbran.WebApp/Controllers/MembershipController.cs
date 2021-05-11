@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sbran.Domain.Data.Adapters;
 using Sbran.Domain.Data.Repositories.Contracts;
 using Sbran.Domain.Entities;
+using Sbran.Domain.Enums;
 using Sbran.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -57,9 +58,13 @@ namespace Sbran.WebApp.Controllers
                 ? await _membershipRepository.GetAllAsync()
                 : await _membershipRepository.GetByEmplIdAsync(employeeId);
 
-            var membershipFilter = type == 1
-                ? Domain.Enums.MembershipType.Russian
-                : Domain.Enums.MembershipType.Other;
+            
+            var membershipFilter = type == 2
+                ? MembershipType.Russian
+                : MembershipType.Other;
+            
+
+            //var membershipFilter = (MembershipType)type;
 
             return list.Where(e => e.MembershipType == membershipFilter).ToList();
 

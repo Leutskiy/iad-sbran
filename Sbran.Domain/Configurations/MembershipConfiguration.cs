@@ -30,6 +30,7 @@ namespace Sbran.Domain.Configurations
             builder.Property(membership => membership.StatusInTheOrganization).IsRequired(false).HasColumnName("StatusInTheOrganization");
             builder.Property(membership => membership.DateOfEntry).IsRequired(false).HasColumnName("DateOfEntry");
             builder.Property(membership => membership.SiteOfTheOrganization).IsRequired(false).HasColumnName("SiteOfTheOrganization");
+            builder.Property(membership => membership.SiteOfTheJournal).IsRequired(false).HasColumnName("SiteOfTheJournal");
 
             builder
                 .HasOne(membership => membership.Employee)

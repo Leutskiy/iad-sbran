@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   icswebapp:
-    container_name: iad-sbran
-    image: leujo/iad-sbran
+    container_name: iad-sbras
+    image: leujo/iad-sbras
     build:
       context: .
       dockerfile: Dockerfile

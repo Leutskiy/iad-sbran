@@ -669,11 +669,11 @@ export class Membership {
   siteOfTheOrganization: string | null;
   dateOfEntry: Date | string | null;
   membershipType: MembershipType | null;
-  siteOfJournal: string | null;
+  siteOfTheJournal: string | null;
   employeeId: string | null;
 
   constructor() {
-    this.siteOfJournal = "";
+    this.siteOfTheJournal = "";
   }
 }
 

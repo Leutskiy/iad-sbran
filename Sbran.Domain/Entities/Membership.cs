@@ -37,7 +37,12 @@ namespace Sbran.Domain.Entities
         /// сайт организации
         /// </summary>
         public string? SiteOfTheOrganization { get; set; }
-        
+
+        /// <summary>
+        /// сайт журнала
+        /// </summary>
+        public string? SiteOfTheJournal { get; set; }
+
         /// <summary>
         /// сайт организации
         /// </summary>

@@ -122,6 +122,7 @@ namespace Sbran.CQS.Converters
             };
         }
 
+        // жесть
         public static EmployeeResult ConvertToResult(
             Employee employee,
             ContactResult? contactResult,
@@ -148,6 +149,29 @@ namespace Sbran.CQS.Converters
                 Memberships = employee.Memberships,
                 ScientificInterests = employee.ScientificInterests,
                 ConsularOffices = employee.ConsularOffices
+            };
+        }
+
+        public static EmployeeResult ConvertToResultForEditEmployeeData(
+            Employee employee,
+            ContactResult? contactResult,
+            PassportResult? passportResult,
+            OrganizationResult? organizationResult,
+            StateRegistrationResult? stateRegistrationResult)
+        {
+            return new EmployeeResult
+            {
+                Id = employee.Id,
+                Contact = contactResult,
+                Passport = passportResult,
+                Organization = organizationResult,
+                StateRegistration = stateRegistrationResult,
+                ManagerId = employee.ManagerId,
+                AcademicDegree = employee.AcademicDegree,
+                AcademicRank = employee.AcademicRank,
+                Education = employee.Education,
+                Position = employee.Position,
+                WorkPlace = employee.WorkPlace
             };
         }
 
