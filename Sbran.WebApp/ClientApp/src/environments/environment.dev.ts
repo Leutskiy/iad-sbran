@@ -1,4 +1,4 @@
 ﻿export const environment = {
   dev: true,
-  apiUrl: "http://dev.iad-sbras.ru/"
+  apiUrl: "https://iad-sbras.ru/"
 };

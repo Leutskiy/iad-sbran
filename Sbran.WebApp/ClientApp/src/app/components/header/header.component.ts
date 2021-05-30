@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
     this.hubConnection = new signalR.HubConnectionBuilder()
       //конфигурации на сервере 
       .configureLogging(signalR.LogLevel.Error)
-      .withUrl("https://localhost:5001/chatsocket", {
+      .withUrl("http://iad-sbras.ru/chatsocket", {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
         accessTokenFactory: () => this.accessToken

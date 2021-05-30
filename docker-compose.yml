@@ -3,7 +3,7 @@
  services:
      postgres:
         container_name: iad_sbras_postgres
-        image: postgres:latest
+        image: leujo/postgres:latest
         restart: always
         ports:
           - 5432:5432
@@ -12,8 +12,6 @@
           POSTGRES_USER: "iadsbras"
           POSTGRES_PASSWORD: "p@ssw0rd"
           POSTGRES_DB: "IadSbrasDB"
-        volumes:
-          - ../DockerData/postgres/data:/var/lib/postgresql/data
             
      postgresgui:
        container_name: iad_sbras_postgresgui

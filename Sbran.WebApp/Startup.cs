@@ -150,15 +150,19 @@ namespace Sbran.WebApp
                 {
                     builder.AllowAnyMethod()
                     .AllowAnyHeader()
-                    .WithOrigins("http://localhost:4200")
+                    .WithOrigins("http://iad-sbras.ru")
                     .AllowCredentials();
                 });
             });
         }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DomainContext domainContext, SystemContext systemContext)
 		{
+                        // migrate any database changes on startup (includes initial db creation)
+                        domainContext.Database.Migrate();
+		        systemContext.Database.Migrate();
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -167,10 +171,10 @@ namespace Sbran.WebApp
 			{
 				app.UseExceptionHandler("/Error");
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
+				// app.UseHsts();
 			}
 
-			app.UseHttpsRedirection();
+			// app.UseHttpsRedirection();
 
             app.UseOpenApi();
 
@@ -185,7 +189,7 @@ namespace Sbran.WebApp
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
 			{

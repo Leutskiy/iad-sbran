@@ -53,9 +53,9 @@ export class NewInvitationFormComponent implements OnInit {
   alienSkilDetailsTitle: string = "Профессионалные данные приглашенного";
   alienPasportDetailsTitle: string = "Паспортные данные приглашенного";
   alienContactDetailsTitle: string = "Контактные данные приглашенного";
-  alienOrganizationTitle: string = "Оргагизация приглашенного";
+  alienOrganizationTitle: string = "Организация приглашенного";
   alienWorkPlaceTitle: string = "Место работы приглашенного";
-  alienStateRegistrationTitle: string = "Госудраственная регистрация приглашенного";
+  alienStateRegistrationTitle: string = "Государственная регистрация приглашенного";
 
   constructor(
     private router: Router,

@@ -19,7 +19,7 @@ export class MainComponent implements OnInit {
   employeeContactDetailsTitle: string = "Контакты";
   employeeOrganizationTitle: string = "Организация";
   employeeWorkPlaceTitle: string = "Работа";
-  employeeStateRegistrationTitle: string = "Госудраственная регистрация";
+  employeeStateRegistrationTitle: string = "Государственная регистрация";
 
   profile: Profile;
   employee: Employee;

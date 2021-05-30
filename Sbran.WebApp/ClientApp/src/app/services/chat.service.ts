@@ -9,10 +9,10 @@ import { MessageDto } from '../contracts/login-data';
 })
 export class ChatService {
 
-  private connection: any = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/chatsocket")   // mapping to the chathub as in startup.cs // localhost:44379 -- IIS
+  private connection: any = new signalR.HubConnectionBuilder().withUrl("http://iad-sbras.ru/chatsocket")   // mapping to the chathub as in startup.cs // localhost:44379 -- IIS
     .configureLogging(signalR.LogLevel.Information)
     .build();
-  readonly POST_URL = "https://localhost:5001/api/chat/send"
+  readonly POST_URL = "http://iad-sbras.ru/api/chat/send"
 
   private receivedMessageObject: MessageDto = new MessageDto();
   private sharedObj = new Subject<MessageDto>();

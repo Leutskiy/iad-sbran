@@ -8,7 +8,7 @@ export const environment = {
   //локально
   //apiUrl: "https://localhost:44343/"
   //На сервере
-  apiUrl: "https://localhost:5001/"
+  apiUrl: "https://iad-sbras.ru/"
 };
 
 /*
